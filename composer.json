@@ -17,7 +17,24 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.6",
         "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0"
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "kartik-v/yii2-widget-fileinput": "@dev",
+        "kartik-v/yii2-grid": "*",
+        "kartik-v/yii2-widget-datepicker": "*",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-widget-typeahead": "*",
+        "toxor88/yii2-widget-switchery": "*",
+        "kartik-v/bootstrap-fileinput": "@dev",
+        "kartik-v/yii2-mpdf": "*",
+        "yii2mod/yii2-sweet-alert": "*",
+        "lavrentiev/yii2-toastr": "~2.0.0",
+        "dmstr/yii2-adminlte-asset":"2.5.*",
+        "2amigos/yii2-gallery-widget": "~1.0",
+        "philippfrenzel/yii2fullcalendar":"*",
+        "miloschuman/yii2-highcharts-widget": "dev-master",
+        "kartik-v/yii2-widget-activeform": "@dev",
+        "phpoffice/phpexcel": "dev-master",
+        "2amigos/yii2-ckeditor-widget" : "~2.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -27,7 +44,15 @@
         "codeception/verify": "~0.3.1"
     },
     "config": {
-        "process-timeout": 1800
+         "process-timeout": 1800,
+        "fxp-asset": {
+        "repositories": {
+        "bower-asset/eve": {
+        "type": "bower-vcs",
+        "url": "https://github.com/adobe-webplatform/eve.git"
+        }
+        }
+        }
     },
     "repositories": [
         {
