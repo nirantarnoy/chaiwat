@@ -21,10 +21,12 @@ $fieldOptions2 = [
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>เชียงใหม่ชัยวัฒน์</b> (1991)</a>
+       <!--  <a href="#"><b>เชียงใหม่ชัยวัฒน์</b> (1991)</a> -->
+
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
+        <img src="../web/uploads/logo/chaiwat.jpg" style="width: 100%">
         <p class="login-box-msg">ลงชื่อเข้าใช้งานระบบ</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
