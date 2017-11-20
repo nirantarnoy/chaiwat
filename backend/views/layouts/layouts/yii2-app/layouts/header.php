@@ -23,7 +23,7 @@ $session->open();
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini">CMC</span><span class="logo-lg"><i class="fa fa-share-alt"></i> CHAIWAT</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini">CMC</span><span class="logo-lg"><i class="fa fa-gg-circle"></i> CMCHAIWAT</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">

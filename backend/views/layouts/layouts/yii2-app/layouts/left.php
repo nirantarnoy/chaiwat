@@ -75,7 +75,7 @@
                     ],  
                      [
                         'label' => 'สต๊อกสินค้า',
-                        'icon' => 'shopping-cart',
+                        'icon' => 'pie-chart',
                         'url' => '#',
                         'items' => [
                             ['label' => 'คลังสินค้า', 'icon' => 'university', 'url' => ['/warehouse'],],

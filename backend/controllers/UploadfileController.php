@@ -35,13 +35,14 @@ class UploadfileController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PositionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $upload_product = new \backend\models\Modelfile();
+        $upload_vendor = new \backend\models\Modelfile();
+        return $this->render('index',
+            [
+                'upload_product' => $upload_product,
+                'upload_vendor' => $upload_vendor,
+            ]
+            );
     }
 
 }
