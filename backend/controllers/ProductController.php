@@ -54,7 +54,7 @@ class ProductController extends Controller
               $data_all = 0;
               $upfiles = time() . "." . $uploaded->getExtension();
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
-
+                 echo "okk";return;
                   $myfile = '../web/uploads/files/'.$uploaded;
                 $inputFileType = \PHPExcel_IOFactory::identify($myfile);
                 $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
@@ -121,6 +121,8 @@ class ProductController extends Controller
                        $session->setFlash('error','บันทึกรายการไม่สำเร็จเนื่องจากมีรหัสซ้ำ'.count($data_fail) .' จาก '.$data_all);
                     }
 
+                }else{
+                  echo "not";
                 }
               
            }
