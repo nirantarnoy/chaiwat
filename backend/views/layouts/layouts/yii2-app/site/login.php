@@ -26,7 +26,8 @@ $fieldOptions2 = [
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <img src="../web/uploads/logo/chaiwat.jpg" style="width: 100%">
+        <!-- <img src="../web/uploads/logo/chaiwat.jpg" style="width: 100%"> -->
+        <?php echo Html::img('@web/uploads/logo/chaiwat.jpg',['style'=>'width: 100%']);?>
         <p class="login-box-msg">ลงชื่อเข้าใช้งานระบบ</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
