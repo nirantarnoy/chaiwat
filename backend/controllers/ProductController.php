@@ -51,8 +51,8 @@ class ProductController extends Controller
               $data_save = 0;
               $data_fail = [];
               $data_all = 0;
-              $uploaded->saveAs('../web/uploads/files/'.$uploaded);
-                $myfile = '../web/uploads/files/'.$uploaded;
+              $uploaded->saveAs('@web/uploads/files/'.$uploaded);
+                $myfile = '@web/uploads/files/'.$uploaded;
                 $inputFileType = \PHPExcel_IOFactory::identify($myfile);
                 $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
                 $objPHPExcel = $objReader->load($myfile);
