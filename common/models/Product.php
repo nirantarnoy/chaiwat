@@ -40,7 +40,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['name','category_id','product_code'],'required'],
             [['category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','parent_id','brand_id','model_id'], 'integer'],
-            [['weight', 'price','cost','sale_price_1','sale_price_2','qty','min_qty','max_qty'], 'number'],
+            [['weight', 'price','cost','sale_price_1','sale_price_2','qty','min_qty','max_qty','purch_qty','sale_qty','return_qty','adjust_qty','cost_sum','product_start'], 'number'],
             [['product_code', 'name', 'description', 'photo'], 'string', 'max' => 255],
         ];
     }
@@ -70,6 +70,12 @@ class Product extends \yii\db\ActiveRecord
             'brand_id' =>'ยี่ห้อ',
             'model_id' => 'รุ่นสินค้า',
             'parent_id' => 'หมวดผลิตภัณฑ์ย่อย',
+            'product_start'=> 'สินค้าตั้งงวด',
+            'sale_qty'=>'จำนวนขาย',
+            'purch_qty'=>'จำนวนซื้อ',
+            'return_qty'=>'จำนวนคืน',
+            'adjust_qty'=>'จำนวนปรับปรุง',
+            'cost_sum'=>'ทุนรวม',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

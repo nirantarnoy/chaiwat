@@ -74,6 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
       </div>
       <div class="panel-body">
+<div class="table-responsive">
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -83,18 +84,83 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'product_code',
-            'name',
+          //  'name',
             'description',
+            'category_id',
             //'photo',
-              [
-               'attribute'=>'category_id',
-               'format' => 'html',
-               'value'=>function($data){
-                 return $data->category_id !== Null ? \backend\models\Category::getCategorycode($data->category_id):'';
-               }
-             ],
+             //  [
+             //   'attribute'=>'category_id',
+             //   'format' => 'html',
+             //   'value'=>function($data){
+             //     return $data->category_id !== Null ? \backend\models\Category::getCategorycode($data->category_id):'';
+             //   }
+             // ],
             // 'weight',
-            // 'unit_id',
+             [
+              'attribute'=>'unit_id',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return \backend\models\Unit::getUnitname($data->unit_id);
+              }
+             ],
+             
+             [
+              'attribute'=>'product_start',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->product_start);
+              }
+             ],
+             [
+              'attribute'=>'sale_qty',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->sale_qty);
+              }
+             ],
+              [
+              'attribute'=>'purch_qty',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->purch_qty);
+              }
+             ],
+              [
+              'attribute'=>'return_qty',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->return_qty);
+              }
+             ],
+             [
+              'attribute'=>'adjust_qty',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->adjust_qty);
+              }
+             ],
+             [
+              'attribute'=>'qty',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->qty);
+              }
+             ],
+             [
+              'attribute'=>'cost_sum',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->cost_sum);
+              }
+             ],
+              [
+              'attribute'=>'cost',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->cost);
+              }
+             ],
+            // 'cost',
             // 'price',
             // 'status',
             // 'created_at',
@@ -102,40 +168,41 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'created_by',
             // 'updated_by',
 
-           [
-               'attribute'=>'status',
-               'format' => 'html',
-               'value'=>function($data){
-                 return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
-               }
-             ],
+           // [
+           //     'attribute'=>'status',
+           //     'format' => 'html',
+           //     'value'=>function($data){
+           //       return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
+           //     }
+           //   ],
             //'created_at',
             // 'updated_at',
             // 'created_by',
             // 'updated_by',
 
-            [
-                        'label' => 'Action',
-                        'format' => 'raw',
-                        'value' => function($model){
-                                return '
-                                    <div class="btn-group" >
-                                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                                        <ul class="dropdown-menu" style="right: 0; left: auto;">
-                                        <li><a href="'.Url::toRoute(['/product/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
-                                        <li><a href="'.Url::toRoute(['/product/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
-                                        <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/product/delete', 'id'=>$model->id],true).'">Delete</a></li>
-                                        </ul>
-                                    </div>
-                                ';
-                            // }
-                        },
-                        'headerOptions'=>['class'=>'text-center'],
-                        'contentOptions' => ['class'=>'text-center','style'=>'vertical-align: middle','text-align: center'],
+            // [
+            //             'label' => 'Action',
+            //             'format' => 'raw',
+            //             'value' => function($model){
+            //                     return '
+            //                         <div class="btn-group" >
+            //                             <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+            //                             <ul class="dropdown-menu" style="right: 0; left: auto;">
+            //                             <li><a href="'.Url::toRoute(['/product/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
+            //                             <li><a href="'.Url::toRoute(['/product/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
+            //                             <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/product/delete', 'id'=>$model->id],true).'">Delete</a></li>
+            //                             </ul>
+            //                         </div>
+            //                     ';
+            //                 // }
+            //             },
+            //             'headerOptions'=>['class'=>'text-center'],
+            //             'contentOptions' => ['class'=>'text-center','style'=>'vertical-align: middle','text-align: center'],
 
-                    ],
+            //         ],
         ],
     ]); ?>
+    </div>
     </div>
   </div>
   </div>
