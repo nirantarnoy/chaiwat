@@ -47,7 +47,7 @@ class ProductController extends Controller
         if($modelfile->load(Yii::$app->request->post())){
            $uploaded = UploadedFile::getInstance($modelfile,"file");
            if(!empty($uploaded)){
-            echo $uploaded;return;
+            //echo $uploaded;return;
               $data = [];
               $data_save = 0;
               $data_fail = [];
