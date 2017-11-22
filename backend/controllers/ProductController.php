@@ -55,7 +55,7 @@ class ProductController extends Controller
               $upfiles = time() . "." . $uploaded->getExtension();
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
                  //echo "okk";return;
-                  $myfile = '../web/uploads/files/'.$uploaded;
+                  $myfile = '../web/uploads/files/'.$upfiles;
                 $inputFileType = \PHPExcel_IOFactory::identify($myfile);
                 $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
                 $objPHPExcel = $objReader->load($myfile);
