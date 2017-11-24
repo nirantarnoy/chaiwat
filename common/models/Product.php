@@ -39,7 +39,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['name','category_id','product_code'],'required'],
-            [['category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','parent_id','brand_id','model_id'], 'integer'],
+            [['category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','parent_id','brand_id','model_id','property_id','type_id'], 'integer'],
             [['weight', 'price','cost','sale_price_1','sale_price_2','qty','min_qty','max_qty','purch_qty','sale_qty','return_qty','adjust_qty','cost_sum','product_start'], 'number'],
             [['product_code', 'name', 'description', 'photo'], 'string', 'max' => 255],
         ];
@@ -76,6 +76,8 @@ class Product extends \yii\db\ActiveRecord
             'return_qty'=>'จำนวนคืน',
             'adjust_qty'=>'จำนวนปรับปรุง',
             'cost_sum'=>'ทุนรวม',
+            'type_id' =>'ประเภท',
+            'property_id'=>'คุณสมบัติ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

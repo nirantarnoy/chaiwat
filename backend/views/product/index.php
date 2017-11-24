@@ -180,26 +180,26 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'created_by',
             // 'updated_by',
 
-            // [
-            //             'label' => 'Action',
-            //             'format' => 'raw',
-            //             'value' => function($model){
-            //                     return '
-            //                         <div class="btn-group" >
-            //                             <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-            //                             <ul class="dropdown-menu" style="right: 0; left: auto;">
-            //                             <li><a href="'.Url::toRoute(['/product/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
-            //                             <li><a href="'.Url::toRoute(['/product/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
-            //                             <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/product/delete', 'id'=>$model->id],true).'">Delete</a></li>
-            //                             </ul>
-            //                         </div>
-            //                     ';
-            //                 // }
-            //             },
-            //             'headerOptions'=>['class'=>'text-center'],
-            //             'contentOptions' => ['class'=>'text-center','style'=>'vertical-align: middle','text-align: center'],
+            [
+                        'label' => 'Action',
+                        'format' => 'raw',
+                        'value' => function($model){
+                                return '
+                                    <div class="btn-group" >
+                                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                        <ul class="dropdown-menu" style="right: 0; left: auto;">
+                                        <li><a href="'.Url::toRoute(['/product/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
+                                        <li><a href="'.Url::toRoute(['/product/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
+                                        <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/product/delete', 'id'=>$model->id],true).'">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                ';
+                            // }
+                        },
+                        'headerOptions'=>['class'=>'text-center'],
+                        'contentOptions' => ['class'=>'text-center','style'=>'vertical-align: middle','text-align: center'],
 
-            //         ],
+                    ],
         ],
     ]); ?>
     </div>

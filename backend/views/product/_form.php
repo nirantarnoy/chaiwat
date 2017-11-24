@@ -12,8 +12,11 @@ use yii\grid\GridView;
 /* @var $model backend\models\Product */
 /* @var $form yii\widgets\ActiveForm */
 $cat = \backend\models\Category::find()->where(['status'=>1])->all();
+$prodtype = \backend\models\Producttype::find()->where(['status'=>1])->all();
+$prodprop = \backend\models\Property::find()->where(['status'=>1])->all();
 $sub_cat = \backend\models\Subcategory::find()->where(['status'=>1])->all();
 $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
+$brand = \backend\models\Brand::find()->where(['status'=>1])->all();
 ?>
 
 <div class="product-form">
@@ -25,7 +28,7 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">ข้อมูลสินค้า</a></li>
               <?php if(!$model->isNewRecord):?>
-              <li><a href="#tab_2" data-toggle="tab">สินค้าคงคลังและความเคลื่อนไหว</a></li>
+            <!--   <li><a href="#tab_2" data-toggle="tab">สินค้าคงคลังและความเคลื่อนไหว</a></li> -->
             <?php endif;?>
             </ul>
 
@@ -47,9 +50,9 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
                                                      'data'=> ArrayHelper::map($cat,'id','name'),
                                                     'options'=>['placeholder' => 'เลือกหมวดผลิตภัณฑ์','class'=>'form-control','id'=>'level',
                                                        'onchange'=>' 
-                                                          $.post("index.php?r=product/showsubcategory&id=' . '"+$(this).val(),function(data){
-                                                          $("select#sub_cat").html(data);
-                                                          $("select#sub_cat").prop("disabled","");
+                                                          // $.post("index.php?r=product/showsubcategory&id=' . '"+$(this).val(),function(data){
+                                                          // $("select#sub_cat").html(data);
+                                                          // $("select#sub_cat").prop("disabled","");
 
                                                           });
                                                       ',
@@ -57,14 +60,38 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
                                                     ]
 
                                                   )->label() ?>
-                                    <?= $form->field($model, 'parent_id')->widget(Select2::className(),
+                                  
+                                     <?= $form->field($model, 'type_id')->widget(Select2::className(),
                                                     [
-                                                     'data'=> ArrayHelper::map($sub_cat,'id','name'),
-                                                     'options'=>['placeholder' => 'เลือกหมวดผลิตภัณฑ์ย่อย','class'=>'form-control','id'=>'sub_cat','disabled'=>'disabled'],
+                                                     'data'=> ArrayHelper::map($prodtype,'id','name'),
+                                                    'options'=>['placeholder' => 'เลือกประเภทสินค้า','class'=>'form-control','id'=>'prodtype',
+                                                       'onchange'=>'',
+                                                    ],
                                                     ]
 
                                                   )->label() ?>
+                                      <?= $form->field($model, 'property_id')->widget(Select2::className(),
+                                                    [
+                                                     'data'=> ArrayHelper::map($prodprop,'id','name'),
+                                                    'options'=>['placeholder' => 'เลือกคุณสมบัติสินค้า','class'=>'form-control','id'=>'prodprop',
+                                                       'onchange'=>' 
+                                                        
+                                                      ',
+                                                    ],
+                                                    ]
 
+                                                  )->label() ?>
+                                                   <?= $form->field($model, 'brand_id')->widget(Select2::className(),
+                                                    [
+                                                     'data'=> ArrayHelper::map($brand,'id','name'),
+                                                    'options'=>['placeholder' => 'เลือกยี่ห้อ','class'=>'form-control','id'=>'brand',
+                                                       'onchange'=>' 
+                                                        
+                                                      ',
+                                                    ],
+                                                    ]
+
+                                                  )->label() ?>
                                     <?php //echo $form->field($model, 'brand_id')->widget(Select2::className(),
                                                    // [
                                                     // 'data'=> ArrayHelper::map(\backend\models\Brand::find()->all(),'id','name'),
@@ -99,15 +126,7 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
 
                                     <?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?>
                                     
-                                    <?= $form->field($model, 'cost')->textInput(['maxlength' => true]) ?>
-
-                                    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
-
-                                    <?= $form->field($model, 'qty')->textInput(['maxlength' => true]) ?>
-
-                                    <?= $form->field($model, 'min_qty')->textInput(['maxlength' => true]) ?>
-
-                                    <?= $form->field($model, 'max_qty')->textInput(['maxlength' => true]) ?>
+                                   
 
                                     <?php echo "<h5>แนบไฟล์</h5>";?>
                                        <?php
@@ -127,215 +146,37 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
                                      <br />
                                    <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 
-                                  <div class="form-group">
-                                      <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-                                  </div>
+                                  
+                                </div>
+                                <div class="col-lg-6">
+                                   <?= $form->field($model, 'cost')->textInput(['maxlength' => true]) ?>
+
+                                    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+
+                                    <?= $form->field($model, 'qty')->textInput(['maxlength' => true]) ?>
+
+                                    <?= $form->field($model, 'min_qty')->textInput(['maxlength' => true]) ?>
+
+                                    <?= $form->field($model, 'max_qty')->textInput(['maxlength' => true]) ?>
                                 </div>
                                 </div>
 
                                     <hr />
-                                    <div class="row">
-                                      <div class="col-lg-12">
-                                         <?php if(!$model->isNewRecord){
-                                              if(count($imagelist)>0){
-                                                $list = [];
-                                                echo "<div class='row'>";
-                                                foreach($imagelist as $value){
-                                                  // array_push($list,[
-                                                  //     'url' => '@web/uploads/images/'.$value->image,
-                                                  //     'src' => '@web/uploads/images/'.$value->image,
-                                                  //     'options' =>['title' => 'Sail us to the Moon','style'=>'height: 10px;width:10px;']
-                                                  //  ]);
-                                                  echo "<div class='col-lg-2' style='padding: 15px;'>";
-                                                  echo Html::img('@web/uploads/images/'.$value->image,['style'=>'width: 80%']);
-                                                  echo "</div>";
-                                                }
-                                              echo "</div>";
-                                                // $items = [$list];
-                                              //echo dosamigos\gallery\Gallery::widget(['items' => $list]);
-                                            }
-                                           }?>
-
-                                      </div>
-                                    </div>
+                                    
 
                                 </div>
                               </div>
                             </div>
                           </div>
+                          <div class="row">
+                            <div class="col-lg-1">
+                              <div class="form-group">
+                                      <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                                  </div>
+                            </div>
+                          </div>
               </div>
-              <?php if(!$model->isNewRecord):?>
-              <div class="tab-pane" id="tab_2">
-                <div class="row">
-                  <div class="col-lg-12">
-                        <div class="row">
-                          <div class="col-lg-12">
-                            <h3>สินค้าคงคลัง</h3>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-lg-12">
-                              <?= GridView::widget([
-                                    'dataProvider' => $dataProvider,
-                                   // 'filterModel' => $searchModel,
-                                    'columns' => [
-                                        ['class' => 'yii\grid\SerialColumn'],
-
-                                       // 'id',
-                                        //'warehouse_id',
-                                        [
-                                          'attribute'=>'warehouse_id',
-                                          'value'=> function($data){
-                                            return $data->warehouse_id!=''?\backend\models\Warehouse::findName($data->warehouse_id):'';
-                                          }
-                                        ],
-                                        'qty',
-                                        [
-                                        'attribute'=>'updated_at',
-                                        'label' => 'อัพเดทล่าสุด',
-                                          'value' => function($data){
-                                            return date('d-m-Y',$data->updated_at);
-                                          }
-                                        ]
-                                        // [
-                                        //   'attribute'=>'sale_date',
-                                        //   'value' => function($data){
-                                        //     return date('d-m-Y',$data->sale_date);
-                                        //   }
-                                        // ],
-                                        //'sale_amount',
-                                        //'payment_type',
-                                        //'require_ship_date',
-                                        //'note',
-                                       // 'payment_status',
-                                       // [
-                                       //     'attribute'=>'status',
-                                       //     'format' => 'html',
-                                       //     'value'=>function($data){
-                                       //       return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
-                                       //     }
-                                       //   ],
-                                        //'created_at',
-                                        // 'updated_at',
-                                        // 'created_by',
-                                        // 'updated_by',
-
-                                        // [
-                                        //             'label' => 'Action',
-                                        //             'format' => 'raw',
-                                        //             'value' => function($model){
-                                        //                     return '
-                                        //                         <div class="btn-group" >
-                                        //                             <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                                        //                             <ul class="dropdown-menu" style="right: 0; left: auto;">
-                                        //                             <li><a href="'.Url::toRoute(['/sale/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
-                                        //                             <li><a href="'.Url::toRoute(['/sale/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
-                                        //                             <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/sale/delete', 'id'=>$model->id],true).'">Delete</a></li>
-                                        //                             </ul>
-                                        //                         </div>
-                                        //                     ';
-                                        //                 // }
-                                        //             },
-                                        //             'headerOptions'=>['class'=>'text-center'],
-                                        //             'contentOptions' => ['class'=>'text-center','style'=>'vertical-align: middle','text-align: center'],
-
-                                        //         ],
-                                    ],
-                                ]); ?>
-                          </div>
-                        </div>
-                         <div class="row">
-                          <div class="col-lg-12">
-                            <h3>ความเคลื่อนไหวล่าสุด</h3>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-lg-12">
-                              <?= GridView::widget([
-                                    'dataProvider' => $dataProvider2,
-                                   // 'filterModel' => $searchModel,
-                                    'columns' => [
-                                        ['class' => 'yii\grid\SerialColumn'],
-
-                                       // 'id',
-                                        'journal_no',
-                                        [
-                                          'attribute'=>'warehouse_id',
-                                          'value'=> function($data){
-                                            return $data->warehouse_id!=''?\backend\models\Warehouse::findName($data->warehouse_id):'';
-                                          }
-                                        ],
-                                        'qty',
-                                        [
-                                        'attribute'=>'invent_type',
-                                        'format'=>'html',
-                                          'value' => function($data){
-                                           
-                                              return $data->invent_type === 0 ? '<div class="label label-success">in</div>':'<div class="label label-danger">out</div>';
-                                          
-                                          }
-                                        ],
-                                        [
-                                        'attribute'=>'transdate',
-                                          'value' => function($data){
-                                            return date('d-m-Y',$data->transdate);
-                                          }
-                                        ]
-                                        // [
-                                        //   'attribute'=>'sale_date',
-                                        //   'value' => function($data){
-                                        //     return date('d-m-Y',$data->sale_date);
-                                        //   }
-                                        // ],
-                                        //'sale_amount',
-                                        //'payment_type',
-                                        //'require_ship_date',
-                                        //'note',
-                                       // 'payment_status',
-                                       // [
-                                       //     'attribute'=>'status',
-                                       //     'format' => 'html',
-                                       //     'value'=>function($data){
-                                       //       return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
-                                       //     }
-                                       //   ],
-                                        //'created_at',
-                                        // 'updated_at',
-                                        // 'created_by',
-                                        // 'updated_by',
-
-                                        // [
-                                        //             'label' => 'Action',
-                                        //             'format' => 'raw',
-                                        //             'value' => function($model){
-                                        //                     return '
-                                        //                         <div class="btn-group" >
-                                        //                             <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                                        //                             <ul class="dropdown-menu" style="right: 0; left: auto;">
-                                        //                             <li><a href="'.Url::toRoute(['/sale/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
-                                        //                             <li><a href="'.Url::toRoute(['/sale/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
-                                        //                             <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/sale/delete', 'id'=>$model->id],true).'">Delete</a></li>
-                                        //                             </ul>
-                                        //                         </div>
-                                        //                     ';
-                                        //                 // }
-                                        //             },
-                                        //             'headerOptions'=>['class'=>'text-center'],
-                                        //             'contentOptions' => ['class'=>'text-center','style'=>'vertical-align: middle','text-align: center'],
-
-                                        //         ],
-                                    ],
-                                ]); ?>
-                          </div>
-                        </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                  </div>
-                </div>
-              </div>
-            <?php endif;?>
+    
             </div>
 </div>
 

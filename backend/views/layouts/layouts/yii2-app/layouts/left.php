@@ -57,6 +57,9 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'กลุ่มสินค้า', 'icon' => 'cubes', 'url' => ['/category'],],
+                            ['label' => 'ประเภทสินค้า', 'icon' => 'cubes', 'url' => ['/producttype'],],
+                            ['label' => 'ยี่ห้อสินค้า', 'icon' => 'cubes', 'url' => ['/brand'],],
+                            ['label' => 'คุณสมบัติสินค้า', 'icon' => 'cubes', 'url' => ['/property'],],
                             ['label' => 'หน่วยนับ', 'icon' => 'balance-scale', 'url' => ['/unit'],],
                             ['label' => 'สินค้า', 'icon' => 'cube', 'url' => ['/product'],],
                            

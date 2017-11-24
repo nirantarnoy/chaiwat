@@ -210,13 +210,13 @@ class ProductController extends Controller
         $searchModel = new StockbalanceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $searchModel2 = new ViewStockSearch();
-        $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams);
-        $dataProvider2->query->where(['product_id'=>$id])->orderby(['created_at'=>SORT_DESC]);
+        // $searchModel2 = new ViewStockSearch();
+        // $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams);
+        // $dataProvider2->query->where(['product_id'=>$id])->orderby(['created_at'=>SORT_DESC]);
 
-        $model_trans = \common\models\ViewTrans::find()->where(['product_id'=>$id])->all();
+        //$model_trans = \common\models\ViewTrans::find()->where(['product_id'=>$id])->all();
 
-        $imagelist = Productimage::find()->where(['product_id'=>$id])->all();
+       // $imagelist = Productimage::find()->where(['product_id'=>$id])->all();
          $modelfile = new Modelfile();
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
            // $oldlogo = Yii::$app->request->post('old_photo');
@@ -252,10 +252,10 @@ class ProductController extends Controller
             return $this->render('update', [
                 'model' => $model,
                 'modelfile' => $modelfile,
-                'imagelist' => $imagelist,
+                //'imagelist' => $imagelist,
                 'dataProvider' => $dataProvider,
-                'dataProvider2' => $dataProvider2,
-                'model_trans' => $model_trans,
+               // 'dataProvider2' => $dataProvider2,
+                //'model_trans' => $model_trans,
             ]);
         }
     }

@@ -15,10 +15,10 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $this->render('_form', [
         'model' => $model,
         'modelfile' => $modelfile,
-        'imagelist' => $imagelist,
+        //'imagelist' => $imagelist,
          'dataProvider' => $dataProvider,
-         'dataProvider2' => $dataProvider2,
-                'model_trans' => $model_trans,
+         // 'dataProvider2' => $dataProvider2,
+         //        'model_trans' => $model_trans,
     ]) ?>
 
 </div>
