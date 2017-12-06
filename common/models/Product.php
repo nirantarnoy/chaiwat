@@ -41,7 +41,9 @@ class Product extends \yii\db\ActiveRecord
             [['name','category_id','product_code'],'required'],
             [['category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','parent_id','brand_id','model_id','property_id','type_id'], 'integer'],
             [['weight', 'price','cost','sale_price_1','sale_price_2','qty','min_qty','max_qty','purch_qty','sale_qty','return_qty','adjust_qty','cost_sum','product_start'], 'number'],
-            [['product_code', 'name', 'description', 'photo'], 'string', 'max' => 255],
+            [['product_code', 'name', 'description', 'photo','selection'], 'string', 'max' => 255],
+            [['group_id','vendor_id'],'integer'],
+            [['front_qty','back_qty','back_qty2','total_qty'],'number']
         ];
     }
 
@@ -82,6 +84,13 @@ class Product extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
+            'group_id' => 'กลุ่ม',
+            'vendor_id' =>'ผู้จำหน่าย',
+            'front_qty'=>'หน้าร้าน',
+            'back_qty'=>'หลังร้าน',
+            'back_qty2'=>'หลังร้าน',
+            'total_qty'=>'รวม',
+            'selection'=>'รายการที่เลือก',
         ];
     }
 }

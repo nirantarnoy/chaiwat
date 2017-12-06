@@ -74,7 +74,7 @@ class ProductController extends Controller
                    // $data_all +=1;
                     continue;
                   }
-                          $modelprod = \backend\models\Product::find()->where(['name'=>$rowData[0][1]])->one();
+                          $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0][0]])->one();
                           if(count($modelprod)>0){
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
@@ -85,9 +85,13 @@ class ProductController extends Controller
                             $modelx->product_code = $rowData[0][0];
                             $modelx->name = $rowData[0][1];
                             $modelx->description = $rowData[0][1] ;
-                            $modelx->category_id = $rowData[0][3];
+                        //    $modelx->category_id = $rowData[0][3];
                             $modelx->weight = 0;
+                            $modelx->category_id = $this->checkCat($rowData[0][3]);
                             $modelx->unit_id = $this->checkUnit($rowData[0][2]);
+                            $modelx->type_id = $this->checkType($rowData[0][13]);
+                           // $modelx->property_id = $this->checkProperty($rowData[0][13]);
+                            $modelx->brand_id = $this->checkBrand($rowData[0][14]);
                             $modelx->price = 0;
                             $modelx->product_start = $rowData[0][4];
                             $modelx->sale_qty = $rowData[0][5];
@@ -100,6 +104,13 @@ class ProductController extends Controller
                             $modelx->min_qty = 0;
                             $modelx->max_qty = 0;
                             $modelx->status = 1;
+                            $modelx->group_id = $this->checkCat($rowData[0][12]);
+                            $modelx->vendor_id = $this->checkVendor($rowData[0][20]);
+                           $modelx->front_qty = $rowData[0][15];
+                           $modelx->back_qty = $rowData[0][16];
+                           $modelx->back_qty2 = $rowData[0][17];
+                           $modelx->total_qty = $rowData[0][18];
+                           $modelx->selection = $rowData[0][19];
                         
                            if($modelx->save(false)){
                               $data_save += 1;
@@ -125,12 +136,38 @@ class ProductController extends Controller
             'modelfile' => $modelfile,
         ]);
     }
-    public function checkCat($name){
+    public function checkVendor($name){
+      $model = \backend\models\Vendor::find()->where(['name'=>$name])->one();
+      if(count($model)>0){
+        return $model->id;
+      }else{
+        $model_new = new \backend\models\Vendor();
+        $model_new->name = $name;
+        $model_new->status = 1;
+        if($model_new->save(false)){
+          return $model_new->id;
+        }
+      }
+    }
+     public function checkCat($name){
       $model = \backend\models\Category::find()->where(['name'=>$name])->one();
       if(count($model)>0){
         return $model->id;
       }else{
         $model_new = new \backend\models\Category();
+        $model_new->name = $name;
+        $model_new->status = 1;
+        if($model_new->save(false)){
+          return $model_new->id;
+        }
+      }
+    }
+     public function checkBrand($name){
+      $model = \backend\models\Brand::find()->where(['name'=>$name])->one();
+      if(count($model)>0){
+        return $model->id;
+      }else{
+        $model_new = new \backend\models\Brand();
         $model_new->name = $name;
         $model_new->status = 1;
         if($model_new->save(false)){
@@ -144,6 +181,32 @@ class ProductController extends Controller
         return $model->id;
       }else{
         $model_new = new \backend\models\Unit();
+        $model_new->name = $name;
+        $model_new->status = 1;
+        if($model_new->save(false)){
+          return $model_new->id;
+        }
+      }
+    }
+    public function checkType($name){
+      $model = \backend\models\Producttype::find()->where(['name'=>$name])->one();
+      if(count($model)>0){
+        return $model->id;
+      }else{
+        $model_new = new \backend\models\Producttype();
+        $model_new->name = $name;
+        $model_new->status = 1;
+        if($model_new->save(false)){
+          return $model_new->id;
+        }
+      }
+    }
+    public function checkProperty($name){
+      $model = \backend\models\Property::find()->where(['name'=>$name])->one();
+      if(count($model)>0){
+        return $model->id;
+      }else{
+        $model_new = new \backend\models\Property();
         $model_new->name = $name;
         $model_new->status = 1;
         if($model_new->save(false)){
