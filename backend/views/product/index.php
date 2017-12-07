@@ -160,6 +160,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 return number_format($data->cost);
               }
              ],
+              [
+              'attribute'=>'vendor_id',
+              'contentOptions'=>['style'=>'text-align: left'],
+              'value' => function($data){
+                return $data->vendor_id;
+              }
+             ],
             // 'cost',
             // 'price',
             // 'status',
