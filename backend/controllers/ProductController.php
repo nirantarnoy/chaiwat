@@ -107,7 +107,7 @@ class ProductController extends Controller
                             $modelx->weight = 0;
                             $modelx->category_id = $this->checkCat($rowData[0][12]);
                             $modelx->unit_id = $this->checkUnit($rowData[0][2]);
-                            $modelx->type_id = $this->checkType($rowData[0][13]);
+                            $modelx->type_id = $this->checkType($rowData[0][13],$modelx->category_id);
                            // $modelx->property_id = $this->checkProperty($rowData[0][13]);
                             $modelx->brand_id = $this->checkBrand($rowData[0][14]);
                             $modelx->price = 0;
@@ -210,13 +210,14 @@ class ProductController extends Controller
         }
       }
     }
-    public function checkType($name){
+    public function checkType($name,$groupid){
       $model = \backend\models\Producttype::find()->where(['name'=>$name])->one();
       if(count($model)>0){
         return $model->id;
       }else{
         $model_new = new \backend\models\Producttype();
         $model_new->name = $name;
+        $model_new->group_id = $groupid;
         $model_new->status = 1;
         if($model_new->save(false)){
           return $model_new->id;
