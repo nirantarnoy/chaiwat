@@ -164,7 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
               'attribute'=>'vendor_id',
               'contentOptions'=>['style'=>'text-align: left'],
               'value' => function($data){
-                return $data->vendor_id;
+                return \backend\models\Vendor::getVendorname($data->vendor_id);
               }
              ],
             // 'cost',

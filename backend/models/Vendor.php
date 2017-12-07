@@ -31,5 +31,9 @@ class Vendor extends \common\models\Vendor
         ],
     ];
  }
+  public function getVendorname($id){
+    $model=Vendor::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
 
 }
