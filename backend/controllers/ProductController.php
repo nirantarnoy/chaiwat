@@ -87,7 +87,7 @@ class ProductController extends Controller
                             $modelx->description = $rowData[0][1] ;
                         //    $modelx->category_id = $rowData[0][3];
                             $modelx->weight = 0;
-                            $modelx->category_id = $this->checkCat($rowData[0][3]);
+                            $modelx->category_id = $this->checkCat($rowData[0][12]);
                             $modelx->unit_id = $this->checkUnit($rowData[0][2]);
                             $modelx->type_id = $this->checkType($rowData[0][13]);
                            // $modelx->property_id = $this->checkProperty($rowData[0][13]);

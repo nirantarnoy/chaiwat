@@ -86,15 +86,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'product_code',
           //  'name',
             'description',
-            'category_id',
+           // 'category_id',
             //'photo',
-             //  [
-             //   'attribute'=>'category_id',
-             //   'format' => 'html',
-             //   'value'=>function($data){
-             //     return $data->category_id !== Null ? \backend\models\Category::getCategorycode($data->category_id):'';
-             //   }
-             // ],
+              [
+               'attribute'=>'category_id',
+               'format' => 'html',
+               'value'=>function($data){
+                 return $data->category_id !== Null ? \backend\models\Category::getCategorycode($data->category_id):'';
+               }
+             ],
             // 'weight',
              [
               'attribute'=>'unit_id',
