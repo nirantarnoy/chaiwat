@@ -55,7 +55,7 @@ class ProductController extends Controller
         }
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->where(['like','category_id',$group])
+        $dataProvider->query->andFilterWhere(['like','category_id',$group])
                      ->andFilterWhere(['like','type_id',$product_type])
                      ->andFilterWhere(['like','brand_id',$brand])
                      ->andFilterWhere(['like','vendor_id',$vendor]);
