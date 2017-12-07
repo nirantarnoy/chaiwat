@@ -18,6 +18,7 @@ use backend\models\ViewStockSearch;
  */
 class ProductController extends Controller
 {
+   public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -28,6 +29,7 @@ class ProductController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST','GET'],
+                    'index' => ['GET','POST'],
                 ],
             ],
         ];
@@ -39,8 +41,24 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
+        $brand= '';
+        $group= '';
+        $product_type = '';
+        $vendor = '';
+
+        if(Yii::$app->request->isPost){
+            $group = Yii::$app->request->post('product_group');
+            $product_type = Yii::$app->request->post('type');
+            $brand = Yii::$app->request->post('brand');
+            $vendor = Yii::$app->request->post('vendor');
+           // echo $product_type;
+        }
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where(['like','category_id',$group])
+                     ->andFilterWhere(['like','type_id',$product_type])
+                     ->andFilterWhere(['like','brand_id',$brand])
+                     ->andFilterWhere(['like','vendor_id',$vendor]);
 
         $modelfile = new Modelfile();
 
@@ -134,6 +152,10 @@ class ProductController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'modelfile' => $modelfile,
+            'group' => $group,
+            'product_type' => $product_type,
+            'brand' => $brand,
+            'vendor' => $vendor,
         ]);
     }
     public function checkVendor($name){
@@ -392,6 +414,21 @@ class ProductController extends Controller
     public function actionImportproduct(){
       if(Yii::$app->request->isPost){
         print_r(Yii::$app->request->post());
+      }
+    }
+    public function actionShowtype(){
+      if(Yii::$app->request->isAjax){
+        $id = Yii::$app->request->post('ids');
+        if($id){
+          $model = \backend\models\Producttype::find()->where(['group_id'=>$id])->all();
+          if($model){
+             foreach($model as $value){
+               echo "<option value='" . $value->id . "'>$value->name</option>";
+             }
+          }else{
+             echo "<option value=''>ไม่พบข้อมูล</option>";
+          }
+        }
       }
     }
 

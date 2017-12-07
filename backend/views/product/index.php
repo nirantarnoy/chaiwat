@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 use yii\helpers\Url;
 use kartik\file\FileInput;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -36,6 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
 //       'events'=> $events,
 //   ));
 
+$groupall = \backend\models\Category::find()->where(['!=','name',''])->all();
+$typeall = \backend\models\Producttype::find()->where(['!=','name',''])->all();
+$brandall = \backend\models\Brand::find()->where(['!=','name',''])->all();
+$vendorall = \backend\models\Vendor::find()->where(['!=','name',''])->all();
+
+if($product_type !=''){
+  $typeall = \backend\models\Producttype::find()->where(['group_id'=>$group])->all();
+}
 
 ?>
 <div class="product-index">
@@ -74,6 +83,60 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
       </div>
       <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
+                   <div class="form-inline">
+                <select class="form-control" id="product_group" name="product_group">
+                  <option value="">เลือกกลุ่มสินค้า</option>
+                  <?php foreach($groupall as $value):?>
+                  <?php $select = '';
+                    if($value->id == $group){
+                      $select = 'selected';
+                    }
+                  ?>
+                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
+                 <?php endforeach;?>
+                </select>
+                 <select class="form-control" id="product_type" name="type" disabled>
+                  <option value="">เลือกประเภทสินค้า</option>
+                  <?php foreach($typeall as $value):?>
+                  <?php $select = '';
+                    if($value->id == $product_type){
+                      $select = 'selected';
+                    }
+                  ?>
+                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
+                 <?php endforeach;?>
+                </select>
+                 <select class="form-control" name="brand">
+                  <option value="">เลือกยี่ห้อสินค้า</option>
+                  <?php foreach($brandall as $value):?>
+                  <?php $select = '';
+                    if($value->id == $brand){
+                      $select = 'selected';
+                    }
+                  ?>
+                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
+                 <?php endforeach;?>
+                </select>
+                <select class="form-control" name="vendor">
+                  <option value="">เลือกผู้จำหน่าย</option>
+                  <?php foreach($vendorall as $value):?>
+                  <?php $select = '';
+                    if($value->id == $vendor){
+                      $select = 'selected';
+                    }
+                  ?>
+                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
+                 <?php endforeach;?>
+                </select>
+                <input type="submit" class="btn btn-primary" value="ค้นหา">
+            </div>
+            </form>
+       
+          </div>
+        </div><br />
 <div class="table-responsive">
 
     <?= GridView::widget([
@@ -95,6 +158,13 @@ $this->params['breadcrumbs'][] = $this->title;
                  return $data->category_id !== Null ? \backend\models\Category::getCategorycode($data->category_id):'';
                }
              ],
+              [
+              'attribute'=>'brand_id',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return \backend\models\Brand::getBrandname($data->brand_id);
+              }
+             ],
             // 'weight',
              [
               'attribute'=>'unit_id',
@@ -104,13 +174,13 @@ $this->params['breadcrumbs'][] = $this->title;
               }
              ],
              
-             [
-              'attribute'=>'product_start',
-              'contentOptions'=>['style'=>'text-align: right'],
-              'value' => function($data){
-                return number_format($data->product_start);
-              }
-             ],
+             // [
+             //  'attribute'=>'product_start',
+             //  'contentOptions'=>['style'=>'text-align: right'],
+             //  'value' => function($data){
+             //    return number_format($data->product_start);
+             //  }
+             // ],
              [
               'attribute'=>'sale_qty',
               'contentOptions'=>['style'=>'text-align: right'],
@@ -259,3 +329,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
   </div>
 </div>
+<?php $this->registerJs('
+    $(function(){
+      var serc = "'.$product_type.'";
+      if(serc !=""){
+        $("#product_type").prop("disabled","");
+      }
+      $("#product_group").change(function(){
+        if($(this).val()!=""){
+          $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "'.Url::to(['product/showtype'],true).'",
+            data: {ids: $(this).val()},
+            success: function(data){
+              $("#product_type").prop("disabled","");
+              $("#product_type").html(data);
+            }
+          });
+        }
+      });
+    });
+  ',static::POS_END);?>

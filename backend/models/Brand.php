@@ -31,6 +31,9 @@ class Brand extends \common\models\Brand
         ],
     ];
  }
- 
+ public function getBrandname($id){
+    $model = Brand::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
 
 }

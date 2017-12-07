@@ -33,7 +33,7 @@ class ProductType extends \yii\db\ActiveRecord
     {
         return [
         [['name'],'required'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by','group_id'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
         ];
     }
@@ -48,6 +48,7 @@ class ProductType extends \yii\db\ActiveRecord
             'name' => 'ชื่อประเภท',
             'description' => 'รายละเอียด',
             'status' => 'สถานะ',
+            'group_id'=>'กลุ่มสินค้า',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
