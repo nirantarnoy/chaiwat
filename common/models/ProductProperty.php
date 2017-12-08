@@ -33,7 +33,7 @@ class ProductProperty extends \yii\db\ActiveRecord
     {
         return [
          [['name'],'required'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by','type_id'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
         ];
     }
@@ -48,6 +48,7 @@ class ProductProperty extends \yii\db\ActiveRecord
             'name' => 'คุณสมบัติ',
             'description' => 'รายละเอียด',
             'status' => 'สถานะ',
+            'type_id'=>'ประเภทสินค้า',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

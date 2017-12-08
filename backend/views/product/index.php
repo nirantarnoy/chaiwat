@@ -41,9 +41,13 @@ $groupall = \backend\models\Category::find()->where(['!=','name',''])->all();
 $typeall = \backend\models\Producttype::find()->where(['!=','name',''])->all();
 $brandall = \backend\models\Brand::find()->where(['!=','name',''])->all();
 $vendorall = \backend\models\Vendor::find()->where(['!=','name',''])->all();
-
+$propertyall = \backend\models\Property::find()->where(['!=','name',''])->all();
+$modeall = [['id'=>1,'name'=>'สั่งซ์้อ'],['id'=>0,'name'=>'ไม่สั่งซ์้อ']];
 if($product_type !=''){
   $typeall = \backend\models\Producttype::find()->where(['group_id'=>$group])->all();
+}
+if($property !=''){
+  $propertyall = \backend\models\Property::find()->where(['type_id'=>$product_type])->all();
 }
 
 ?>
@@ -109,6 +113,17 @@ if($product_type !=''){
                   <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
                  <?php endforeach;?>
                 </select>
+                 <select class="form-control" id="property" name="property" disabled>
+                  <option value="">เลือกคุณสมบัติ</option>
+                  <?php foreach($propertyall as $value):?>
+                  <?php $select = '';
+                    if($value->id == $property){
+                      $select = 'selected';
+                    }
+                  ?>
+                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
+                 <?php endforeach;?>
+                </select>
                  <select class="form-control" name="brand">
                   <option value="">เลือกยี่ห้อสินค้า</option>
                   <?php foreach($brandall as $value):?>
@@ -120,7 +135,8 @@ if($product_type !=''){
                   <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
                  <?php endforeach;?>
                 </select>
-                <select class="form-control" name="vendor">
+               
+                 <select class="form-control" name="vendor">
                   <option value="">เลือกผู้จำหน่าย</option>
                   <?php foreach($vendorall as $value):?>
                   <?php $select = '';
@@ -130,6 +146,17 @@ if($product_type !=''){
                   ?>
                   <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
                  <?php endforeach;?>
+                </select>
+                <select class="form-control" name="mode">
+                  <option value="">เลือกโหมดสั่งซื้อ</option>
+                  <?php for($i=0;$i<=count($modeall)-1;$i++):?>
+                  <?php $select = '';
+                    if($modeall[$i]['id'] == $mode){
+                      $select = 'selected';
+                    }
+                  ?>
+                  <option value="<?=$modeall[$i]['id']?>" <?=$select?>><?=$modeall[$i]['name']?></option>
+                 <?php endfor;?>
                 </select>
                 <input type="submit" class="btn btn-primary" value="ค้นหา">
             </div>
@@ -146,6 +173,14 @@ if($product_type !=''){
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
+            [
+              'attribute'=>'mode',
+              'label'=>'สั่งซื้อ',
+              'format' => 'html',
+              'value'=> function($data){
+                return $data->mode == 1?"<i class='fa fa-check-circle text-success'></i>":"<i class='fa fa-ban text-danger'></i>";
+              }
+            ],
             'product_code',
           //  'name',
             'description',
@@ -159,6 +194,13 @@ if($product_type !=''){
                }
              ],
               [
+              'attribute'=>'type_id',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return \backend\models\Producttype::getTypename($data->type_id);
+              }
+             ],
+              [
               'attribute'=>'brand_id',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
@@ -166,13 +208,14 @@ if($product_type !=''){
               }
              ],
             // 'weight',
-             [
-              'attribute'=>'unit_id',
-              'contentOptions'=>['style'=>'text-align: right'],
-              'value' => function($data){
-                return \backend\models\Unit::getUnitname($data->unit_id);
-              }
-             ],
+            
+             //  [
+             //  'attribute'=>'unit_id',
+             //  'contentOptions'=>['style'=>'text-align: right'],
+             //  'value' => function($data){
+             //    return \backend\models\Unit::getUnitname($data->unit_id);
+             //  }
+             // ],
              
              // [
              //  'attribute'=>'product_start',
@@ -332,8 +375,12 @@ if($product_type !=''){
 <?php $this->registerJs('
     $(function(){
       var serc = "'.$product_type.'";
+      var perty = "'.$property.'";
       if(serc !=""){
         $("#product_type").prop("disabled","");
+      }
+       if(perty !=""){
+        $("#property").prop("disabled","");
       }
       $("#product_group").change(function(){
         if($(this).val()!=""){
@@ -349,5 +396,21 @@ if($product_type !=''){
           });
         }
       });
+      
+      $("#product_type").change(function(){
+        if($(this).val()!=""){
+          $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "'.Url::to(['product/showproperty'],true).'",
+            data: {ids: $(this).val()},
+            success: function(data){
+              $("#property").prop("disabled","");
+              $("#property").html(data);
+            }
+          });
+        }
+      });
+
     });
   ',static::POS_END);?>

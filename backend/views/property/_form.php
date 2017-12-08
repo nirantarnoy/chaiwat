@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use toxor88\switchery\Switchery;
+use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Property */
@@ -23,6 +25,10 @@ use toxor88\switchery\Switchery;
                   <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
                   <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                  <?= $form->field($model, 'type_id')->widget(Select2::className(),[
+                      'data' => ArrayHelper::map(\backend\models\Property::find()->where(['!=','name',''])->all(),'id','name'),
+                      'options'=>['placeholder'=>'เลือกประเภทสินค้า']
+                  ]) ?>
 
                   <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 

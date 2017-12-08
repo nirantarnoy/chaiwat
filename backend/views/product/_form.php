@@ -144,7 +144,9 @@ $brand = \backend\models\Brand::find()->where(['status'=>1])->all();
                  
                                      <input type="hidden" name="old_photo" value="<?=$model->photo?>" />
                                      <br />
-                                   <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
+                                   <?php echo $form->field($model, 'mode')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
+                                  
+                                    <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 
                                   
                                 </div>

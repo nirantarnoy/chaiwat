@@ -31,6 +31,9 @@ class Producttype extends \common\models\ProductType
         ],
     ];
  }
- 
+ public function getTypename($id){
+    $model=Producttype::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
 
 }

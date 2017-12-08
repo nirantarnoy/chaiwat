@@ -45,19 +45,25 @@ class ProductController extends Controller
         $group= '';
         $product_type = '';
         $vendor = '';
+         $property = '';
+         $mode = '';
 
         if(Yii::$app->request->isPost){
             $group = Yii::$app->request->post('product_group');
             $product_type = Yii::$app->request->post('type');
             $brand = Yii::$app->request->post('brand');
             $vendor = Yii::$app->request->post('vendor');
+            $property = Yii::$app->request->post('property');
+            $mode = Yii::$app->request->post('mode');
            // echo $product_type;
         }
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andFilterWhere(['like','category_id',$group])
                      ->andFilterWhere(['like','type_id',$product_type])
+                     ->andFilterWhere(['like','property_id',$property])
                      ->andFilterWhere(['like','brand_id',$brand])
+                     ->andFilterWhere(['like','mode',$mode])
                      ->andFilterWhere(['like','vendor_id',$vendor]);
 
         $modelfile = new Modelfile();
@@ -105,30 +111,31 @@ class ProductController extends Controller
                             $modelx->description = $rowData[0][1] ;
                         //    $modelx->category_id = $rowData[0][3];
                             $modelx->weight = 0;
-                            $modelx->category_id = $this->checkCat($rowData[0][12]);
-                            $modelx->unit_id = $this->checkUnit($rowData[0][2]);
-                            $modelx->type_id = $this->checkType($rowData[0][13],$modelx->category_id);
-                           // $modelx->property_id = $this->checkProperty($rowData[0][13]);
+                            $modelx->category_id = $this->checkCat($rowData[0][11]);
+                           // $modelx->unit_id = $this->checkUnit($rowData[0][2]);
+                            $modelx->type_id = $this->checkType($rowData[0][12],$modelx->category_id);
+                            $modelx->property_id = $this->checkProperty($rowData[0][13],$modelx->type_id);
                             $modelx->brand_id = $this->checkBrand($rowData[0][14]);
                             $modelx->price = 0;
-                            $modelx->product_start = $rowData[0][4];
-                            $modelx->sale_qty = $rowData[0][5];
-                            $modelx->purch_qty = $rowData[0][6];
-                            $modelx->return_qty = $rowData[0][7];
-                            $modelx->adjust_qty = $rowData[0][8];
-                            $modelx->cost_sum = $rowData[0][10];
-                            $modelx->cost = $rowData[0][11];
-                            $modelx->qty = $rowData[0][9];
+                            $modelx->product_start = $rowData[0][3];
+                            $modelx->sale_qty = $rowData[0][4];
+                            $modelx->purch_qty = $rowData[0][5];
+                            $modelx->return_qty = $rowData[0][6];
+                            $modelx->adjust_qty = $rowData[0][7];
+                            $modelx->cost_sum = $rowData[0][9];
+                            $modelx->cost = $rowData[0][10];
+                            $modelx->qty = $rowData[0][8];
                             $modelx->min_qty = 0;
                             $modelx->max_qty = 0;
                             $modelx->status = 1;
-                            $modelx->group_id = $this->checkCat($rowData[0][12]);
-                            $modelx->vendor_id = $this->checkVendor($rowData[0][20]);
+                            $modelx->group_id = $this->checkCat($rowData[0][11]);
+                            $modelx->vendor_id = $this->checkVendor($rowData[0][21]);
                            $modelx->front_qty = $rowData[0][15];
                            $modelx->back_qty = $rowData[0][16];
                            $modelx->back_qty2 = $rowData[0][17];
                            $modelx->total_qty = $rowData[0][18];
                            $modelx->selection = $rowData[0][19];
+                           $modelx->mode = $rowData[0][19]=='y'?1:0;
                         
                            if($modelx->save(false)){
                               $data_save += 1;
@@ -156,6 +163,8 @@ class ProductController extends Controller
             'product_type' => $product_type,
             'brand' => $brand,
             'vendor' => $vendor,
+            'property' => $property,
+            'mode' => $mode,
         ]);
     }
     public function checkVendor($name){
@@ -224,7 +233,7 @@ class ProductController extends Controller
         }
       }
     }
-    public function checkProperty($name){
+    public function checkProperty($name,$type_id){
       $model = \backend\models\Property::find()->where(['name'=>$name])->one();
       if(count($model)>0){
         return $model->id;
@@ -232,6 +241,7 @@ class ProductController extends Controller
         $model_new = new \backend\models\Property();
         $model_new->name = $name;
         $model_new->status = 1;
+        $model_new->type_id = $type_id;
         if($model_new->save(false)){
           return $model_new->id;
         }
@@ -423,6 +433,23 @@ class ProductController extends Controller
         if($id){
           $model = \backend\models\Producttype::find()->where(['group_id'=>$id])->all();
           if($model){
+             echo "<option>เลือกประเภทสินค้า </option>";
+             foreach($model as $value){
+               echo "<option value='" . $value->id . "'>$value->name</option>";
+             }
+          }else{
+             echo "<option value=''>ไม่พบข้อมูล</option>";
+          }
+        }
+      }
+    }
+    public function actionShowproperty(){
+      if(Yii::$app->request->isAjax){
+        $id = Yii::$app->request->post('ids');
+        if($id){
+          $model = \backend\models\Property::find()->where(['type_id'=>$id])->all();
+          if($model){
+             echo "<option>เลือกคุณสมบัติ </option>";
              foreach($model as $value){
                echo "<option value='" . $value->id . "'>$value->name</option>";
              }
