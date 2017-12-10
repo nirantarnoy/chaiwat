@@ -154,6 +154,8 @@ $brand = \backend\models\Brand::find()->where(['status'=>1])->all();
                                    <?= $form->field($model, 'cost')->textInput(['maxlength' => true]) ?>
 
                                     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+                                    
+                                    <?= $form->field($model, 'sale_price')->textInput(['maxlength' => true]) ?>
 
                                     <?= $form->field($model, 'qty')->textInput(['maxlength' => true]) ?>
 

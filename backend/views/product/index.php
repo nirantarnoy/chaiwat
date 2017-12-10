@@ -91,6 +91,7 @@ if($property !=''){
           <div class="col-lg-12">
             <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
                    <div class="form-inline">
+                    <input type="text" name="text_search" class="form-control" value="" placeholder="รหัสสินค้า,ชื่อสินค้า">
                 <select class="form-control" id="product_group" name="product_group">
                   <option value="">เลือกกลุ่มสินค้า</option>
                   <?php foreach($groupall as $value):?>
@@ -271,6 +272,13 @@ if($property !=''){
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
                 return number_format($data->cost);
+              }
+             ],
+             [
+              'attribute'=>'sale_price',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->sale_price);
               }
              ],
               [

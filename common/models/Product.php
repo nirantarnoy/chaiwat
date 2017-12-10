@@ -43,7 +43,7 @@ class Product extends \yii\db\ActiveRecord
             [['weight', 'price','cost','sale_price_1','sale_price_2','qty','min_qty','max_qty','purch_qty','sale_qty','return_qty','adjust_qty','cost_sum','product_start'], 'number'],
             [['product_code', 'name', 'description', 'photo','selection'], 'string', 'max' => 255],
             [['group_id','vendor_id','mode'],'integer'],
-            [['front_qty','back_qty','back_qty2','total_qty'],'number']
+            [['front_qty','back_qty','back_qty2','total_qty','sale_price'],'number']
         ];
     }
 
@@ -92,6 +92,7 @@ class Product extends \yii\db\ActiveRecord
             'total_qty'=>'รวม',
             'selection'=>'รายการที่เลือก',
             'mode' => 'สั่งซื้อ',
+            'sale_price' => 'ราคาขาย',
         ];
     }
 }

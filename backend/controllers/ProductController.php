@@ -45,8 +45,9 @@ class ProductController extends Controller
         $group= '';
         $product_type = '';
         $vendor = '';
-         $property = '';
-         $mode = '';
+        $property = '';
+        $mode = '';
+        $text_search = '';
 
         if(Yii::$app->request->isPost){
             $group = Yii::$app->request->post('product_group');
@@ -55,7 +56,8 @@ class ProductController extends Controller
             $vendor = Yii::$app->request->post('vendor');
             $property = Yii::$app->request->post('property');
             $mode = Yii::$app->request->post('mode');
-           // echo $product_type;
+            $text_search = Yii::$app->request->post('text_search');
+            //echo $text_search;
         }
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -64,7 +66,8 @@ class ProductController extends Controller
                      ->andFilterWhere(['like','property_id',$property])
                      ->andFilterWhere(['like','brand_id',$brand])
                      ->andFilterWhere(['like','mode',$mode])
-                     ->andFilterWhere(['like','vendor_id',$vendor]);
+                     ->andFilterWhere(['like','vendor_id',$vendor])
+                     ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]]);
 
         $modelfile = new Modelfile();
 
@@ -112,7 +115,7 @@ class ProductController extends Controller
                         //    $modelx->category_id = $rowData[0][3];
                             $modelx->weight = 0;
                             $modelx->category_id = $this->checkCat($rowData[0][11]);
-                           // $modelx->unit_id = $this->checkUnit($rowData[0][2]);
+                            $modelx->unit_id = $this->checkUnit($rowData[0][22]);
                             $modelx->type_id = $this->checkType($rowData[0][12],$modelx->category_id);
                             $modelx->property_id = $this->checkProperty($rowData[0][13],$modelx->type_id);
                             $modelx->brand_id = $this->checkBrand($rowData[0][14]);
@@ -130,12 +133,13 @@ class ProductController extends Controller
                             $modelx->status = 1;
                             $modelx->group_id = $this->checkCat($rowData[0][11]);
                             $modelx->vendor_id = $this->checkVendor($rowData[0][21]);
-                           $modelx->front_qty = $rowData[0][15];
-                           $modelx->back_qty = $rowData[0][16];
-                           $modelx->back_qty2 = $rowData[0][17];
-                           $modelx->total_qty = $rowData[0][18];
-                           $modelx->selection = $rowData[0][19];
-                           $modelx->mode = $rowData[0][19]=='y'?1:0;
+                            $modelx->front_qty = $rowData[0][15];
+                            $modelx->back_qty = $rowData[0][16];
+                            $modelx->back_qty2 = $rowData[0][17];
+                            $modelx->total_qty = $rowData[0][18];
+                            $modelx->selection = $rowData[0][19];
+                            $modelx->mode = $rowData[0][19]=='y'?1:0;
+                            $modelx->sale_price = $rowData[0][23];
                         
                            if($modelx->save(false)){
                               $data_save += 1;
