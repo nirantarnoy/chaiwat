@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use kartik\file\FileInput;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -49,6 +50,7 @@ if($product_type !=''){
 if($property !=''){
   $propertyall = \backend\models\Property::find()->where(['type_id'=>$product_type])->all();
 }
+//print_r($product_type);return;
 
 ?>
 <div class="product-index">
@@ -91,8 +93,25 @@ if($property !=''){
           <div class="col-lg-12">
             <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
                    <div class="form-inline">
-                    <input type="text" name="text_search" class="form-control" value="" placeholder="รหัสสินค้า,ชื่อสินค้า">
-                <select class="form-control" id="product_group" name="product_group">
+                    
+                    <input type="text" name="text_search" class="form-control" value="<?=$text_search?>" placeholder="รหัสสินค้า,ชื่อสินค้า">
+                    <div class="form-group">
+                        <?php echo Select2::widget([
+                        'name'=>'product_group[]',
+                        'id'=>"product_group",
+                        'value'=>$group,
+                        'data' => ArrayHelper::map(\backend\models\Category::find()->all(),'id','name'),
+                        'maintainOrder' => true,
+                        'options' => ['placeholder' => 'กลุ่มสินค้า','multiple' => true,'class'=>'form-control'],
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'maximumInputLength' => 10,
+                        ],
+                      ]);
+                    ?>
+
+                    </div>
+               <!--  <select class="form-control" id="product_group" name="product_group">
                   <option value="">เลือกกลุ่มสินค้า</option>
                   <?php foreach($groupall as $value):?>
                   <?php $select = '';
@@ -102,8 +121,8 @@ if($property !=''){
                   ?>
                   <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
                  <?php endforeach;?>
-                </select>
-                 <select class="form-control" id="product_type" name="type" disabled>
+                </select> -->
+                <!--  <select class="form-control" id="product_type" name="type" disabled>
                   <option value="">เลือกประเภทสินค้า</option>
                   <?php foreach($typeall as $value):?>
                   <?php $select = '';
@@ -113,8 +132,24 @@ if($property !=''){
                   ?>
                   <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
                  <?php endforeach;?>
-                </select>
-                 <select class="form-control" id="property" name="property" disabled>
+                </select> -->
+                <div class="form-group">
+                        <?php echo Select2::widget([
+                        'name'=>'type',
+                        'id'=>"product_type",
+                        'value'=>$product_type,
+                        'data' => ArrayHelper::map($typeall,'id','name'),
+                        'maintainOrder' => true,
+                        'options' => ['placeholder' => 'เประเภทสินค้า','multiple' => true,'class'=>'form-control'],
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'maximumInputLength' => 10,
+                        ],
+                      ]);
+                    ?>
+
+                    </div>
+                 <!-- <select class="form-control" id="property" name="property" disabled>
                   <option value="">เลือกคุณสมบัติ</option>
                   <?php foreach($propertyall as $value):?>
                   <?php $select = '';
@@ -124,8 +159,24 @@ if($property !=''){
                   ?>
                   <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
                  <?php endforeach;?>
-                </select>
-                 <select class="form-control" name="brand">
+                </select> -->
+                <div class="form-group">
+                        <?php echo Select2::widget([
+                        'name'=>'property[]',
+                        'id'=>"property",
+                        'value'=>$property,
+                        'data' => ArrayHelper::map($propertyall,'id','name'),
+                        'maintainOrder' => true,
+                        'options' => ['placeholder' => 'คุณสมบัติ','multiple' => true,'class'=>'form-control'],
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'maximumInputLength' => 10,
+                        ],
+                      ]);
+                    ?>
+
+                    </div>
+                 <!-- <select class="form-control" name="brand">
                   <option value="">เลือกยี่ห้อสินค้า</option>
                   <?php foreach($brandall as $value):?>
                   <?php $select = '';
@@ -135,9 +186,24 @@ if($property !=''){
                   ?>
                   <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
                  <?php endforeach;?>
-                </select>
-               
-                 <select class="form-control" name="vendor">
+                </select> -->
+               <div class="form-group">
+                        <?php echo Select2::widget([
+                        'name'=>'brand[]',
+                        'id'=>"brand",
+                        'data' => ArrayHelper::map($brandall,'id','name'),
+                        'value'=>$brand,
+                        'maintainOrder' => true,
+                        'options' => ['placeholder' => 'ยี่ห้อ','multiple' => true,'class'=>'form-control'],
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'maximumInputLength' => 10,
+                        ],
+                      ]);
+                    ?>
+
+                    </div>
+                 <!-- <select class="form-control" name="vendor">
                   <option value="">เลือกผู้จำหน่าย</option>
                   <?php foreach($vendorall as $value):?>
                   <?php $select = '';
@@ -147,18 +213,41 @@ if($property !=''){
                   ?>
                   <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
                  <?php endforeach;?>
-                </select>
+                </select> -->
+                <div class="form-group">
+                        <?php echo Select2::widget([
+                        'name'=>'vendor[]',
+                        'id'=>"vendor",
+                        'data' => ArrayHelper::map($vendorall,'id','name'),
+                        'value'=>$vendor,
+                        'maintainOrder' => true,
+                        'options' => ['placeholder' => 'ผู้จำหน่าย','multiple' => true,'class'=>'form-control'],
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'maximumInputLength' => 10,
+                        ],
+                      ]);
+                    ?>
+                    </div>
                 <select class="form-control" name="mode">
                   <option value="">เลือกโหมดสั่งซื้อ</option>
                   <?php for($i=0;$i<=count($modeall)-1;$i++):?>
                   <?php $select = '';
+                  if($mode != ''):?>
+                  <?php
                     if($modeall[$i]['id'] == $mode){
                       $select = 'selected';
-                    }
+                    } ?>
+                     <option value="<?=$modeall[$i]['id']?>" <?=$select?>><?=$modeall[$i]['name']?></option>
+                  <?php else:?>
+                     <option value="<?=$modeall[$i]['id']?>" <?=$select?>><?=$modeall[$i]['name']?></option>
+                  <?php 
+                    endif;
                   ?>
-                  <option value="<?=$modeall[$i]['id']?>" <?=$select?>><?=$modeall[$i]['name']?></option>
+                 
                  <?php endfor;?>
                 </select>
+               
                 <input type="submit" class="btn btn-primary" value="ค้นหา">
             </div>
             </form>
@@ -196,14 +285,21 @@ if($property !=''){
              ],
               [
               'attribute'=>'type_id',
-              'contentOptions'=>['style'=>'text-align: right'],
+              'contentOptions'=>['style'=>'text-align: left'],
               'value' => function($data){
                 return \backend\models\Producttype::getTypename($data->type_id);
               }
              ],
               [
+              'attribute'=>'property_id',
+              'contentOptions'=>['style'=>'text-align: left'],
+              'value' => function($data){
+                return \backend\models\Property::getPropertyname($data->property_id);
+              }
+             ],
+              [
               'attribute'=>'brand_id',
-              'contentOptions'=>['style'=>'text-align: right'],
+              'contentOptions'=>['style'=>'text-align: left'],
               'value' => function($data){
                 return \backend\models\Brand::getBrandname($data->brand_id);
               }
@@ -382,8 +478,8 @@ if($property !=''){
 </div>
 <?php $this->registerJs('
     $(function(){
-      var serc = "'.$product_type.'";
-      var perty = "'.$property.'";
+      var serc = "'.count($product_type).'";
+      var perty = "'.count($property).'";
       if(serc !=""){
         $("#product_type").prop("disabled","");
       }

@@ -31,6 +31,9 @@ class Property extends \common\models\ProductProperty
         ],
     ];
  }
- 
+ public function getPropertyname($id){
+    $model=Property::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
 
 }

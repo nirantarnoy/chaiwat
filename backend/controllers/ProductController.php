@@ -48,7 +48,6 @@ class ProductController extends Controller
         $property = '';
         $mode = '';
         $text_search = '';
-
         if(Yii::$app->request->isPost){
             $group = Yii::$app->request->post('product_group');
             $product_type = Yii::$app->request->post('type');
@@ -57,14 +56,16 @@ class ProductController extends Controller
             $property = Yii::$app->request->post('property');
             $mode = Yii::$app->request->post('mode');
             $text_search = Yii::$app->request->post('text_search');
-            //echo $text_search;
+           // echo $mode;return;
+
+            //print_r($product_type);return;
         }
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andFilterWhere(['like','category_id',$group])
                      ->andFilterWhere(['like','type_id',$product_type])
                      ->andFilterWhere(['like','property_id',$property])
-                     ->andFilterWhere(['like','brand_id',$brand])
+                     ->andFilterWhere(['in','brand_id',$brand])
                      ->andFilterWhere(['like','mode',$mode])
                      ->andFilterWhere(['like','vendor_id',$vendor])
                      ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]]);
@@ -169,6 +170,7 @@ class ProductController extends Controller
             'vendor' => $vendor,
             'property' => $property,
             'mode' => $mode,
+            'text_search' => $text_search,
         ]);
     }
     public function checkVendor($name){
@@ -394,7 +396,7 @@ class ProductController extends Controller
       if (count($model) > 0) {
           foreach ($model as $value) {
               if($i == 0){
-                    echo "<option>เลือกหมวดย่อย </option>";
+                    //echo "<option>เลือกหมวดย่อย </option>";
                     echo "<option value='$value->id'>$value->name</option>";
                     $i+=1;
               }else{
@@ -413,7 +415,7 @@ class ProductController extends Controller
       if (count($model) > 0) {
           foreach ($model as $value) {
               if($i == 0){
-                    echo "<option>เลือกรุ่นสินค้า </option>";
+                    //echo "<option>เลือกรุ่นสินค้า </option>";
                     echo "<option value='$value->id'>$value->name</option>";
                     $i+=1;
               }else{
@@ -437,7 +439,7 @@ class ProductController extends Controller
         if($id){
           $model = \backend\models\Producttype::find()->where(['group_id'=>$id])->all();
           if($model){
-             echo "<option>เลือกประเภทสินค้า </option>";
+            // echo "<option>เลือกประเภทสินค้า </option>";
              foreach($model as $value){
                echo "<option value='" . $value->id . "'>$value->name</option>";
              }
@@ -453,7 +455,7 @@ class ProductController extends Controller
         if($id){
           $model = \backend\models\Property::find()->where(['type_id'=>$id])->all();
           if($model){
-             echo "<option>เลือกคุณสมบัติ </option>";
+            // echo "<option>เลือกคุณสมบัติ </option>";
              foreach($model as $value){
                echo "<option value='" . $value->id . "'>$value->name</option>";
              }
