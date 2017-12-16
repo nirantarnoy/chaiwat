@@ -143,9 +143,9 @@ class ProductController extends Controller
                             $modelx->sale_price = $rowData[0][23];
                         
                            if($modelx->save(false)){
-                              $data_save += 1;
-                              $data_all +=1;
-                              array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
+                              // $data_save += 1;
+                              // $data_all +=1;
+                              // array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
                            }
                          // }
                           
