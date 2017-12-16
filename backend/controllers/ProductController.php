@@ -117,8 +117,8 @@ class ProductController extends Controller
                             $modelx->weight = 0;
                             $modelx->category_id = $this->checkCat($rowData[0][11]);
                             $modelx->unit_id = $this->checkUnit($rowData[0][22]);
-                            $modelx->type_id = $this->checkType($rowData[0][12],$modelx->category_id);
-                            $modelx->property_id = $this->checkProperty($rowData[0][13],$modelx->type_id);
+                            //$modelx->type_id = $this->checkType($rowData[0][12],$modelx->category_id);
+                           // $modelx->property_id = $this->checkProperty($rowData[0][13],$modelx->type_id);
                             $modelx->brand_id = $this->checkBrand($rowData[0][14]);
                             $modelx->price = 0;
                             $modelx->product_start = $rowData[0][3];
