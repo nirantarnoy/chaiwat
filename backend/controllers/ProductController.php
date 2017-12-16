@@ -109,44 +109,44 @@ class ProductController extends Controller
                             continue;
                           }
 
-                            $modelx = new \backend\models\Product();
-                            $modelx->product_code = $rowData[0][0];
-                            $modelx->name = $rowData[0][1];
-                            $modelx->description = $rowData[0][1] ;
-                        //    $modelx->category_id = $rowData[0][3];
-                            $modelx->weight = 0;
-                            $modelx->category_id = $this->checkCat($rowData[0][11]);
-                            $modelx->unit_id = $this->checkUnit($rowData[0][22]);
-                            //$modelx->type_id = $this->checkType($rowData[0][12],$modelx->category_id);
-                           // $modelx->property_id = $this->checkProperty($rowData[0][13],$modelx->type_id);
-                            $modelx->brand_id = $this->checkBrand($rowData[0][14]);
-                            $modelx->price = 0;
-                            $modelx->product_start = $rowData[0][3];
-                            $modelx->sale_qty = $rowData[0][4];
-                            $modelx->purch_qty = $rowData[0][5];
-                            $modelx->return_qty = $rowData[0][6];
-                            $modelx->adjust_qty = $rowData[0][7];
-                            $modelx->cost_sum = $rowData[0][9];
-                            $modelx->cost = $rowData[0][10];
-                            $modelx->qty = $rowData[0][8];
-                            $modelx->min_qty = 0;
-                            $modelx->max_qty = 0;
-                            $modelx->status = 1;
-                            $modelx->group_id = $this->checkCat($rowData[0][11]);
-                            $modelx->vendor_id = $this->checkVendor($rowData[0][21]);
-                            $modelx->front_qty = $rowData[0][15];
-                            $modelx->back_qty = $rowData[0][16];
-                            $modelx->back_qty2 = $rowData[0][17];
-                            $modelx->total_qty = $rowData[0][18];
-                            $modelx->selection = $rowData[0][19];
-                            $modelx->mode = $rowData[0][19]=='y'?1:0;
-                            $modelx->sale_price = $rowData[0][23];
+                        //     $modelx = new \backend\models\Product();
+                        //     $modelx->product_code = $rowData[0][0];
+                        //     $modelx->name = $rowData[0][1];
+                        //     $modelx->description = $rowData[0][1] ;
+                        // //    $modelx->category_id = $rowData[0][3];
+                        //     $modelx->weight = 0;
+                        //     $modelx->category_id = $this->checkCat($rowData[0][11]);
+                        //     $modelx->unit_id = $this->checkUnit($rowData[0][22]);
+                        //     //$modelx->type_id = $this->checkType($rowData[0][12],$modelx->category_id);
+                        //    // $modelx->property_id = $this->checkProperty($rowData[0][13],$modelx->type_id);
+                        //     $modelx->brand_id = $this->checkBrand($rowData[0][14]);
+                        //     $modelx->price = 0;
+                        //     $modelx->product_start = $rowData[0][3];
+                        //     $modelx->sale_qty = $rowData[0][4];
+                        //     $modelx->purch_qty = $rowData[0][5];
+                        //     $modelx->return_qty = $rowData[0][6];
+                        //     $modelx->adjust_qty = $rowData[0][7];
+                        //     $modelx->cost_sum = $rowData[0][9];
+                        //     $modelx->cost = $rowData[0][10];
+                        //     $modelx->qty = $rowData[0][8];
+                        //     $modelx->min_qty = 0;
+                        //     $modelx->max_qty = 0;
+                        //     $modelx->status = 1;
+                        //     $modelx->group_id = $this->checkCat($rowData[0][11]);
+                        //     $modelx->vendor_id = $this->checkVendor($rowData[0][21]);
+                        //     $modelx->front_qty = $rowData[0][15];
+                        //     $modelx->back_qty = $rowData[0][16];
+                        //     $modelx->back_qty2 = $rowData[0][17];
+                        //     $modelx->total_qty = $rowData[0][18];
+                        //     $modelx->selection = $rowData[0][19];
+                        //     $modelx->mode = $rowData[0][19]=='y'?1:0;
+                        //     $modelx->sale_price = $rowData[0][23];
                         
-                           if($modelx->save(false)){
-                              // $data_save += 1;
-                              // $data_all +=1;
-                              // array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
-                           }
+                        //    if($modelx->save(false)){
+                        //       // $data_save += 1;
+                        //       // $data_all +=1;
+                        //       // array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
+                        //    }
                          // }
                           
                   //echo $rowData[0][0]."/".$rowData[0][1]."/".$rowData[0][2]."/".$rowData[0][3]."/".$rowData[0][4].'<br />';
