@@ -8,6 +8,7 @@ use kartik\file\FileInput;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
+use dosamigos\multiselect\MultiSelect;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -95,140 +96,69 @@ if($property !=''){
                    <div class="form-inline">
                     
                     <input type="text" name="text_search" class="form-control" value="<?=$text_search?>" placeholder="รหัสสินค้า,ชื่อสินค้า">
-                    <div class="form-group">
-                        <?php echo Select2::widget([
-                        'name'=>'product_group[]',
-                        'id'=>"product_group",
-                        'value'=>$group,
-                        'data' => ArrayHelper::map(\backend\models\Category::find()->all(),'id','name'),
-                        'maintainOrder' => true,
-                        'options' => ['placeholder' => 'กลุ่มสินค้า','multiple' => true,'class'=>'form-control'],
-                        'pluginOptions' => [
-                            'tags' => true,
-                            'maximumInputLength' => 10,
-                        ],
-                      ]);
-                    ?>
-
-                    </div>
-               <!--  <select class="form-control" id="product_group" name="product_group">
-                  <option value="">เลือกกลุ่มสินค้า</option>
-                  <?php foreach($groupall as $value):?>
-                  <?php $select = '';
-                    if($value->id == $group){
-                      $select = 'selected';
-                    }
-                  ?>
-                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
-                 <?php endforeach;?>
-                </select> -->
-                <!--  <select class="form-control" id="product_type" name="type" disabled>
-                  <option value="">เลือกประเภทสินค้า</option>
-                  <?php foreach($typeall as $value):?>
-                  <?php $select = '';
-                    if($value->id == $product_type){
-                      $select = 'selected';
-                    }
-                  ?>
-                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
-                 <?php endforeach;?>
-                </select> -->
-                <div class="form-group">
-                        <?php echo Select2::widget([
-                        'name'=>'type',
-                        'id'=>"product_type",
-                        'value'=>$product_type,
-                        'data' => ArrayHelper::map($typeall,'id','name'),
-                        'maintainOrder' => true,
-                        'options' => ['placeholder' => 'เประเภทสินค้า','multiple' => true,'class'=>'form-control'],
-                        'pluginOptions' => [
-                            'tags' => true,
-                            'maximumInputLength' => 10,
-                        ],
-                      ]);
-                    ?>
-
-                    </div>
-                 <!-- <select class="form-control" id="property" name="property" disabled>
-                  <option value="">เลือกคุณสมบัติ</option>
-                  <?php foreach($propertyall as $value):?>
-                  <?php $select = '';
-                    if($value->id == $property){
-                      $select = 'selected';
-                    }
-                  ?>
-                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
-                 <?php endforeach;?>
-                </select> -->
-                <div class="form-group">
-                        <?php echo Select2::widget([
+                    <?php      echo MultiSelect::widget([
+                            'id'=>"product_group",
+                            'name'=>'product_group[]',
+                            //'model'=>null,
+                            "options" => ['multiple'=>"multiple"], // for the actual multiselect
+                            'data' => ArrayHelper::map(\backend\models\Category::find()->all(),'id','name'), // data as array
+                            'value' => $group, // if preselected
+                            "clientOptions" => 
+                                [
+                                    "includeSelectAllOption" => true,
+                                    'numberDisplayed' => 5,
+                                    'nonSelectedText'=>'กลุ่มสินค้า',
+                                ], 
+                        ]); ?>
+                   
+             
+                 <?php      echo MultiSelect::widget([
+                           // 'id'=>"multiXX",
+                            'name'=>'type',
+                            'id'=>"product_type",
+                            //'model'=>null,
+                            "options" => ['multiple'=>"multiple"], // for the actual multiselect
+                            'data' => ArrayHelper::map($typeall,'id','name'), // data as array
+                            'value' => $product_type, // if preselected
+                            "clientOptions" => 
+                                [
+                                    "includeSelectAllOption" => true,
+                                    'numberDisplayed' => 5,
+                                    'nonSelectedText'=>'ประเภทสินค้า',
+                                    'disabled' => true
+                                ], 
+                        ]); ?>
+                <?php      echo MultiSelect::widget([
+                       // 'id'=>"multiXX",
                         'name'=>'property[]',
-                        'id'=>"property",
-                        'value'=>$property,
-                        'data' => ArrayHelper::map($propertyall,'id','name'),
-                        'maintainOrder' => true,
-                        'options' => ['placeholder' => 'คุณสมบัติ','multiple' => true,'class'=>'form-control'],
-                        'pluginOptions' => [
-                            'tags' => true,
-                            'maximumInputLength' => 10,
-                        ],
-                      ]);
-                    ?>
-
-                    </div>
-                 <!-- <select class="form-control" name="brand">
-                  <option value="">เลือกยี่ห้อสินค้า</option>
-                  <?php foreach($brandall as $value):?>
-                  <?php $select = '';
-                    if($value->id == $brand){
-                      $select = 'selected';
-                    }
-                  ?>
-                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
-                 <?php endforeach;?>
-                </select> -->
-               <div class="form-group">
-                        <?php echo Select2::widget([
-                        'name'=>'brand[]',
-                        'id'=>"brand",
-                        'data' => ArrayHelper::map($brandall,'id','name'),
-                        'value'=>$brand,
-                        'maintainOrder' => true,
-                        'options' => ['placeholder' => 'ยี่ห้อ','multiple' => true,'class'=>'form-control'],
-                        'pluginOptions' => [
-                            'tags' => true,
-                            'maximumInputLength' => 10,
-                        ],
-                      ]);
-                    ?>
-
-                    </div>
-                 <!-- <select class="form-control" name="vendor">
-                  <option value="">เลือกผู้จำหน่าย</option>
-                  <?php foreach($vendorall as $value):?>
-                  <?php $select = '';
-                    if($value->id == $vendor){
-                      $select = 'selected';
-                    }
-                  ?>
-                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
-                 <?php endforeach;?>
-                </select> -->
-                <div class="form-group">
-                        <?php echo Select2::widget([
-                        'name'=>'vendor[]',
-                        'id'=>"vendor",
-                        'data' => ArrayHelper::map($vendorall,'id','name'),
-                        'value'=>$vendor,
-                        'maintainOrder' => true,
-                        'options' => ['placeholder' => 'ผู้จำหน่าย','multiple' => true,'class'=>'form-control'],
-                        'pluginOptions' => [
-                            'tags' => true,
-                            'maximumInputLength' => 10,
-                        ],
-                      ]);
-                    ?>
-                    </div>
+                        //'model'=>null,
+                        "options" => ['multiple'=>"multiple"], // for the actual multiselect
+                        'data' => ArrayHelper::map($propertyall,'id','name'), // data as array
+                        'value' => $property, // if preselected
+                        "clientOptions" => 
+                            [
+                                "includeSelectAllOption" => true,
+                                'numberDisplayed' => 5,
+                                'nonSelectedText'=>'คุณสมบัติ',
+                            ], 
+                    ]); ?>
+               
+                 <?php      echo MultiSelect::widget([
+                           // 'id'=>"multiXX",
+                            'name'=>'vendor[]',
+                            'id'=>"vendor",
+                            //'model'=>null,
+                            "options" => ['multiple'=>"multiple"], // for the actual multiselect
+                            'data' => ArrayHelper::map($vendorall,'id','name'), // data as array
+                            'value' => $vendor, // if preselected
+                            "clientOptions" => 
+                                [
+                                    "includeSelectAllOption" => true,
+                                    'numberDisplayed' => 5,
+                                    'nonSelectedText'=>'ผู้จำหน่าย',
+                                ], 
+                        ]); ?>
+               
                 <select class="form-control" name="mode">
                   <option value="">เลือกโหมดสั่งซื้อ</option>
                   <?php for($i=0;$i<=count($modeall)-1;$i++):?>
@@ -247,6 +177,26 @@ if($property !=''){
                  
                  <?php endfor;?>
                 </select>
+
+         
+          <?php      echo MultiSelect::widget([
+             // 'id'=>"multiXX",
+              'name'=>'brand[]',
+              //'model'=>null,
+              "options" => ['multiple'=>"multiple",
+                            
+                           ], // for the actual multiselect
+              'data' => ArrayHelper::map($brandall,'id','name'), // data as array
+              'value' => $brand, // if preselected
+             // 'name' => 'multti', // name for the form
+              "clientOptions" => 
+                  [
+                      "includeSelectAllOption" => true,
+                      'numberDisplayed' => 5,
+                      'nonSelectedText'=>'ยี่ห้อ',
+                  ], 
+          ]); ?>
+
                
                 <input type="submit" class="btn btn-primary" value="ค้นหา">
             </div>
@@ -494,8 +444,10 @@ if($property !=''){
             url: "'.Url::to(['product/showtype'],true).'",
             data: {ids: $(this).val()},
             success: function(data){
-              $("#product_type").prop("disabled","");
+              //$("#product_type").prop("disabled","");
               $("#product_type").html(data);
+              $("#product_type").multiselect();
+              
             }
           });
         }
@@ -509,7 +461,7 @@ if($property !=''){
             url: "'.Url::to(['product/showproperty'],true).'",
             data: {ids: $(this).val()},
             success: function(data){
-              $("#property").prop("disabled","");
+             // $("#property").prop("disabled","");
               $("#property").html(data);
             }
           });

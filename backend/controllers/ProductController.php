@@ -57,7 +57,7 @@ class ProductController extends Controller
             $mode = Yii::$app->request->post('mode');
             $text_search = Yii::$app->request->post('text_search');
            // echo $mode;return;
-
+            //echo Yii::$app->request->post('new_brand')[0]; return;
             //print_r($product_type);return;
         }
         $searchModel = new ProductSearch();
@@ -449,6 +449,29 @@ class ProductController extends Controller
         }
       }
     }
+    // public function actionShowtype(){
+    //   if(Yii::$app->request->isAjax){
+    //     $id = Yii::$app->request->post('ids');
+    //     if($id){
+    //       $model = \backend\models\Producttype::find()->where(['group_id'=>$id])->all();
+    //       if($model){
+    //         // echo "<option>เลือกประเภทสินค้า </option>";
+    //          foreach($model as $value){
+    //            echo "<li>
+    //                    <a tabindex='0'>
+    //                     <label class='checkbox'>
+    //                       <input type='checkbox' value=".$value->id.">
+    //                       ".$value->name."
+    //                     </label>
+    //                    </a>
+    //                  </li>";
+    //          }
+    //       }else{
+    //          //echo "<option value=''>ไม่พบข้อมูล</option>";
+    //       }
+    //     }
+    //   }
+    // }
     public function actionShowproperty(){
       if(Yii::$app->request->isAjax){
         $id = Yii::$app->request->post('ids');

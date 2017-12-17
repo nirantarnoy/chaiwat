@@ -34,7 +34,8 @@
         "miloschuman/yii2-highcharts-widget": "dev-master",
         "kartik-v/yii2-widget-activeform": "@dev",
         "phpoffice/phpexcel": "dev-master",
-        "2amigos/yii2-ckeditor-widget" : "~2.1"
+        "2amigos/yii2-ckeditor-widget" : "~2.1",
+        "2amigos/yii2-multi-select-widget" : "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
