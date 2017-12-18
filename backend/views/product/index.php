@@ -430,6 +430,10 @@ if($property !=''){
     $(function(){
       var serc = "'.count($product_type).'";
       var perty = "'.count($property).'";
+
+     $("#product_type").multiselect("disable");
+       });                   
+
       if(serc !=""){
         $("#product_type").prop("disabled","");
       }
