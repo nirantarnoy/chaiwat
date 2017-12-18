@@ -9,6 +9,9 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use dosamigos\multiselect\MultiSelect;
+use backend\assets\ICheckAsset;
+
+ICheckAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -52,8 +55,15 @@ if($property !=''){
   $propertyall = \backend\models\Property::find()->where(['type_id'=>$product_type])->all();
 }
 
+$this->registerJsFile(
+    '@web/js/stockbalancejs.js?V=001',
+    ['depends' => [\yii\web\JqueryAsset::className()]],
+    static::POS_END
+);
+
 ?>
 <div class="product-index">
+  <input type="hidden" name="listid" class="listid" value="">
    <div class="row">
     <div class="col-lg-12">
       <?php
@@ -83,12 +93,14 @@ if($property !=''){
            <div>
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างผลิตภัณฑ์', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
+             <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
       </div>
       </div>
       <div class="panel-body">
+        <?php //Pjax::begin(); ?>
         <div class="row">
           <div class="col-lg-12">
             <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
@@ -205,12 +217,13 @@ if($property !=''){
           </div>
         </div><br />
 <div class="table-responsive">
- <?php Pjax::begin(); ?>
+ 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\CheckboxColumn'],
 
             //'id',
             [
@@ -381,7 +394,7 @@ if($property !=''){
   </div>
   </div>
   </div>
-    <?php Pjax::end(); ?>
+    <?php //Pjax::end(); ?>
 </div>
 
 <!-- Modal -->
@@ -426,7 +439,9 @@ if($property !=''){
 
   </div>
 </div>
-<?php $this->registerJs('
+<?php 
+  $url_to_delete =  Url::to(['product/bulkdelete'],true);
+$this->registerJs('
     $(function(){
       var serc = "'.count($product_type).'";
       var perty = "'.count($property).'";
@@ -472,5 +487,24 @@ if($property !=''){
         }
       });
 
+    });
+    $(".btn-bulk-remove").click(function(e){
+          //alert($(".listid").val());
+                if($(this).attr("disabled")){
+                  return;
+                }
+                if(confirm("คุณต้องการลบรายการที่เลือกใช่หรือไม่")){
+                  if($(".listid").length >0){
+                    $.ajax({
+                      type: "post",
+                      dataType: "html",
+                      url: "'.$url_to_delete.'",
+                      data: {id: $(".listid").val()},
+                      success: function(data){
+
+                      }
+                    });
+                  }
+                }
     });
   ',static::POS_END);?>
