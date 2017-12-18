@@ -45,7 +45,7 @@ $brandall = \backend\models\Brand::find()->where(['!=','name',''])->all();
 $vendorall = \backend\models\Vendor::find()->where(['!=','name',''])->all();
 $propertyall = \backend\models\Property::find()->where(['!=','name',''])->all();
 $modeall = [['id'=>1,'name'=>'สั่งซ์้อ'],['id'=>0,'name'=>'ไม่สั่งซ์้อ']];
-if($product_type !=''){
+if($product_type !='' && $group !=''){
   $typeall = \backend\models\Producttype::find()->where(['group_id'=>$group])->all();
 }
 if($property !=''){
@@ -431,8 +431,8 @@ if($property !=''){
       var serc = "'.count($product_type).'";
       var perty = "'.count($property).'";
 
-     $("#product_type").multiselect("disable");
-       });                   
+     $("select#product_type").prop("disabled","disabled");
+       //});                   
 
       if(serc !=""){
         $("#product_type").prop("disabled","");
