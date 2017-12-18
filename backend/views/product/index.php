@@ -265,7 +265,7 @@ $this->registerJsFile(
               'label'=>'สั่งซื้อ',
               'format' => 'html',
               'value'=> function($data){
-                return $data->mode == 1?"<i class='fa fa-check-circle text-success'></i>":"<i class='fa fa-ban text-danger'></i>";
+                return $data->mode == 1?"<h4><i class='fa fa-check-circle text-success'></i></h4>":"<h4><i class='fa fa-ban text-danger'></i></h4>";
               }
             ],
             // 'weight',

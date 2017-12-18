@@ -83,9 +83,10 @@
                         'items' => [
                             ['label' => 'คลังสินค้า', 'icon' => 'university', 'url' => ['/warehouse'],],
                             ['label' => 'สินค้าคงคลัง', 'icon' => 'cubes', 'url' => ['/stockbalance'],],
+                            ['label' => 'อัพโหลดปรับยอดสินค้า', 'icon' => 'cubes', 'url' => ['/stockbalance'],],
                         ],
                     ],  
-                     ['label' => 'อัพโหลดข้อมูล', 'icon' => 'upload', 'url' => ['/uploadfile'],],
+                    // ['label' => 'อัพโหลดข้อมูล', 'icon' => 'upload', 'url' => ['/uploadfile'],],
                   
                 ],
             ]
