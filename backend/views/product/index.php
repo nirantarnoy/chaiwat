@@ -51,7 +51,6 @@ if($product_type !='' && $group !=''){
 if($property !=''){
   $propertyall = \backend\models\Property::find()->where(['type_id'=>$product_type])->all();
 }
-//print_r($product_type);return;
 
 ?>
 <div class="product-index">
@@ -74,7 +73,7 @@ if($property !=''){
     </div>
    </div>
 
-    <?php Pjax::begin(); ?>
+   
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 <div class="row">
@@ -93,6 +92,7 @@ if($property !=''){
         <div class="row">
           <div class="col-lg-12">
             <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
+        <!--    <form id="search-form" action="index.php?r=product" method="get"> -->
                    <div class="form-inline">
                     
                     <input type="text" name="text_search" class="form-control" value="<?=$text_search?>" placeholder="รหัสสินค้า,ชื่อสินค้า">
@@ -205,7 +205,7 @@ if($property !=''){
           </div>
         </div><br />
 <div class="table-responsive">
-
+ <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,

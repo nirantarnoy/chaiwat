@@ -47,7 +47,10 @@ class ProductController extends Controller
         $vendor = '';
         $property = '';
         $mode = '';
-        $text_search = '';
+        $text_search = '';  
+
+        $session = Yii::$app->session;
+
         if(Yii::$app->request->isPost){
             $group = Yii::$app->request->post('product_group');
             $product_type = Yii::$app->request->post('type');
@@ -58,17 +61,31 @@ class ProductController extends Controller
             $text_search = Yii::$app->request->post('text_search');
            // echo $mode;return;
             //echo Yii::$app->request->post('new_brand')[0]; return;
-            //print_r($product_type);return;
+            // print_r($product_type);
+           // echo $product_type; 
+           // print_r(Yii::$app->request->queryParams); return;   
+          
+            $session['group'] = $group;
+            $session['product_type'] = $product_type;
+            $session['property'] = $property;
+            $session['brand'] = $brand;
+            $session['vendor'] = $vendor;
+            $session['mode'] = $mode;
+            $session['text_search'] = $text_search;
         }
+
+        
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['like','category_id',$group])
-                     ->andFilterWhere(['like','type_id',$product_type])
-                     ->andFilterWhere(['like','property_id',$property])
-                     ->andFilterWhere(['in','brand_id',$brand])
-                     ->andFilterWhere(['like','mode',$mode])
-                     ->andFilterWhere(['like','vendor_id',$vendor])
-                     ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]]);
+        $dataProvider->query->andFilterWhere(['like','category_id',$session['group']])
+                     ->andFilterWhere(['in','type_id',$session['product_type']])
+                     ->andFilterWhere(['in','property_id',$session['property']])
+                     ->andFilterWhere(['in','brand_id',$session['brand']])
+                     ->andFilterWhere(['in','mode',$session['mode']])
+                     ->andFilterWhere(['in','vendor_id',$session['vendor']])
+                     ->andFilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]]);
+
+        //$dataProvider->pagination->pageSize = 10;
 
         $modelfile = new Modelfile();
 
