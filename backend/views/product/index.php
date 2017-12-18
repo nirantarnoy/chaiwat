@@ -226,14 +226,7 @@ $this->registerJsFile(
             ['class' => 'yii\grid\CheckboxColumn'],
 
             //'id',
-            [
-              'attribute'=>'mode',
-              'label'=>'สั่งซื้อ',
-              'format' => 'html',
-              'value'=> function($data){
-                return $data->mode == 1?"<i class='fa fa-check-circle text-success'></i>":"<i class='fa fa-ban text-danger'></i>";
-              }
-            ],
+           
             'product_code',
           //  'name',
             'description',
@@ -267,6 +260,14 @@ $this->registerJsFile(
                 return \backend\models\Brand::getBrandname($data->brand_id);
               }
              ],
+              [
+              'attribute'=>'mode',
+              'label'=>'สั่งซื้อ',
+              'format' => 'html',
+              'value'=> function($data){
+                return $data->mode == 1?"<i class='fa fa-check-circle text-success'></i>":"<i class='fa fa-ban text-danger'></i>";
+              }
+            ],
             // 'weight',
             
              //  [
