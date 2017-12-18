@@ -446,8 +446,7 @@ if($property !=''){
             success: function(data){
               //$("#product_type").prop("disabled","");
               $("#product_type").html(data);
-              $("#product_type").multiselect();
-              
+               $("#product_type").multiselect("rebuild");
             }
           });
         }
@@ -463,6 +462,7 @@ if($property !=''){
             success: function(data){
              // $("#property").prop("disabled","");
               $("#property").html(data);
+              $("#property").multiselect("rebuild");
             }
           });
         }
