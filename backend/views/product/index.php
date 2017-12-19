@@ -261,6 +261,13 @@ $this->registerJsFile(
               }
              ],
               [
+              'attribute'=>'sale_price',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->sale_price);
+              }
+             ],
+              [
               'attribute'=>'mode',
               'label'=>'สั่งซื้อ',
               'format' => 'html',
@@ -300,6 +307,13 @@ $this->registerJsFile(
               }
              ],
               [
+              'attribute'=>'qty',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return number_format($data->qty);
+              }
+             ],
+              [
               'attribute'=>'return_qty',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
@@ -313,13 +327,7 @@ $this->registerJsFile(
                 return number_format($data->adjust_qty);
               }
              ],
-             [
-              'attribute'=>'qty',
-              'contentOptions'=>['style'=>'text-align: right'],
-              'value' => function($data){
-                return number_format($data->qty);
-              }
-             ],
+            
              [
               'attribute'=>'cost_sum',
               'contentOptions'=>['style'=>'text-align: right'],
@@ -334,13 +342,7 @@ $this->registerJsFile(
                 return number_format($data->cost);
               }
              ],
-             [
-              'attribute'=>'sale_price',
-              'contentOptions'=>['style'=>'text-align: right'],
-              'value' => function($data){
-                return number_format($data->sale_price);
-              }
-             ],
+            
               [
               'attribute'=>'vendor_id',
               'contentOptions'=>['style'=>'text-align: left'],
