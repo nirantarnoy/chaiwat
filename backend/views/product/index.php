@@ -518,6 +518,7 @@ $this->registerJsFile(
 
     $(".btn-print").click(function(){
       $("#search-form").attr("action","");
+      $("#search-form").attr("target","_blank");
       $("#search-form").attr("action","'.$url_to_showreport.'");
       $("#search-form").submit();
     });
