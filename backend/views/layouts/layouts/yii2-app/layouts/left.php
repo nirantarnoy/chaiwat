@@ -34,6 +34,7 @@
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
+               // 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
                     //['label' => '', 'options' => ['class' => 'header']],
                     ['label' => 'หน้าแรก','icon'=>'dashboard', 'url' => ['/dashboard']],

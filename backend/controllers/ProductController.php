@@ -13,6 +13,8 @@ use backend\models\Modelfile;
 use backend\models\Productimage;
 use backend\models\StockbalanceSearch;
 use backend\models\ViewStockSearch;
+use yii\helpers\Json;
+use kartik\mpdf\Pdf;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
@@ -514,6 +516,60 @@ class ProductController extends Controller
           }
         }
       }
+    }
+     public function actionShowreport(){
+         $brand= '';
+        $group= '';
+        $product_type = '';
+        $vendor = '';
+        $property = '';
+        $mode = '';
+        $text_search = '';  
+
+        if(Yii::$app->request->isPost){
+
+            $group = Yii::$app->request->post('product_group');
+            $product_type = Yii::$app->request->post('type');
+            $brand = Yii::$app->request->post('brand');
+            $vendor = Yii::$app->request->post('vendor');
+            $property = Yii::$app->request->post('property');
+            $mode = Yii::$app->request->post('mode');
+            $text_search = Yii::$app->request->post('text_search');
+
+        }
+
+        
+      
+       $modellist = Product::find()->where(['like','category_id',$group])
+                     ->andFilterWhere(['in','type_id',$product_type])
+                     ->andFilterWhere(['in','property_id',$property])
+                     ->andFilterWhere(['in','brand_id',$brand])
+                     ->andFilterWhere(['in','mode',$mode])
+                     ->andFilterWhere(['in','vendor_id',$vendor])
+                     ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]])->all();
+      
+      $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+                'format' => Pdf::FORMAT_A4, 
+                'orientation' => Pdf::ORIENT_LANDSCAPE,
+                'destination' => Pdf::DEST_BROWSER, 
+                'content' => $this->renderPartial('_print',[
+                    'list'=>$modellist,  
+                    // 'from_date'=> $from_date,
+                    // 'to_date' => $to_date,
+                    ]),
+                //'content' => "nira",
+                'cssFile' => '@backend/web/css/pdf.css',
+                'options' => [
+                    'title' => 'รายงานระหัสินค้า',
+                    'subject' => ''
+                ],
+                'methods' => [
+                    'SetHeader' => ['รายงานรหัสสินค้า||Generated On: ' . date("r")],
+                    'SetFooter' => ['|Page {PAGENO}|'],
+                ]
+            ]);
+             return $pdf->render();
     }
 
 }

@@ -94,6 +94,7 @@ $this->registerJsFile(
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างผลิตภัณฑ์', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
              <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
+             <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
@@ -104,6 +105,7 @@ $this->registerJsFile(
         <div class="row">
           <div class="col-lg-12">
             <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
+              <input type="hidden" class="actiontype" name="action-type" value="0">
         <!--    <form id="search-form" action="index.php?r=product" method="get"> -->
                    <div class="form-inline">
                     
@@ -221,6 +223,7 @@ $this->registerJsFile(
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
+       // 'tableOptions'=>['class'=>'my-grid-table'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
@@ -443,8 +446,10 @@ $this->registerJsFile(
   </div>
 </div>
 <?php 
+
   $url_to_delete =  Url::to(['product/bulkdelete'],true);
-$this->registerJs('
+  $url_to_showreport =  Url::to(['product/showreport'],true);
+  $this->registerJs('
     $(function(){
       var serc = "'.count($product_type).'";
       var perty = "'.count($property).'";
@@ -510,4 +515,11 @@ $this->registerJs('
                   }
                 }
     });
+
+    $(".btn-print").click(function(){
+      $("#search-form").attr("action","");
+      $("#search-form").attr("action","'.$url_to_showreport.'");
+      $("#search-form").submit();
+    });
+    
   ',static::POS_END);?>
