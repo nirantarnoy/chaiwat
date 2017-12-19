@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 use kartik\file\FileInput;
@@ -394,6 +394,8 @@ $this->registerJsFile(
 
                     ],
         ],
+         'floatHeader'=>true,
+         'floatHeaderOptions'=>['scrollingTop'=>'50','zIndex'=>900]
     ]); ?>
     </div>
     </div>
