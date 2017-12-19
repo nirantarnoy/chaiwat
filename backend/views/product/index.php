@@ -218,7 +218,7 @@ $this->registerJsFile(
        
           </div>
         </div><br />
-<div class="table-responsive">
+<!-- <div class="table-responsive"> -->
  
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -403,7 +403,7 @@ $this->registerJsFile(
   </div>
   </div>
     <?php //Pjax::end(); ?>
-</div>
+<!-- </div> -->
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
