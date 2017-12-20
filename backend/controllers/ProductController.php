@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use backend\models\Modelfile;
+use backend\models\Modelfile2;
 use backend\models\Productimage;
 use backend\models\StockbalanceSearch;
 use backend\models\ViewStockSearch;
@@ -90,6 +91,7 @@ class ProductController extends Controller
         //$dataProvider->pagination->pageSize = 10;
 
         $modelfile = new Modelfile();
+        $modelfile2 = new Modelfile2();
 
         if($modelfile->load(Yii::$app->request->post())){
            $uploaded = UploadedFile::getInstance($modelfile,"file");
@@ -111,7 +113,8 @@ class ProductController extends Controller
                 $highestRow = $sheet->getHighestRow();
                 $highestColumn = $sheet->getHighestColumn();
 
-                for($row=1;$row <= $highestRow; $row++){
+                //for($row=1;$row <= $highestRow; $row++){
+                 for($row=1;$row <= 300; $row++){
                   $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
 
                   if($row <=1){
@@ -134,32 +137,32 @@ class ProductController extends Controller
                             $modelx->description = $rowData[0][1] ;
                         //    $modelx->category_id = $rowData[0][3];
                             $modelx->weight = 0;
-                            $modelx->category_id = $this->checkCat($rowData[0][11]);
-                            $modelx->unit_id = $this->checkUnit($rowData[0][22]);
-                            $modelx->type_id = $this->checkType($rowData[0][12],$modelx->category_id);
-                            $modelx->property_id = $this->checkProperty($rowData[0][13],$modelx->type_id);
-                            $modelx->brand_id = $this->checkBrand($rowData[0][14]);
+                            $modelx->category_id = $this->checkCat($rowData[0][12]);
+                            $modelx->unit_id = $this->checkUnit($rowData[0][2]);
+                            $modelx->type_id = $this->checkType($rowData[0][13],$modelx->category_id);
+                            $modelx->property_id = $this->checkProperty($rowData[0][14],$modelx->type_id);
+                            $modelx->brand_id = $this->checkBrand($rowData[0][15]);
                             $modelx->price = 0;
-                            $modelx->product_start = $rowData[0][3];
-                            $modelx->sale_qty = $rowData[0][4];
-                            $modelx->purch_qty = $rowData[0][5];
-                            $modelx->return_qty = $rowData[0][6];
-                            $modelx->adjust_qty = $rowData[0][7];
-                            $modelx->cost_sum = $rowData[0][9];
-                            $modelx->cost = $rowData[0][10];
-                            $modelx->qty = $rowData[0][8];
+                            $modelx->product_start = $rowData[0][4];
+                            $modelx->sale_qty = $rowData[0][5];
+                            $modelx->purch_qty = $rowData[0][6];
+                            $modelx->return_qty = $rowData[0][7];
+                            $modelx->adjust_qty = $rowData[0][8];
+                            $modelx->cost_sum = $rowData[0][10];
+                            $modelx->cost = $rowData[0][11];
+                            $modelx->qty = $rowData[0][9];
                             $modelx->min_qty = 0;
                             $modelx->max_qty = 0;
                             $modelx->status = 1;
-                            $modelx->group_id = $this->checkCat($rowData[0][11]);
-                            $modelx->vendor_id = $this->checkVendor($rowData[0][21]);
-                            $modelx->front_qty = $rowData[0][15];
-                            $modelx->back_qty = $rowData[0][16];
-                            $modelx->back_qty2 = $rowData[0][17];
-                            $modelx->total_qty = $rowData[0][18];
-                            $modelx->selection = $rowData[0][19];
+                            $modelx->group_id = $this->checkCat($rowData[0][12]);
+                            $modelx->vendor_id = $this->checkVendor($rowData[0][17]);
+                            $modelx->front_qty = 0;
+                            $modelx->back_qty = 0;
+                            $modelx->back_qty2 = 0;
+                            $modelx->total_qty = 0;
+                            $modelx->selection =0;
                             $modelx->mode = $rowData[0][19]=='y'?1:0;
-                            $modelx->sale_price = $rowData[0][23];
+                            $modelx->sale_price = $rowData[0][18];
                         
                            if($modelx->save(false)){
                               // $data_save += 1;
@@ -171,7 +174,7 @@ class ProductController extends Controller
                   //echo $rowData[0][0]."/".$rowData[0][1]."/".$rowData[0][2]."/".$rowData[0][3]."/".$rowData[0][4].'<br />';
                 }
 
-                
+                unlink('../web/uploads/files/'.$upfiles);
                 }else{
                   //echo "not";
                 }
@@ -183,6 +186,7 @@ class ProductController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'modelfile' => $modelfile,
+            'modelfile2' => $modelfile2,
             'group' => $group,
             'product_type' => $product_type,
             'brand' => $brand,
@@ -572,4 +576,92 @@ class ProductController extends Controller
              return $pdf->render();
     }
 
+    public function actionImportupdate(){
+
+       $modelfile = new Modelfile2();
+       $uploaded = UploadedFile::getInstance($modelfile,"file");
+           if(!empty($uploaded)){
+               $upfiles = time() . "." . $uploaded->getExtension();
+               if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
+                        $myfile = '../web/uploads/files/'.$upfiles;
+                        $inputFileType = \PHPExcel_IOFactory::identify($myfile);
+                        $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
+                        $objPHPExcel = $objReader->load($myfile);
+
+                        $sheet = $objPHPExcel->getSheet(0);
+                        $highestRow = $sheet->getHighestRow();
+                        $highestColumn = $sheet->getHighestColumn();
+
+                          // $maxCell = $sheet->getHighestRowAndColumn();
+                          // $data = $sheet->rangeToArray('A1:' . $maxCell['column'] . $maxCell['row']);
+                          // $data = array_map('array_filter', $data);
+                          // $data = array_filter($data); 
+
+                       // echo $highestRow;return;
+
+                        for($row=1;$row <= 300; $row++){
+                          $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+
+                          if($row <=1){
+                            continue;
+                          }
+                          if($rowData[0][0] == ''){
+                           // $data_all +=1;
+                            continue;
+                          }
+
+                                    $modelx = \backend\models\Product::find()->where(['product_code'=>$rowData[0][0]])->one();
+                                    if($modelx){
+                                        // $modelx->product_code = $rowData[0][0];
+                                        // $modelx->name = $rowData[0][1];
+                                        // $modelx->description = $rowData[0][1] ;
+                                    //    $modelx->category_id = $rowData[0][3];
+                                       // $modelx->weight = 0;
+                                        // $modelx->category_id = $this->checkCat($rowData[0][11]);
+                                        // $modelx->unit_id = $this->checkUnit($rowData[0][22]);
+                                        // $modelx->type_id = $this->checkType($rowData[0][12],$modelx->category_id);
+                                        // $modelx->property_id = $this->checkProperty($rowData[0][13],$modelx->type_id);
+                                        // $modelx->brand_id = $this->checkBrand($rowData[0][14]);
+                                       // $modelx->price = 0;
+                                       // $modelx->product_start = $rowData[0][3];
+                                        $modelx->sale_qty = $rowData[0][4];
+                                        $modelx->purch_qty = $rowData[0][5];
+                                        $modelx->return_qty = $rowData[0][6];
+                                        $modelx->adjust_qty = $rowData[0][7];
+                                        $modelx->cost_sum = $rowData[0][9];
+                                        $modelx->cost = $rowData[0][10];
+                                        $modelx->qty = $rowData[0][8];
+                                       // $modelx->min_qty = 0;
+                                       // $modelx->max_qty = 0;
+                                       // $modelx->status = 1;
+                                        // $modelx->group_id = $this->checkCat($rowData[0][11]);
+                                        // $modelx->vendor_id = $this->checkVendor($rowData[0][21]);
+                                        $modelx->front_qty = $rowData[0][15];
+                                        $modelx->back_qty = $rowData[0][16];
+                                        $modelx->back_qty2 = $rowData[0][17];
+                                        $modelx->total_qty = $rowData[0][18];
+                                        $modelx->selection = $rowData[0][19];
+                                        $modelx->mode = $rowData[0][19]=='y'?1:0;
+                                        $modelx->sale_price = $rowData[0][23];
+                                    
+                                       $modelx->save(false);
+                                    }
+                                  
+                          //echo $rowData[0][0]."/".$rowData[0][1]."/".$rowData[0][2]."/".$rowData[0][3]."/".$rowData[0][4].'<br />';
+                        }
+                        // unlink('../web/uploads/files/'.$upfiles);
+                        return $this->redirect(['index']);
+              }
+
+           }else{
+                  return $this->redirect(['index']);
+          }
+    }
+      
+
 }
+
+              
+               
+
+               

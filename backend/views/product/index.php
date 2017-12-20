@@ -93,6 +93,7 @@ $this->registerJsFile(
            <div>
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างผลิตภัณฑ์', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
+            <div class="btn btn-info btn-import" data-toggle="modal" data-target="#myModal_update"><i class="fa fa-upload"></i> อัพเดทข้อมูลสินค้า</div>
              <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
              <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
             <div class="btn-group pull-right" style="bottom: 10px">
@@ -115,7 +116,7 @@ $this->registerJsFile(
                             'name'=>'product_group[]',
                             //'model'=>null,
                             "options" => ['multiple'=>"multiple"], // for the actual multiselect
-                            'data' => ArrayHelper::map(\backend\models\Category::find()->all(),'id','name'), // data as array
+                            'data' => count($groupall)==0?['No Data']:ArrayHelper::map($groupall,'id','name'), // data as array
                             'value' => $group, // if preselected
                             "clientOptions" => 
                                 [
@@ -132,7 +133,7 @@ $this->registerJsFile(
                             'id'=>"product_type",
                             //'model'=>null,
                             "options" => ['multiple'=>"multiple"], // for the actual multiselect
-                            'data' => ArrayHelper::map($typeall,'id','name'), // data as array
+                            'data' => count($typeall)==0?['No Data']:ArrayHelper::map($typeall,'id','name'), // data as array
                             'value' => $product_type, // if preselected
                             "clientOptions" => 
                                 [
@@ -147,7 +148,7 @@ $this->registerJsFile(
                         'name'=>'property[]',
                         //'model'=>null,
                         "options" => ['multiple'=>"multiple"], // for the actual multiselect
-                        'data' => ArrayHelper::map($propertyall,'id','name'), // data as array
+                        'data' => count($typeall)==0?['No Data']:ArrayHelper::map($propertyall,'id','name'), // data as array
                         'value' => $property, // if preselected
                         "clientOptions" => 
                             [
@@ -163,7 +164,7 @@ $this->registerJsFile(
                             'id'=>"vendor",
                             //'model'=>null,
                             "options" => ['multiple'=>"multiple"], // for the actual multiselect
-                            'data' => ArrayHelper::map($vendorall,'id','name'), // data as array
+                            'data' => count($vendorall)==0?['No Data']:ArrayHelper::map($vendorall,'id','name'), // data as array
                             'value' => $vendor, // if preselected
                             "clientOptions" => 
                                 [
@@ -200,7 +201,7 @@ $this->registerJsFile(
               "options" => ['multiple'=>"multiple",
                             
                            ], // for the actual multiselect
-              'data' => ArrayHelper::map($brandall,'id','name'), // data as array
+              'data' => count($brandall)==0?['No Data']:ArrayHelper::map($brandall,'id','name'), // data as array
               'value' => $brand, // if preselected
              // 'name' => 'multti', // name for the form
               "clientOptions" => 
@@ -425,6 +426,47 @@ $this->registerJsFile(
                 echo FileInput::widget([
                   'name' => 'file',
                   'model' => $modelfile,
+                  'attribute' => 'file',
+
+                ]);
+                ?>
+                <br />
+                <div class="btn-group">
+                  <input type="submit" class="btn btn-success" value="ตกลง">
+                </div>
+                <?php
+                ActiveForm::end();
+             ?>
+            </div>
+           
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
+<div id="myModal_update" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-download"></i> อัพเดทข้อมูลสินค้า</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <?php 
+
+                ActiveForm::begin(['action'=>Url::to(['product/importupdate'],true),'options'=>['enctype'=>'multipart/form-data']]);
+                echo FileInput::widget([
+                  'name' => 'file',
+                  'model' => $modelfile2,
                   'attribute' => 'file',
 
                 ]);
