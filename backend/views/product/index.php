@@ -19,7 +19,6 @@ ICheckAsset::register($this);
 $this->title = 'ผลิตภัณฑ์';
 $this->params['breadcrumbs'][] = $this->title;
 
-echo "hello";
 // $events = array();
 //   //Testing
 //   $Event = new \yii2fullcalendar\models\Event();
