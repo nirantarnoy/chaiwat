@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use dosamigos\multiselect\MultiSelect;
 use backend\assets\ICheckAsset;
+use miloschuman\highcharts\Highcharts;
 
 ICheckAsset::register($this);
 /* @var $this yii\web\View */
@@ -97,6 +98,7 @@ $this->registerJsFile(
              <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
              <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
              <div class="btn btn-default btn-po"> <i class="fa fa-shopping-cart"></i> สร้างใบสั่งซื้อ</div>
+             <div class="btn btn-default btn-chart"> <i class="fa fa-pie-chart"></i> กราฟเปรียบเทียบซื้อขาย</div>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
@@ -305,18 +307,29 @@ $this->registerJsFile(
              // ],
              [
               'attribute'=>'sale_qty',
-              'contentOptions'=>['style'=>'text-align: right'],
-              'format'=>'html',
+              'contentOptions'=>['style'=>'text-align: right;'],
+              'format'=>'raw',
               'value' => function($data){
-                return '<div class="text-red">'.$data->sale_qty==0?'-':number_format($data->sale_qty).'</div>';
+               // return number_format($data->sale_qty);
+                if($data->sale_qty <= 0){
+                  return '<div class="text-red">-</div>';
+                }else{
+                  return '<div class="text-red">'.number_format($data->sale_qty).'</div>';
+                }
+                
               }
              ],
               [
               'attribute'=>'purch_qty',
               'contentOptions'=>['style'=>'text-align: right'],
-              'format'=>'html',
+              'format'=>'raw',
               'value' => function($data){
-                return '<div class="text-green">'.$data->purch_qty == 0?'-':number_format($data->purch_qty).'</div>';
+                if($data->purch_qty <=0){
+                  return '<div class="text-green">-</div>';
+                }else{
+                  return '<div class="text-green">'.$data->purch_qty == 0?'-':number_format($data->purch_qty).'</div>';
+                }
+                
               }
              ],
               [
@@ -533,6 +546,77 @@ $this->registerJsFile(
 
   </div>
 </div>
+<div id="myModal_chart" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-pie-chart text-warning"></i> กราฟเปรียบเทียบซื้อขาย <small id="items"> </small></h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+          <div class="col-lg-12">
+              <?php
+
+
+
+                $titlename = ['ซื้อ', 'ขาย',];
+                $dataamt = [['ซื้อ', 100], ['ขาย', 10]];
+                echo Highcharts::widget([
+                    'options' => [
+                        'title' => ['text' => ''],
+                        'xAxis' => [
+                            'categories' => $titlename
+                        ],
+                        'yAxis' => [
+                            'title' => ['text' => 'มูลค่าซื้อขาย']
+                        ],
+                        'series' => [
+                            ['name' => 'Qty', 'data' => $dataamt],
+
+                        ],
+                        'colors' => ['#66CC00', '#2F4F4F', '#8bbc21', '#1aadce', '#FF6633'],
+                        'credits' => ['enabled' => false],
+                        'chart' => [
+                            'type' => 'pie',
+                            'options3d' => [
+                                'enabled' => 'true',
+                                'alpha' => 45,
+                            ],
+                        ],
+                        'tooltip' => [
+                            'pointFormat' => '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        ],
+                        'plotOptions' => [
+                            'pie' => [
+                                'allowPointSelect' => true,
+                                'cursor' => 'pointer',
+                                'dataLabels' => [
+                                    'enabled' => false,
+                                    'format' => '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                    'style' => [
+                                        //'color'=> (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                    ]
+                                ],
+                                'showInLegend' => true
+                            ]
+                        ],
+                    ]
+                ]);
+                ?>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
 <?php 
 
   $url_to_delete =  Url::to(['product/bulkdelete'],true);
@@ -620,6 +704,9 @@ $this->registerJsFile(
     
     $(".btn-po").click(function(){
       $("#myModal_po").modal("show");
+    });
+   $(".btn-chart").click(function(){
+      $("#myModal_chart").modal("show");
     });
 
   ',static::POS_END);?>
