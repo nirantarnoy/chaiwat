@@ -658,6 +658,34 @@ class ProductController extends Controller
           }
     }
       
+      public function actionGenpo(){
+        $prodid = Yii::$app->request->post('listid');
+        $pid = explode(',', $prodid);
+
+        if(count($pid)>0){
+            $model = new \backend\models\Purchaseorder();
+            $model->purchase_order = $model::getLastNo();
+            $model->status = 1;
+            if($model->save()){
+               for($i=0;$i<=count($pid)-1;$i++){
+                  $modelline = new \backend\models\Purchaseorderline();
+                  $modelline->product_id = $pid[$i];
+                  $modelline->qty = 1;
+                  $modelline->purchase_order_id = $model->id;
+                  $modelline->price = 0;
+                  $modelline->line_amount = 0;
+                  $modelline->status = 1;
+                  $modelline->save(false);
+               }
+            }
+
+            $session = Yii::$app->session;
+            $session->setFlash('msg','สร้างใบสั่งซื้อเรียบร้อยแล้ว');
+
+            return $this->redirect(['index']);
+        }
+
+      }
 
 }
 

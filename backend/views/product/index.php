@@ -19,6 +19,7 @@ ICheckAsset::register($this);
 $this->title = 'ผลิตภัณฑ์';
 $this->params['breadcrumbs'][] = $this->title;
 
+echo "hello";
 // $events = array();
 //   //Testing
 //   $Event = new \yii2fullcalendar\models\Event();
@@ -505,7 +506,8 @@ $this->registerJsFile(
         
         <div class="row">
           <div class="col-lg-12">
-             <form id="form-po">
+             <form id="form-po" action="<?=Url::to(['product/genpo'],true)?>" method="post">
+              <input type="hidden" name="listid" class="listid" value="">
               <?= Select2::widget([
                  'data'=> ArrayHelper::map(\backend\models\Vendor::find()->all(),'id','name'),
                  'name' => 'vendor_id',
