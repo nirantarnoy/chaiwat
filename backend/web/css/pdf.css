@@ -1,6 +1,6 @@
 body{
     font-family: "Garuda";
-    font-size: 10pt;
+    font-size: 8pt;
 }
 
 .table_bordered{
@@ -12,5 +12,5 @@ body{
 .table_bordered td{
     border:0.1px solid #CCC;
     border-collapse: collapse;
-    padding: 10px;
+    padding: 5px;
 }
