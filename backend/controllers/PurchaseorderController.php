@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Trans;
-
+use yii\helpers\Json;
 /**
  * PurchaseorderController implements the CRUD actions for Purchaseorder model.
  */
@@ -246,5 +246,13 @@ class PurchaseorderController extends Controller
     public function actionAddline(){
     $data = Yii::$app->request->post('data');
     return $this->renderPartial('_addline',['data'=>$data]);
+}
+public function actionProductlist($q = null) {
+      $query = $q;
+      $model = \backend\models\Product::find()->where(['like','product_code',$query])->orFilterWhere(['like','name',$query])->all();
+      if($model){
+              echo Json::encode($model);
+      }
+
 }
 }

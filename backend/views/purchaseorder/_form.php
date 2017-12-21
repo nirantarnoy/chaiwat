@@ -87,7 +87,7 @@ use yii\helpers\Url;
                                   ],
                                   //'prefetch' => '/samples/countries.json',
                                   'remote' => [
-                                      'url' => 'index.php?r=sale%2Fproductlist'.'&q=%QUERY',
+                                      'url' => 'index.php?r=purchaseorder%2Fproductlist'.'&q=%QUERY',
                                       'wildcard' => '%QUERY'
                                   ]
                               ]
@@ -121,6 +121,8 @@ use yii\helpers\Url;
                   ?>
                 </div>
                </div>
+               <div class="table-responsive">
+
                 <table class="table" id="lineitem">
                 <thead>
                   <tr>
@@ -173,6 +175,7 @@ use yii\helpers\Url;
                   </tr>
                 </tfoot>
                </table>
+                </div>
         </div>
     </div>
     

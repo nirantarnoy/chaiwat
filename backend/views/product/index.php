@@ -219,7 +219,7 @@ $this->registerJsFile(
        
           </div>
         </div><br />
-<!-- <div class="table-responsive"> -->
+<div class="table-responsive">
  
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -396,7 +396,8 @@ $this->registerJsFile(
                     ],
         ],
          'floatHeader'=>true,
-         'floatHeaderOptions'=>['scrollingTop'=>'50','zIndex'=>900]
+        // 'floatOverflowContainer' => true,
+         'floatHeaderOptions'=>['scrollingTop'=>'150','zIndex'=>900,'position'=>'fixed','autoReflow'=>true]
     ]); ?>
     </div>
     </div>
@@ -404,7 +405,7 @@ $this->registerJsFile(
   </div>
   </div>
     <?php //Pjax::end(); ?>
-<!-- </div> -->
+</div>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
