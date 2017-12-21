@@ -96,6 +96,7 @@ $this->registerJsFile(
             <div class="btn btn-info btn-import" data-toggle="modal" data-target="#myModal_update"><i class="fa fa-upload"></i> อัพเดทข้อมูลสินค้า</div>
              <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
              <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
+             <div class="btn btn-default btn-po"> <i class="fa fa-shopping-cart"></i> สร้างใบสั่งซื้อ</div>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
@@ -144,7 +145,7 @@ $this->registerJsFile(
                                 ], 
                         ]); ?>
                 <?php      echo MultiSelect::widget([
-                       // 'id'=>"multiXX",
+                        'id'=>"property",
                         'name'=>'property[]',
                         //'model'=>null,
                         "options" => ['multiple'=>"multiple"], // for the actual multiselect
@@ -159,7 +160,7 @@ $this->registerJsFile(
                     ]); ?>
                
                  <?php      echo MultiSelect::widget([
-                           // 'id'=>"multiXX",
+                            'id'=>"vendor",
                             'name'=>'vendor[]',
                             'id'=>"vendor",
                             //'model'=>null,
@@ -461,7 +462,7 @@ $this->registerJsFile(
       <div class="modal-body">
         
         <div class="row">
-            <div class="col-lg-12">
+           <div class="col-lg-12">
                 <?php 
 
                 ActiveForm::begin(['action'=>Url::to(['product/importupdate'],true),'options'=>['enctype'=>'multipart/form-data']]);
@@ -481,6 +482,39 @@ $this->registerJsFile(
              ?>
             </div>
            
+           
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
+<div id="myModal_po" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> สร้างใบสั่งซื้อ <small id="items"> </small></h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+          <div class="col-lg-12">
+             <form id="form-po">
+              <?= Select2::widget([
+                 'data'=> ArrayHelper::map(\backend\models\Vendor::find()->all(),'id','name'),
+                 'name' => 'vendor_id',
+                 'options'=>[],
+              ]);?>
+              <br>
+              <input type="submit" value="ตกลง" class="btn btn-primary">
+             </form>
+          </div>
         </div>
       </div>
       <!-- <div class="modal-footer">
@@ -568,4 +602,8 @@ $this->registerJsFile(
       $("#search-form").submit();
     });
     
+    $(".btn-po").click(function(){
+      $("#myModal_po").modal("show");
+    });
+
   ',static::POS_END);?>

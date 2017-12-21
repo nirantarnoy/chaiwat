@@ -18,7 +18,11 @@ use yii\helpers\Url;
     <div class="row">
         <div class="col-lg-12">
             <div class="form-group">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>   
+                <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์ใบสั่งซื้อ</div>
+            </div>
+             <div class="form-group">
+             
             </div>
 
         </div>

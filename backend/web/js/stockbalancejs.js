@@ -63,6 +63,7 @@ $(function(){
                         $(".remove_item").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',false);
                         $(".listid").val(orderList);
+                        $("#items").html("สินค้าจำนวน "+orderList.length+" รายการ");
                        // console.log("niran");
                       }else{
                         $(".btn-trasfer").attr("disabled",true);
@@ -71,6 +72,7 @@ $(function(){
                         $(".remove_item").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',true);
                         $(".listid").val(orderList);
+                         $("#items").html("สินค้าจำนวน "+orderList.length+" รายการ");
                         //console.log("ddfdfdfd");
                       }
                   });
