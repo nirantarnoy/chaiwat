@@ -3,7 +3,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<table class="table table-bordered" style="width: 100%">
+		<table class="table table_bordered" style="width: 100%">
 			<thead>
 				<tr>
 					<th style="text-align: left">ลำดับ</th>
@@ -19,6 +19,7 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php if(count($list)>0):?>
 				<?php $i=0;?>
 				<?php foreach($list as $value):?>
 				<?php $i+=1;?>
@@ -35,6 +36,7 @@
 					<td style="text-align: right"><?=number_format($value->sale_price,0)?></td>
 				</tr>
 			<?php endforeach;?>
+		<?php endif;?>
 			</tbody>
 		</table>
 	</div>

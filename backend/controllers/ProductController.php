@@ -531,7 +531,6 @@ class ProductController extends Controller
         $text_search = '';  
 
         if(Yii::$app->request->isPost){
-
             $group = Yii::$app->request->post('product_group');
             $product_type = Yii::$app->request->post('type');
             $brand = Yii::$app->request->post('brand');
@@ -539,12 +538,13 @@ class ProductController extends Controller
             $property = Yii::$app->request->post('property');
             $mode = Yii::$app->request->post('mode');
             $text_search = Yii::$app->request->post('text_search');
-
+            //print_r($group);return;
         }
 
         
       
-       $modellist = Product::find()->where(['like','category_id',$group])
+       $modellist = Product::find()
+                     ->andFilterWhere(['like','category_id',$group])
                      ->andFilterWhere(['in','type_id',$product_type])
                      ->andFilterWhere(['in','property_id',$property])
                      ->andFilterWhere(['in','brand_id',$brand])
@@ -660,11 +660,15 @@ class ProductController extends Controller
       
       public function actionGenpo(){
         $prodid = Yii::$app->request->post('listid');
+        $vendor_id = Yii::$app->request->post('vendor_id');
         $pid = explode(',', $prodid);
-
-        if(count($pid)>0){
+        
+        
+        if(count($pid)>0 && $pid[0]!=''){
             $model = new \backend\models\Purchaseorder();
             $model->purchase_order = $model::getLastNo();
+            $model->vendor_id = $vendor_id ;
+            $model->purchase_date = time();
             $model->status = 1;
             if($model->save()){
                for($i=0;$i<=count($pid)-1;$i++){
@@ -672,19 +676,41 @@ class ProductController extends Controller
                   $modelline->product_id = $pid[$i];
                   $modelline->qty = 1;
                   $modelline->purchase_order_id = $model->id;
-                  $modelline->price = 0;
-                  $modelline->line_amount = 0;
+                  $modelline->price = $this->getPrice($pid[$i]);
+                  $modelline->line_amount = $this->getPrice($pid[$i]) * 1;
                   $modelline->status = 1;
                   $modelline->save(false);
                }
+               $this->updateSumpo($model->id);
             }
 
             $session = Yii::$app->session;
-            $session->setFlash('msg','สร้างใบสั่งซื้อเรียบร้อยแล้ว');
+            $session->setFlash('success','สร้างใบสั่งซื้อเรียบร้อยแล้ว');
+
+            return $this->redirect(['index']);
+        }else{
+            $session = Yii::$app->session;
+            $session->setFlash('error','ไม่มีรายการให้สร้างใบสั่งซื้อ');
 
             return $this->redirect(['index']);
         }
 
+      }
+      public function getPrice($id){
+        $model = \backend\models\Product::find()->where(['id'=>$id])->one();
+        if($model){
+          return $model->cost;
+        }else{
+          return 0;
+        }
+      }
+      public function updateSumpo($id){
+        $qty = \backend\models\Purchaseorderline::find()->where(['purchase_order_id'=>$id])->sum('line_amount');
+        $model = \backend\models\Purchaseorder::find()->where(['id'=>$id])->one();
+        if($model){
+          $model->purchase_amount = $qty;
+          $model->save(false);
+        }
       }
 
 }

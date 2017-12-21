@@ -124,6 +124,7 @@ $this->registerJsFile(
                                     "includeSelectAllOption" => true,
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'กลุ่มสินค้า',
+                                    'enableFiltering' => true,
                                 ], 
                         ]); ?>
                    
@@ -141,6 +142,7 @@ $this->registerJsFile(
                                     "includeSelectAllOption" => true,
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'ประเภทสินค้า',
+                                    'enableFiltering' => true,
                                     'disabled' => true
                                 ], 
                         ]); ?>
@@ -156,6 +158,7 @@ $this->registerJsFile(
                                 "includeSelectAllOption" => true,
                                 'numberDisplayed' => 5,
                                 'nonSelectedText'=>'คุณสมบัติ',
+                                'enableFiltering' => true,
                             ], 
                     ]); ?>
                
@@ -172,6 +175,7 @@ $this->registerJsFile(
                                     "includeSelectAllOption" => true,
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'ผู้จำหน่าย',
+                                    'enableFiltering' => true,
                                 ], 
                         ]); ?>
                
@@ -210,17 +214,19 @@ $this->registerJsFile(
                       "includeSelectAllOption" => true,
                       'numberDisplayed' => 5,
                       'nonSelectedText'=>'ยี่ห้อ',
+                      'enableFiltering' => true,
                   ], 
           ]); ?>
 
                
-                <input type="submit" class="btn btn-primary" value="ค้นหา">
+                <!-- <input type="submit" class="btn btn-primary" value="ค้นหา"> -->
+               <div class="btn btn-primary btn-search">ค้นหา</div>
             </div>
             </form>
        
           </div>
         </div><br />
-<div class="table-responsive">
+<div class="">
  
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -269,7 +275,7 @@ $this->registerJsFile(
               'attribute'=>'sale_price',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return number_format($data->sale_price);
+                return $data->sale_price == 0?'-':number_format($data->sale_price);
               }
              ],
               [
@@ -300,36 +306,38 @@ $this->registerJsFile(
              [
               'attribute'=>'sale_qty',
               'contentOptions'=>['style'=>'text-align: right'],
+              'format'=>'html',
               'value' => function($data){
-                return number_format($data->sale_qty);
+                return '<div class="text-red">'.$data->sale_qty==0?'-':number_format($data->sale_qty).'</div>';
               }
              ],
               [
               'attribute'=>'purch_qty',
               'contentOptions'=>['style'=>'text-align: right'],
+              'format'=>'html',
               'value' => function($data){
-                return number_format($data->purch_qty);
+                return '<div class="text-green">'.$data->purch_qty == 0?'-':number_format($data->purch_qty).'</div>';
               }
              ],
               [
               'attribute'=>'qty',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return number_format($data->qty);
+                return $data->qty==0?'-':number_format($data->qty);
               }
              ],
               [
               'attribute'=>'return_qty',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return number_format($data->return_qty);
+                return $data->return_qty == 0?'-':number_format($data->return_qty);
               }
              ],
              [
               'attribute'=>'adjust_qty',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return number_format($data->adjust_qty);
+                return $data->adjust_qty == 0?'-':number_format($data->adjust_qty);
               }
              ],
             
@@ -337,14 +345,14 @@ $this->registerJsFile(
               'attribute'=>'cost_sum',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return number_format($data->cost_sum);
+                return $data->cost_sum == 0?'-':number_format($data->cost_sum);
               }
              ],
               [
               'attribute'=>'cost',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return number_format($data->cost);
+                return $data->cost == 0?'-':number_format($data->cost);
               }
              ],
             
@@ -529,6 +537,7 @@ $this->registerJsFile(
 
   $url_to_delete =  Url::to(['product/bulkdelete'],true);
   $url_to_showreport =  Url::to(['product/showreport'],true);
+  $url_to_index_search =  Url::to(['product/index'],true);
   $this->registerJs('
     $(function(){
       var serc = "'.count($product_type).'";
@@ -600,6 +609,12 @@ $this->registerJsFile(
       $("#search-form").attr("action","");
       $("#search-form").attr("target","_blank");
       $("#search-form").attr("action","'.$url_to_showreport.'");
+      $("#search-form").submit();
+    });
+    $(".btn-search").click(function(){
+      $("#search-form").attr("action","");
+      $("#search-form").attr("target","_blank");
+      $("#search-form").attr("action","'.$url_to_index_search.'");
       $("#search-form").submit();
     });
     

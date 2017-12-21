@@ -143,9 +143,11 @@ use yii\helpers\Url;
                 <tbody class="add-saleline">
                   <?php if(!$model->isNewRecord):?>
                     <?php if(count($modelline)>0):?>
+                    <?php $i=0;?>
                       <?php foreach($modelline as $value):?>
+                      <?php $i+=1;?>
                         <tr class="saleline-id-">
-                          <td>1</td>
+                          <td><?=$i?></td>
                           <td>
                             <input type="text" class="form-control product_code" name="product_code[]" value="<?=\backend\models\Product::getProdcode($value->product_id)?>" disabled="disabled" /> 
                             <input type="hidden" class="form-control product_id" name="product_id[]" value="<?=$value->product_id?>" /> 
@@ -198,7 +200,7 @@ use yii\helpers\Url;
     $(".add-saleline >tr").each(function(){
       amount = parseFloat(amount) + parseFloat($(this).closest("tr").find(".line_amount").val());
     });
-    $(".total_all").val(amount);
+    $(".total_all").val(parseFloat(amount).toFixed(2));
   }
   function eventNumber(e){
     // var x = e.val().replace(/[^0-9\.]/g,"");
