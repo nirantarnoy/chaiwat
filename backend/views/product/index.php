@@ -697,7 +697,7 @@ $this->registerJsFile(
     });
     $(".btn-search").click(function(){
       $("#search-form").attr("action","");
-      $("#search-form").attr("target","_blank");
+      //$("#search-form").attr("target","_blank");
       $("#search-form").attr("action","'.$url_to_index_search.'");
       $("#search-form").submit();
     });
