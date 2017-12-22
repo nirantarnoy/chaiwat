@@ -314,7 +314,7 @@ $this->registerJsFile(
                 if($data->sale_qty <= 0){
                   return '<div class="text-red">-</div>';
                 }else{
-                  return '<div class="text-red">'.number_format($data->sale_qty).'</div>';
+                  return '<div class="text-red"><b>'.number_format($data->sale_qty).'</b></div>';
                 }
                 
               }
@@ -327,7 +327,7 @@ $this->registerJsFile(
                 if($data->purch_qty <=0){
                   return '<div class="text-green">-</div>';
                 }else{
-                  return '<div class="text-green">'.$data->purch_qty == 0?'-':number_format($data->purch_qty).'</div>';
+                  return '<div class="text-green"><b>'.$data->purch_qty == 0?'-':number_format($data->purch_qty).'</b></div>';
                 }
                 
               }
@@ -335,8 +335,9 @@ $this->registerJsFile(
               [
               'attribute'=>'qty',
               'contentOptions'=>['style'=>'text-align: right'],
+              'format'=>'raw',
               'value' => function($data){
-                return $data->qty==0?'-':number_format($data->qty);
+                return '<b>'.$data->qty==0?'-':number_format($data->qty).'</b>';
               }
              ],
               [
@@ -406,7 +407,6 @@ $this->registerJsFile(
                                         <ul class="dropdown-menu" style="right: 0; left: auto;">
                                         <li><a href="'.Url::toRoute(['/product/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
                                         <li><a href="'.Url::toRoute(['/product/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
-                                        <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/product/delete', 'id'=>$model->id],true).'">Delete</a></li>
                                         </ul>
                                     </div>
                                 ';

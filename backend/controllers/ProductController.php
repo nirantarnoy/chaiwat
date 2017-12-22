@@ -371,7 +371,7 @@ class ProductController extends Controller
                 }else{
                     //$model->photo = $oldlogo;
                 }
-                return $this->redirect(['update', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         } else {
             return $this->render('update', [
