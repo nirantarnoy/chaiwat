@@ -62,6 +62,8 @@ $(function(){
                         $(".btn-trasfer").addClass("btn-primary");
                         $(".remove_item").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',false);
+                        $(".btn-view").attr('disabled',false);
+                        $(".btn-update").attr('disabled',false);
                         $(".listid").val(orderList);
                         $("#items").html("สินค้าจำนวน "+orderList.length+" รายการ");
                        // console.log("niran");
@@ -71,6 +73,8 @@ $(function(){
                         $(".btn-trasfer").addClass("btn-default");
                         $(".remove_item").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',true);
+                        $(".btn-view").attr('disabled',true);
+                        $(".btn-update").attr('disabled',true);
                         $(".listid").val(orderList);
                          $("#items").html("สินค้าจำนวน "+orderList.length+" รายการ");
                         //console.log("ddfdfdfd");

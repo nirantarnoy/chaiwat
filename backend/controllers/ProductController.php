@@ -32,6 +32,9 @@ class ProductController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST','GET'],
+                    'update' => ['POST','GET'],
+                     'update2' => ['POST','GET'],
+                    'view' => ['POST','GET'],
                     'index' => ['GET','POST'],
                 ],
             ],
@@ -282,10 +285,17 @@ class ProductController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    // public function actionView($id)
+    // {
+    //     return $this->render('view', [
+    //         'model' => $this->findModel($id),
+    //     ]);
+    // }
+     public function actionView()
     {
+       $session = Yii::$app->session;
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($session['pid']),
         ]);
     }
 
@@ -329,9 +339,66 @@ class ProductController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    // public function actionUpdate($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     $searchModel = new StockbalanceSearch();
+    //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+    //     // $searchModel2 = new ViewStockSearch();
+    //     // $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams);
+    //     // $dataProvider2->query->where(['product_id'=>$id])->orderby(['created_at'=>SORT_DESC]);
+
+    //     //$model_trans = \common\models\ViewTrans::find()->where(['product_id'=>$id])->all();
+
+    //    // $imagelist = Productimage::find()->where(['product_id'=>$id])->all();
+    //      $modelfile = new Modelfile();
+    //     if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
+    //        // $oldlogo = Yii::$app->request->post('old_photo');
+    //         $uploaded = UploadedFile::getInstances($modelfile, 'file');
+    //         // if(!empty($uploaded)){
+    //         //       $upfiles = time() . "." . $uploaded->getExtension();
+
+    //         //         //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+    //         //         if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+    //         //            $model->photo = $upfiles;
+    //         //         }
+    //         // }else{
+    //         //      $model->photo = $oldlogo;
+    //         // }
+    //         if($model->save()){
+    //             if(!empty($uploaded)){
+    //               foreach($uploaded as $file){
+    //                   //  $upfiles = time() . "." . $file->getExtension();                        
+    //                     $upfiles = $file;                        
+    //                     $modelimage = new Productimage();
+    //                     if ($file->saveAs('../web/uploads/images/' . $upfiles)) {
+    //                        $modelimage->image = $upfiles;
+    //                     }
+    //                     $modelimage->product_id = $model->id;
+    //                     $modelimage->save(false);
+    //               }
+    //             }else{
+    //                 //$model->photo = $oldlogo;
+    //             }
+    //             return $this->redirect(['index']);
+    //         }
+    //     } else {
+    //         return $this->render('update', [
+    //             'model' => $model,
+    //             'modelfile' => $modelfile,
+    //             //'imagelist' => $imagelist,
+    //             'dataProvider' => $dataProvider,
+    //            // 'dataProvider2' => $dataProvider2,
+    //             //'model_trans' => $model_trans,
+    //         ]);
+    //     }
+    // }
+
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
+        $session = Yii::$app->session;
+        $model = $this->findModel($session['pid']);
         $searchModel = new StockbalanceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -382,6 +449,25 @@ class ProductController extends Controller
                // 'dataProvider2' => $dataProvider2,
                 //'model_trans' => $model_trans,
             ]);
+        }
+    }
+
+     public function actionUpdate2()
+    {
+       $id = Yii::$app->request->post('id');
+        if($id){
+          $session = Yii::$app->session;
+          $session['pid'] = $id;
+          return $this->redirect(['update']);
+        }
+    }
+     public function actionView2()
+    {
+       $id = Yii::$app->request->post('id');
+        if($id){
+          $session = Yii::$app->session;
+          $session['pid'] = $id;
+          return $this->redirect(['view']);
         }
     }
 

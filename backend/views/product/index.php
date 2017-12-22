@@ -95,7 +95,9 @@ $this->registerJsFile(
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างผลิตภัณฑ์', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
             <div class="btn btn-info btn-import" data-toggle="modal" data-target="#myModal_update"><i class="fa fa-upload"></i> อัพเดทข้อมูลสินค้า</div>
-             <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
+             <div class="btn btn-danger btn-bulk-remove" disabled><i class="fa fa-trash"></i> ลบ <span class="remove_item">[0]</span></div>
+             <div class="btn btn-warning btn-view" disabled><i class="fa fa-eye"></i> รายละเอียด </div>
+             <div class="btn btn-primary btn-update"><i class="fa fa-pencil"></i> แก้ไข </div>
              <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
              <div class="btn btn-default btn-po"> <i class="fa fa-shopping-cart"></i> สร้างใบสั่งซื้อ</div>
              <div class="btn btn-default btn-chart"> <i class="fa fa-pie-chart"></i> กราฟเปรียบเทียบซื้อขาย</div>
@@ -397,29 +399,37 @@ $this->registerJsFile(
             // 'created_by',
             // 'updated_by',
 
-            [
-                        'label' => 'Action',
-                        'format' => 'raw',
-                        'value' => function($model){
-                                return '
-                                    <div class="btn-group" >
-                                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                                        <ul class="dropdown-menu" style="right: 0; left: auto;">
-                                        <li><a href="'.Url::toRoute(['/product/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
-                                        <li><a href="'.Url::toRoute(['/product/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
-                                        </ul>
-                                    </div>
-                                ';
-                            // }
-                        },
-                        'headerOptions'=>['class'=>'text-center'],
-                        'contentOptions' => ['class'=>'text-center','style'=>'vertical-align: middle','text-align: center'],
+            // [
+            //             'label' => 'Action',
+            //             'format' => 'raw',
+            //             'value' => function($model){
+            //                     return '
+            //                         <div class="btn-group" >
+            //                             <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+            //                             <ul class="dropdown-menu" style="right: 0; left: auto;">
+            //                             <li><a href="'.Url::toRoute(['/product/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
+            //                             <li><a href="'.Url::toRoute(['/product/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
+            //                             </ul>
+            //                         </div>
+            //                     ';
+            //                 // }
+            //             },
+            //             'headerOptions'=>['class'=>'text-center'],
+            //             'contentOptions' => ['class'=>'text-center','style'=>'vertical-align: middle','text-align: center'],
 
-                    ],
+            //         ],
         ],
          'floatHeader'=>true,
         // 'floatOverflowContainer' => true,
-         'floatHeaderOptions'=>['scrollingTop'=>'150','zIndex'=>900,'position'=>'fixed','autoReflow'=>true]
+         'floatHeaderOptions'=>[
+              'scrollingTop'=>'50',
+              'zIndex'=>900,
+              'floatThead'=>[
+                'position'=>'auto',
+                'autoReflow'=>true,
+              ]
+              //'floatContainerClass'=>'floatThead-container',
+              ]
     ]); ?>
     </div>
     </div>
@@ -622,6 +632,8 @@ $this->registerJsFile(
   $url_to_delete =  Url::to(['product/bulkdelete'],true);
   $url_to_showreport =  Url::to(['product/showreport'],true);
   $url_to_index_search =  Url::to(['product/index'],true);
+  $url_to_update =  Url::to(['product/update2'],true);
+  $url_to_view =  Url::to(['product/view2'],true);
   $this->registerJs('
     $(function(){
       var serc = "'.count($product_type).'";
@@ -689,6 +701,26 @@ $this->registerJsFile(
                 }
     });
 
+    $(".btn-view").click(function(e){
+          //alert($(".listid").val());
+                if($(this).attr("disabled")){
+                  return;
+                }
+                
+                  if($(".listid").length >0){
+                    $.ajax({
+                      type: "post",
+                      dataType: "html",
+                      url: "'.$url_to_view.'",
+                      data: {id: $(".listid").val()},
+                      success: function(data){
+
+                      }
+                    });
+                  }
+              
+    });
+
     $(".btn-print").click(function(){
       $("#search-form").attr("action","");
       $("#search-form").attr("target","_blank");
@@ -708,5 +740,20 @@ $this->registerJsFile(
    $(".btn-chart").click(function(){
       $("#myModal_chart").modal("show");
     });
+   $(".btn-update").click(function(){
+      if($(".listid").length >0){
+                    $.ajax({
+                      type: "post",
+                      dataType: "html",
+                      url: "'.$url_to_update.'",
+                      data: {id: $(".listid").val()},
+                      success: function(data){
+
+                      }
+                    });
+                  }else{
+        alert("เลือกรายการก่อน");
+      }
+   });
 
   ',static::POS_END);?>
