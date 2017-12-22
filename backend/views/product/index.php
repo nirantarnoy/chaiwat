@@ -326,10 +326,10 @@ $this->registerJsFile(
               'contentOptions'=>['style'=>'text-align: right'],
               'format'=>'raw',
               'value' => function($data){
-                if($data->purch_qty <=0){
+                if($data->purch_qty <= 0){
                   return '<div class="text-green">-</div>';
                 }else{
-                  return '<div class="text-green"><b>'.$data->purch_qty == 0?'-':number_format($data->purch_qty).'</b></div>';
+                  return '<div class="text-green"><b>'.number_format($data->purch_qty).'</b></div>';
                 }
                 
               }

@@ -65,7 +65,7 @@ class Product extends \yii\db\ActiveRecord
             'sale_price_1'=>'ราคาขาย',
             'sale_price_2'=>'ราคาขาย',
             'price' => 'ราคา',
-            'qty' => 'จำนวน',
+            'qty' => 'คงเหลือ',
             'min_qty'=>'ขั้นต่ำ',
             'max_qty'=>'สูงสุด',
             'status' => 'สถานะ',
