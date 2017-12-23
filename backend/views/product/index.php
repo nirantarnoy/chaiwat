@@ -339,21 +339,33 @@ $this->registerJsFile(
               'contentOptions'=>['style'=>'text-align: right'],
               'format'=>'raw',
               'value' => function($data){
-                return '<b>'.$data->qty==0?'-':number_format($data->qty).'</b>';
+                 if($data->qty <= 0){
+                  return '-';
+                }else{
+                  return number_format($data->qty);
+                }
               }
              ],
               [
               'attribute'=>'return_qty',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return $data->return_qty == 0?'-':number_format($data->return_qty);
+                if($data->return_qty <= 0){
+                  return '-';
+                }else{
+                  return number_format($data->return_qty);
+                }
               }
              ],
              [
               'attribute'=>'adjust_qty',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return $data->adjust_qty == 0?'-':number_format($data->adjust_qty);
+                if($data->adjust_qty <= 0){
+                  return '-';
+                }else{
+                  return number_format($data->adjust_qty);
+                }
               }
              ],
             
@@ -361,14 +373,22 @@ $this->registerJsFile(
               'attribute'=>'cost_sum',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return $data->cost_sum == 0?'-':number_format($data->cost_sum);
+                 if($data->cost_sum <= 0){
+                  return '-';
+                }else{
+                  return number_format($data->cost_sum);
+                }
               }
              ],
               [
               'attribute'=>'cost',
               'contentOptions'=>['style'=>'text-align: right'],
               'value' => function($data){
-                return $data->cost == 0?'-':number_format($data->cost);
+                 if($data->cost <= 0){
+                  return '-';
+                }else{
+                  return number_format($data->cost);
+                }
               }
              ],
             

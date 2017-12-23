@@ -491,7 +491,6 @@ class ProductController extends Controller
                 Product::deleteAll(['id'=>$id]);
             }
         }
-    
         return $this->redirect(['index']);
     }
     /**
