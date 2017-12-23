@@ -1,7 +1,9 @@
-$(function(){
-	var orderList = [];
-	    $(".btn-trasfer").attr("disabled","disabled");
-        $("input").iCheck({
+
+$(document).on('ready pjax:success', function() {
+  //alert();
+    var orderList = [];
+      $(".btn-trasfer").attr("disabled","disabled");
+        $(".table-grid input").iCheck({
               checkboxClass: "icheckbox_square-green",
               radioClass: "iradio_square-green",
               increaseArea: "20%" // optional
@@ -82,8 +84,9 @@ $(function(){
                   });
               });
 
-
-
-         
-
-    });
+});
+ $(".table-grid input").iCheck({
+      checkboxClass: "icheckbox_square-green",
+      radioClass: "iradio_square-green",
+      increaseArea: "20%" // optional
+});

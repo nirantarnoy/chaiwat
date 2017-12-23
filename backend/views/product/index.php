@@ -107,7 +107,7 @@ $this->registerJsFile(
       </div>
       </div>
       <div class="panel-body">
-        <?php //Pjax::begin(); ?>
+        <?php //Pjax::begin(['id'=>'my-pjax']); ?>
         <div class="row">
           <div class="col-lg-12">
             <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
@@ -230,13 +230,13 @@ $this->registerJsFile(
        
           </div>
         </div><br />
-<!-- <div class="table-responsive"> -->
+<div class="table-grid">
  
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'id'=>'product-grid',
         //'filterModel' => $searchModel,
        // 'tableOptions'=>['class'=>'my-grid-table'],
-        'responsive'=>true,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
@@ -440,6 +440,13 @@ $this->registerJsFile(
 
             //         ],
         ],
+        'containerOptions' => ['style'=>'overflow: auto'],
+        'pjax' => true,
+        'bordered' => true,
+        'striped' => false,
+        'condensed' => false,
+        'responsive' => false,
+        'hover' => true,
          'floatHeader'=>true,
         // 'floatOverflowContainer' => true,
          'floatHeaderOptions'=>[
@@ -450,7 +457,10 @@ $this->registerJsFile(
                 'autoReflow'=>true,
               ]
               //'floatContainerClass'=>'floatThead-container',
-              ]
+          ],
+        // 'panel' => [
+        //     'type' => GridView::TYPE_PRIMARY
+        // ],
     ]); ?>
   <!--   </div> -->
     </div>
