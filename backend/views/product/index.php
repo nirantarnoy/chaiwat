@@ -230,12 +230,13 @@ $this->registerJsFile(
        
           </div>
         </div><br />
-<div class="">
+<!-- <div class="table-responsive"> -->
  
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
        // 'tableOptions'=>['class'=>'my-grid-table'],
+        'responsive'=>true,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
@@ -243,8 +244,8 @@ $this->registerJsFile(
             //'id',
            
             'product_code',
-          //  'name',
-            'description',
+            'name',
+            //'description',
            // 'category_id',
             //'photo',
               [
@@ -451,7 +452,7 @@ $this->registerJsFile(
               //'floatContainerClass'=>'floatThead-container',
               ]
     ]); ?>
-    </div>
+  <!--   </div> -->
     </div>
   </div>
   </div>
