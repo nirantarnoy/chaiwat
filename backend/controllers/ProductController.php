@@ -772,7 +772,8 @@ class ProductController extends Controller
             $session = Yii::$app->session;
             $session->setFlash('success','สร้างใบสั่งซื้อเรียบร้อยแล้ว');
 
-            return $this->redirect(['index']);
+            $session['new_poid'] = $model->id;
+            return $this->redirect(['purchaseorder/update2']);
         }else{
             $session = Yii::$app->session;
             $session->setFlash('error','ไม่มีรายการให้สร้างใบสั่งซื้อ');

@@ -138,6 +138,42 @@ class PurchaseorderController extends Controller
             'modelline' => $modelline,
         ]);
     }
+    public function actionUpdate2()
+    {
+        $session = Yii::$app->session;
+        $id = $session['new_poid'];
+        $model = $this->findModel($id);
+         $modelline = \backend\models\Purchaseorderline::find()->where(['purchase_order_id'=>$id])->all();
+        if ($model->load(Yii::$app->request->post())) {
+            $prodid = Yii::$app->request->post('product_id');
+            $qty = Yii::$app->request->post('qty');
+            $price = Yii::$app->request->post('price');
+            $lineamt = Yii::$app->request->post('line_amount');
+
+            $model->purchase_date = strtotime($model->purchase_date);
+            if($model->save()){
+                \backend\models\Purchaseorderline::deleteAll(['purchase_order_id'=>$id]);
+                if(count($prodid)>0){
+                    for($i=0;$i<=count($prodid)-1;$i++){
+                        $modelline = new \backend\models\Purchaseorderline();
+                        $modelline->purchase_order_id = $model->id;
+                        $modelline->product_id = $prodid[$i];
+                        $modelline->qty = $qty[$i];
+                        $modelline->price = $price[$i];
+                        $modelline->line_amount=$lineamt[$i];
+                        $modelline->save(false);
+                    }
+                }
+                $this->updateAmount($id);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+            'modelline' => $modelline,
+        ]);
+    }
 
     /**
      * Deletes an existing Purchaseorder model.
