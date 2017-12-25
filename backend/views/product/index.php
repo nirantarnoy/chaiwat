@@ -601,9 +601,6 @@ $this->registerJsFile(
         <div class="row">
           <div class="col-lg-12">
               <?php
-
-
-
                 $titlename = ['ซื้อ', 'ขาย',];
                 $dataamt = [['ซื้อ', 100], ['ขาย', 10]];
                 echo Highcharts::widget([
@@ -619,7 +616,7 @@ $this->registerJsFile(
                             ['name' => 'Qty', 'data' => $dataamt],
 
                         ],
-                        'colors' => ['#66CC00', '#2F4F4F', '#8bbc21', '#1aadce', '#FF6633'],
+                        'colors' => ['#1aadce', '#FF6633'],
                         'credits' => ['enabled' => false],
                         'chart' => [
                             'type' => 'pie',
@@ -629,7 +626,7 @@ $this->registerJsFile(
                             ],
                         ],
                         'tooltip' => [
-                            'pointFormat' => '{series.name}: <b>{point.percentage:.1f}%</b>'
+                            'pointFormat' => '{series.name}: <b>{point.y:.1f} Qty.</b>'
                         ],
                         'plotOptions' => [
                             'pie' => [
@@ -642,7 +639,10 @@ $this->registerJsFile(
                                         //'color'=> (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                                     ]
                                 ],
-                                'showInLegend' => true
+                                'showInLegend' => true,
+                                'labelFormatter'=> function() {
+                                   return '<div style="text-align: left; width:130px;float:left;">{point.name}</b></div><div style="width:40px; float:left;text-align:right;"><b>{point.y:.1f} Qty.</b></div>';
+                                }
                             ]
                         ],
                     ]
