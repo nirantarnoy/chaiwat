@@ -75,7 +75,7 @@ class Product extends \yii\db\ActiveRecord
             'product_start'=> 'สินค้าตั้งงวด',
             'sale_qty'=>'ขาย',
             'purch_qty'=>'ซื้อ',
-            'return_qty'=>'จำนวนคืน',
+            'return_qty'=>'รับคืน',
             'adjust_qty'=>'ปรับปรุง',
             'cost_sum'=>'ทุนรวม',
             'type_id' =>'ประเภท',

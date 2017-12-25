@@ -11,6 +11,7 @@ use kartik\select2\Select2;
 use dosamigos\multiselect\MultiSelect;
 use backend\assets\ICheckAsset;
 use miloschuman\highcharts\Highcharts;
+use yii\web\JsExpression;
 
 ICheckAsset::register($this);
 /* @var $this yii\web\View */
@@ -626,9 +627,7 @@ $this->registerJsFile(
                         'legend'=>[
                           'enabled'=> true,
                           'useHtml'=> true,
-                          // 'labelFormatter'=> function() {
-                          //          return '<div style="text-align: left; width:130px;float:left;">{point.name}</b></div><div style="width:40px; float:left;text-align:right;"><b>{point.y:.1f} Qty.</b></div>';
-                          //       }
+                        // 'labelFormatter' => new JsExpression('function () { return this.name + this.data[0] }'),
                         ],
                         'colors' => ['#1aadce', '#FF6633'],
                         'credits' => ['enabled' => false],
