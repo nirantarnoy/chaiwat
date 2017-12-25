@@ -95,7 +95,7 @@ class ProductController extends Controller
                      ->andFilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]]);
 
         //$dataProvider->pagination->pageSize = 10;
-       $sale_sum = Product::find()->where(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])
+       $sale_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])
                                   ->andFilterWhere(['like','category_id',$session['group']])
                                    ->andFilterWhere(['in','type_id',$session['product_type']])
                                    ->andFilterWhere(['in','property_id',$session['property']])
@@ -103,7 +103,7 @@ class ProductController extends Controller
                                    ->andFilterWhere(['in','mode',$session['mode']])
                                    ->andFilterWhere(['in','vendor_id',$session['vendor']])
                                    ->sum('sale_qty');
-       $purch_sum = Product::find()->where(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])
+       $purch_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])
                                   ->andFilterWhere(['like','category_id',$session['group']])
                                    ->andFilterWhere(['in','type_id',$session['product_type']])
                                    ->andFilterWhere(['in','property_id',$session['property']])
