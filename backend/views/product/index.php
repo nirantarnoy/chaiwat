@@ -20,6 +20,9 @@ ICheckAsset::register($this);
 $this->title = 'ผลิตภัณฑ์';
 $this->params['breadcrumbs'][] = $this->title;
 
+$xsale = intval($sale_sum);
+$xpurch = intval($purch_sum);
+
 // $events = array();
 //   //Testing
 //   $Event = new \yii2fullcalendar\models\Event();
@@ -102,7 +105,7 @@ $this->registerJsFile(
              <div class="btn btn-default btn-po"> <i class="fa fa-shopping-cart"></i> สร้างใบสั่งซื้อ</div>
              <div class="btn btn-default btn-chart"> <i class="fa fa-pie-chart"></i> กราฟเปรียบเทียบซื้อขาย</div>
             <div class="btn-group pull-right" style="bottom: 10px">
-        <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
       </div>
       </div>
@@ -601,8 +604,12 @@ $this->registerJsFile(
         <div class="row">
           <div class="col-lg-12">
               <?php
+               // $sale_sum = $sale_sum;
+
+             
+
                 $titlename = ['ซื้อ', 'ขาย',];
-                $dataamt = [['ซื้อ', 100], ['ขาย', 10]];
+                $dataamt = [['ซื้อ', $xpurch], ['ขาย', $xsale]];
                 echo Highcharts::widget([
                     'options' => [
                         'title' => ['text' => ''],
@@ -615,6 +622,13 @@ $this->registerJsFile(
                         'series' => [
                             ['name' => 'Qty', 'data' => $dataamt],
 
+                        ],
+                        'legend'=>[
+                          'enabled'=> true,
+                          'useHtml'=> true,
+                          // 'labelFormatter'=> function() {
+                          //          return '<div style="text-align: left; width:130px;float:left;">{point.name}</b></div><div style="width:40px; float:left;text-align:right;"><b>{point.y:.1f} Qty.</b></div>';
+                          //       }
                         ],
                         'colors' => ['#1aadce', '#FF6633'],
                         'credits' => ['enabled' => false],
@@ -640,9 +654,7 @@ $this->registerJsFile(
                                     ]
                                 ],
                                 'showInLegend' => true,
-                                'labelFormatter'=> function() {
-                                   return '<div style="text-align: left; width:130px;float:left;">{point.name}</b></div><div style="width:40px; float:left;text-align:right;"><b>{point.y:.1f} Qty.</b></div>';
-                                }
+                                
                             ]
                         ],
                     ]

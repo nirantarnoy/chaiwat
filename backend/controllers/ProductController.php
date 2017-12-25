@@ -54,7 +54,10 @@ class ProductController extends Controller
         $property = '';
         $mode = '';
         $text_search = '';  
-
+        
+        $sale_sum = 0;
+        $purch_sum = 0;
+        
         $session = Yii::$app->session;
 
         if(Yii::$app->request->isPost){
@@ -92,6 +95,22 @@ class ProductController extends Controller
                      ->andFilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]]);
 
         //$dataProvider->pagination->pageSize = 10;
+       $sale_sum = Product::find()->where(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])
+                                  ->andFilterWhere(['like','category_id',$session['group']])
+                                   ->andFilterWhere(['in','type_id',$session['product_type']])
+                                   ->andFilterWhere(['in','property_id',$session['property']])
+                                   ->andFilterWhere(['in','brand_id',$session['brand']])
+                                   ->andFilterWhere(['in','mode',$session['mode']])
+                                   ->andFilterWhere(['in','vendor_id',$session['vendor']])
+                                   ->sum('sale_qty');
+       $purch_sum = Product::find()->where(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])
+                                  ->andFilterWhere(['like','category_id',$session['group']])
+                                   ->andFilterWhere(['in','type_id',$session['product_type']])
+                                   ->andFilterWhere(['in','property_id',$session['property']])
+                                   ->andFilterWhere(['in','brand_id',$session['brand']])
+                                   ->andFilterWhere(['in','mode',$session['mode']])
+                                   ->andFilterWhere(['in','vendor_id',$session['vendor']])
+                                   ->sum('purch_qty');
 
         $modelfile = new Modelfile();
         $modelfile2 = new Modelfile2();
@@ -197,6 +216,8 @@ class ProductController extends Controller
             'property' => $property,
             'mode' => $mode,
             'text_search' => $text_search,
+            'sale_sum'=> $sale_sum,
+            'purch_sum'=> $purch_sum,
         ]);
     }
     public function checkVendor($name){
