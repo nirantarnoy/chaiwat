@@ -130,6 +130,7 @@ class ProductController extends Controller
 
 
                     $file = fopen($myfile, "r");
+                    fwrite($file, "\xEF\xBB\xBF");
                      // header('Content-Type: text/html; charset=UTF-8');
                      // iconv_set_encoding("internal_encoding", "UTF-8");
                      // iconv_set_encoding("output_encoding", "UTF-8");
@@ -143,16 +144,16 @@ class ProductController extends Controller
                             continue;
                           }
                           
-                          $rowData = array_map('utf8_encode', $rowData);
+                         // $rowData = array_map('utf8_encode', $rowData);
 
-                          if( mb_detect_encoding($rowData[1], 'UTF-8','auto') !== false ){
-                              echo "utf-8";
-                              echo $rowData[1];
-                          }else{
-                             $x = utf8_encode($rowData[1]);
-                             echo $x;
-                          }
-                          break;
+                          // if( mb_detect_encoding($rowData[1], 'UTF-8','auto') !== false ){
+                          //     echo "utf-8";
+                          //     echo $rowData[1];
+                          // }else{
+                          //    $x = utf8_encode($rowData[1]);
+                          //    echo $x;
+                          // }
+                          // break;
 
                           $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
                           if(count($modelprod)>0){
