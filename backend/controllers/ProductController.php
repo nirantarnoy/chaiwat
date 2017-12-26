@@ -119,72 +119,212 @@ class ProductController extends Controller
            $uploaded = UploadedFile::getInstance($modelfile,"file");
            if(!empty($uploaded)){
             //echo $uploaded;return;
-              $data = [];
-              $data_save = 0;
-              $data_fail = [];
-              $data_all = 0;
+              // $data = [];
+              // $data_save = 0;
+              // $data_fail = [];
+              // $data_all = 0;
               $upfiles = time() . "." . $uploaded->getExtension();
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
                  //echo "okk";return;
                   $myfile = '../web/uploads/files/'.$upfiles;
-                $inputFileType = \PHPExcel_IOFactory::identify($myfile);
-                $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
-                $objPHPExcel = $objReader->load($myfile);
 
-                $sheet = $objPHPExcel->getSheet(0);
-                $highestRow = $sheet->getHighestRow();
-                $highestColumn = $sheet->getHighestColumn();
 
-                //for($row=1;$row <= $highestRow; $row++){
-                 
-                 $data_insert = [];
+                    $file = fopen($myfile, "r");
+                     // header('Content-Type: text/html; charset=UTF-8');
+                     // iconv_set_encoding("internal_encoding", "UTF-8");
+                     // iconv_set_encoding("output_encoding", "UTF-8");
+                     // setlocale(LC_ALL, 'th_TH.utf8');
+                   setlocale ( LC_ALL, 'th_TH.TIS-620' );
+                    $i = -1;
+                     while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE)
+                     {
+                          $i+=1;
+                          if($rowData[0] =='' || $i == 0){
+                            continue;
+                          }
+                          
+                          $rowData = array_map('utf8_encode', $rowData);
 
-                 for($row=1;$row <= 300; $row++){
-                  $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+                          if( mb_detect_encoding($rowData[1], 'UTF-8','auto') !== false ){
+                              echo "utf-8";
+                              echo $rowData[1];
+                          }else{
+                             $x = utf8_encode($rowData[1]);
+                             echo $x;
+                          }
+                          break;
 
-                  if($row <=1){
-                    continue;
-                  }
-                  if($rowData[0][0] == ''){
-                   // $data_all +=1;
-                    continue;
-                  }
-                          $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0][0]])->one();
+                          $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
                           if(count($modelprod)>0){
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
                             continue;
                           }
+           
+                            $modelx = new \backend\models\Product();
+                            $modelx->product_code = $rowData[0];
+                            $modelx->name = $rowData[1];
+                            $modelx->description = $rowData[1] ;
+                        //    $modelx->category_id = $rowData[0][3];
+                            $modelx->weight = 0;
+                            $modelx->category_id = $this->checkCat($rowData[12]);
+                            $modelx->unit_id = $this->checkUnit($rowData[2]);
+                            $modelx->type_id = $this->checkType($rowData[13],$modelx->category_id);
+                            $modelx->property_id = $this->checkProperty($rowData[14],$modelx->type_id);
+                            $modelx->brand_id = $this->checkBrand($rowData[15]);
+                            $modelx->price = 0;
+                            $modelx->product_start = $rowData[4];
+                            $modelx->sale_qty = $rowData[5];
+                            $modelx->purch_qty = $rowData[6];
+                            $modelx->return_qty = $rowData[7];
+                            $modelx->adjust_qty = $rowData[8];
+                            $modelx->cost_sum = $rowData[10];
+                            $modelx->cost = $rowData[11];
+                            $modelx->qty = $rowData[9];
+                            $modelx->min_qty = 0;
+                            $modelx->max_qty = 0;
+                            $modelx->status = 1;
+                            $modelx->group_id = $this->checkCat($rowData[12]);
+                            $modelx->vendor_id = $this->checkVendor($rowData[17]);
+                            $modelx->front_qty = 0;
+                            $modelx->back_qty = 0;
+                            $modelx->back_qty2 = 0;
+                            $modelx->total_qty = 0;
+                            $modelx->selection =0;
+                            $modelx->mode = $rowData[19]=='y'?1:0;
+                            $modelx->sale_price = $rowData[18];
+                        
+                           if($modelx->save(false)){
+                              // $data_save += 1;
+                              // $data_all +=1;
+                              // array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
+                           }
+                        // }
+           
+                     }
+                     fclose($file);
 
-                          $xunit = $this->checkUnit($rowData[0][2]);
-                          $xcat = $this->checkCat($rowData[0][12]);
-                          $xtype = $this->checkType($rowData[0][13],$xcat);
-                          $xprop = $this->checkProperty($rowData[0][14],$xtype);
-                          $xbrand = $this->checkBrand($rowData[0][15]);
-                          $xvendor = $this->checkVendor($rowData[0][17]);
 
-                          array_push($data_insert, [
-                                 $rowData[0][0], 
-                                 $rowData[0][1],
-                                 $rowData[0][1],
-                                 $xunit,
-                                 $rowData[0][4],
-                                 $rowData[0][5],
-                                 $rowData[0][6],
-                                 $rowData[0][7],
-                                 $rowData[0][8],
-                                 $rowData[0][9],
-                                 $rowData[0][10],
-                                 $rowData[0][11],
-                                 $xcat,
-                                 $xcat,
-                                 $xtype,
-                                 $xprop,
-                                 $xbrand,
-                                 $xvendor,
-                                 $rowData[0][18],
-                                 $rowData[0][19]=='y'?1:0
-                            ]);
+               //   $inputFileType = \PHPExcel_IOFactory::identify($myfile);
+               //   $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
+               // // $objReader = \PHPExcel_IOFactory::createReader($myfile);
+               //  $objPHPExcel = $objReader->load($myfile);
+
+               //  $sheet = $objPHPExcel->getSheet(0);
+               //  $highestRow = $sheet->getHighestRow();
+               //  $highestColumn = $sheet->getHighestColumn();
+
+               //  //for($row=1;$row <= $highestRow; $row++){
+                 
+               //   $data_insert = [];
+
+//                   for($row=1;$row <= 130; $row++){
+
+//                   if($row <=1){
+//                     continue;
+//                   }
+//                 //  $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+//                   $rowData = $sheet->rangeToArray('A'.$row.':'.'B'.$row,NULL,TRUE,FALSE);
+
+//                   if($rowData[0][0] == ''){
+//                    // $data_all +=1;
+//                     continue;
+//                   }
+// array_push($data_insert, ['niran']); 
+
+///////////// insert temp
+
+                        //     $modelx = new \common\models\ProductTmp();
+                        //     $modelx->product_code = $rowData[0][0];
+                        //     $modelx->name = $rowData[0][1];
+                        //     $modelx->description = $rowData[0][1] ;
+                        // //    $modelx->category_id = $rowData[0][3];
+                        //     $modelx->weight = 0;
+                        //     $modelx->category_id = $rowData[0][12];
+                        //     $modelx->unit_id = $rowData[0][2];
+                        //     $modelx->type_id = $rowData[0][13];
+                        //     $modelx->property_id = $rowData[0][14];
+                        //     $modelx->brand_id = $rowData[0][15];
+                        //     $modelx->price = 0;
+                        //     $modelx->product_start = $rowData[0][4];
+                        //     $modelx->sale_qty = $rowData[0][5];
+                        //     $modelx->purch_qty = $rowData[0][6];
+                        //     $modelx->return_qty = $rowData[0][7];
+                        //     $modelx->adjust_qty = $rowData[0][8];
+                        //     $modelx->cost_sum = $rowData[0][10];
+                        //     $modelx->cost = $rowData[0][11];
+                        //     $modelx->qty = $rowData[0][9];
+                        //     $modelx->min_qty = 0;
+                        //     $modelx->max_qty = 0;
+                        //     $modelx->status = 1;
+                        //     $modelx->group_id = $rowData[0][12];
+                        //     $modelx->vendor_id = $rowData[0][17];
+                        //     $modelx->front_qty = 0;
+                        //     $modelx->back_qty = 0;
+                        //     $modelx->back_qty2 = 0;
+                        //     $modelx->total_qty = 0;
+                        //     $modelx->selection =0;
+                        //     $modelx->mode = $rowData[0][19]=='y'?1:0;
+                        //     $modelx->sale_price = $rowData[0][18];
+                        
+                        //    if($modelx->save(false)){
+                        //       // $data_save += 1;
+                        //       // $data_all +=1;
+                        //       // array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
+                        //    }
+                        // // }
+
+/////////////////// end ///////////
+
+
+
+
+
+
+
+                 //          $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0][0]])->one();
+                 //          if(count($modelprod)>0){
+                 //            // $data_all +=1;
+                 //            // array_push($data_fail,['name'=>$rowData[0][1]]);
+                 //            continue;
+                 //          }
+
+                          // $xunit = $rowData[0][2];
+                          // $xcat = $rowData[0][12];
+                          // $xtype = $rowData[0][13];
+                          // $xprop = $rowData[0][14];
+                          // $xbrand = $rowData[0][15];
+                          // $xvendor = $rowData[0][17];
+
+                          //  $xunit = $this->checkUnit($rowData[0][2]);
+                          // $xcat = $this->checkCat($rowData[0][12]);
+                          // $xtype = $this->checkType($rowData[0][13],$xcat);
+                          // $xprop = $this->checkProperty($rowData[0][14],$xtype);
+                          // $xbrand = $this->checkBrand($rowData[0][15]);
+                          // $xvendor = $this->checkVendor($rowData[0][17]);
+
+                          // array_push($data_insert, [
+                          //        $rowData[0][0], 
+                          //        $rowData[0][1],
+                          //        $rowData[0][1],
+                          //        $xunit,
+                          //        $rowData[0][4],
+                          //        $rowData[0][5],
+                          //        $rowData[0][6],
+                          //        $rowData[0][7],
+                          //        $rowData[0][8],
+                          //        $rowData[0][9],
+                          //        $rowData[0][10],
+                          //        $rowData[0][11],
+                          //        $xcat,
+                          //        $xcat,
+                          //        $xtype,
+                          //        $xprop,
+                          //        $xbrand,
+                          //        $xvendor,
+                          //        $rowData[0][18],
+                          //       // $rowData[0][19]=='y'?1:0
+                          //   ]);
 
                         //     $modelx = new \backend\models\Product();
                         //     $modelx->product_code = $rowData[0][0];
@@ -227,16 +367,20 @@ class ProductController extends Controller
                          //}
                           
                   //echo $rowData[0][0]."/".$rowData[0][1]."/".$rowData[0][2]."/".$rowData[0][3]."/".$rowData[0][4].'<br />';
-                }
+              
+              //  }
 
-                Yii::$app->db->createCommand()->batchInsert('product', ['product_code', 'name', 'description','unit_id','product_start','sale_qty','purch_qty','return_qty','adjust_qty','cost_sum',
-                                                                        'qty','cost','category_id','group_id','type_id','property_id','brand_id','vendor_id','sale_price','mode'                                          
-                        ],
-                [
-                   $data_insert
-                ])->execute();
+                // Yii::$app->db->createCommand()->batchInsert('product', ['product_code', 'name', 'description','unit_id','product_start','sale_qty','purch_qty','return_qty','adjust_qty','cost_sum',
+                //                                                         'qty','cost','category_id','group_id','type_id','property_id','brand_id','vendor_id','sale_price','mode'                                          
+                //         ],
+                // [
+                //    $data_insert
+                // ])->execute();
+
+
 
                 unlink('../web/uploads/files/'.$upfiles);
+              //  print_r($data_insert);return;
 
                 }else{
                   //echo "not";
@@ -261,6 +405,10 @@ class ProductController extends Controller
             'purch_sum'=> $purch_sum,
         ]);
     }
+    function convert( $str ) {
+        return iconv( "Windows-1252", "UTF-8", $str );
+    }
+
     public function checkVendor($name){
       $model = \backend\models\Vendor::find()->where(['name'=>$name])->one();
       if(count($model)>0){
