@@ -3,7 +3,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<table class="table table_bordered" style="width: 100%">
+		<table class="table table_bordered table-striped" style="width: 100%">
 			<thead>
 				<tr>
 					<th style="text-align: left">ลำดับ</th>
