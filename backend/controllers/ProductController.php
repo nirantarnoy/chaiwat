@@ -115,6 +115,8 @@ class ProductController extends Controller
         $modelfile = new Modelfile();
         $modelfile2 = new Modelfile2();
 
+         $dataProvider->query->orderby(['product_code'=>SORT_ASC]);
+
         if($modelfile->load(Yii::$app->request->post())){
            $uploaded = UploadedFile::getInstance($modelfile,"file");
            if(!empty($uploaded)){
@@ -846,7 +848,7 @@ class ProductController extends Controller
                      ->andFilterWhere(['in','brand_id',$brand])
                      ->andFilterWhere(['in','mode',$mode])
                      ->andFilterWhere(['in','vendor_id',$vendor])
-                     ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]])->all();
+                     ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]])->orderby(['product_code'=>SORT_ASC])->all();
       
       $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
