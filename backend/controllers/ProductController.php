@@ -883,7 +883,7 @@ class ProductController extends Controller
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
                         $myfile = '../web/uploads/files/'.$upfiles;
                        
-                       $file = fopen($myfile, "r");
+                    $file = fopen($myfile, "r");
                     fwrite($file, "\xEF\xBB\xBF");
                      // header('Content-Type: text/html; charset=UTF-8');
                      // iconv_set_encoding("internal_encoding", "UTF-8");
@@ -922,7 +922,7 @@ class ProductController extends Controller
                              // $modelx->type_id = $this->checkType($rowData[13],$modelx->category_id);
                              // $modelx->property_id = $this->checkProperty($rowData[14],$modelx->type_id);
                             //  $modelx->brand_id = $this->checkBrand($rowData[15]);
-                              $modelx->price = 0;
+                             // $modelx->price = 0;
                               $modelx->product_start = $rowData[4];
                               $modelx->sale_qty = $rowData[5];
                               $modelx->purch_qty = $rowData[6];
