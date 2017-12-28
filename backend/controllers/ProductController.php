@@ -880,71 +880,79 @@ class ProductController extends Controller
                $upfiles = time() . "." . $uploaded->getExtension();
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
                         $myfile = '../web/uploads/files/'.$upfiles;
-                        $inputFileType = \PHPExcel_IOFactory::identify($myfile);
-                        $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
-                        $objPHPExcel = $objReader->load($myfile);
-
-                        $sheet = $objPHPExcel->getSheet(0);
-                        $highestRow = $sheet->getHighestRow();
-                        $highestColumn = $sheet->getHighestColumn();
-
-                          // $maxCell = $sheet->getHighestRowAndColumn();
-                          // $data = $sheet->rangeToArray('A1:' . $maxCell['column'] . $maxCell['row']);
-                          // $data = array_map('array_filter', $data);
-                          // $data = array_filter($data); 
-
-                       // echo $highestRow;return;
-
-                        for($row=1;$row <= 300; $row++){
-                          $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
-
-                          if($row <=1){
+                       
+                       $file = fopen($myfile, "r");
+                    fwrite($file, "\xEF\xBB\xBF");
+                     // header('Content-Type: text/html; charset=UTF-8');
+                     // iconv_set_encoding("internal_encoding", "UTF-8");
+                     // iconv_set_encoding("output_encoding", "UTF-8");
+                     // setlocale(LC_ALL, 'th_TH.utf8');
+                   setlocale ( LC_ALL, 'th_TH.TIS-620' );
+                    $i = -1;
+                     while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE)
+                     {
+                          $i+=1;
+                          if($rowData[0] =='' || $i == 0){
                             continue;
                           }
-                          if($rowData[0][0] == ''){
-                           // $data_all +=1;
-                            continue;
-                          }
+                          
+                         // $rowData = array_map('utf8_encode', $rowData);
 
-                                    $modelx = \backend\models\Product::find()->where(['product_code'=>$rowData[0][0]])->one();
-                                    if($modelx){
-                                        // $modelx->product_code = $rowData[0][0];
-                                        // $modelx->name = $rowData[0][1];
-                                        // $modelx->description = $rowData[0][1] ;
-                                    //    $modelx->category_id = $rowData[0][3];
-                                       // $modelx->weight = 0;
-                                        // $modelx->category_id = $this->checkCat($rowData[0][11]);
-                                        // $modelx->unit_id = $this->checkUnit($rowData[0][22]);
-                                        // $modelx->type_id = $this->checkType($rowData[0][12],$modelx->category_id);
-                                        // $modelx->property_id = $this->checkProperty($rowData[0][13],$modelx->type_id);
-                                        // $modelx->brand_id = $this->checkBrand($rowData[0][14]);
-                                       // $modelx->price = 0;
-                                       // $modelx->product_start = $rowData[0][3];
-                                        $modelx->sale_qty = $rowData[0][4];
-                                        $modelx->purch_qty = $rowData[0][5];
-                                        $modelx->return_qty = $rowData[0][6];
-                                        $modelx->adjust_qty = $rowData[0][7];
-                                        $modelx->cost_sum = $rowData[0][9];
-                                        $modelx->cost = $rowData[0][10];
-                                        $modelx->qty = $rowData[0][8];
-                                       // $modelx->min_qty = 0;
-                                       // $modelx->max_qty = 0;
-                                       // $modelx->status = 1;
-                                        // $modelx->group_id = $this->checkCat($rowData[0][11]);
-                                        // $modelx->vendor_id = $this->checkVendor($rowData[0][21]);
-                                        $modelx->front_qty = $rowData[0][15];
-                                        $modelx->back_qty = $rowData[0][16];
-                                        $modelx->back_qty2 = $rowData[0][17];
-                                        $modelx->total_qty = $rowData[0][18];
-                                        $modelx->selection = $rowData[0][19];
-                                        $modelx->mode = $rowData[0][19]=='y'?1:0;
-                                        $modelx->sale_price = $rowData[0][23];
-                                    
-                                       $modelx->save(false);
-                                    }
-                                  
-                          //echo $rowData[0][0]."/".$rowData[0][1]."/".$rowData[0][2]."/".$rowData[0][3]."/".$rowData[0][4].'<br />';
-                        }
+                          // if( mb_detect_encoding($rowData[1], 'UTF-8','auto') !== false ){
+                          //     // echo "utf-8";
+                          //     // echo $rowData[1];
+                          // }else{
+                          //    $x = utf8_encode($rowData[1]);
+                          //    //echo $x;
+                          // }
+                          // break;
+
+                          $modelx = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
+                          if(count($modelx)>0){
+                             // $modelx = new \backend\models\Product();
+                             // $modelx->product_code = $rowData[0];
+                             // $modelx->name = $rowData[1];
+                             // $modelx->description = $rowData[1] ;
+                          //    $modelx->category_id = $rowData[0][3];
+                             // $modelx->weight = 0;
+                             // $modelx->category_id = $this->checkCat($rowData[12]);
+                             // $modelx->unit_id = $this->checkUnit($rowData[2]);
+                             // $modelx->type_id = $this->checkType($rowData[13],$modelx->category_id);
+                             // $modelx->property_id = $this->checkProperty($rowData[14],$modelx->type_id);
+                            //  $modelx->brand_id = $this->checkBrand($rowData[15]);
+                              $modelx->price = 0;
+                              $modelx->product_start = $rowData[4];
+                              $modelx->sale_qty = $rowData[5];
+                              $modelx->purch_qty = $rowData[6];
+                              $modelx->return_qty = $rowData[7];
+                              $modelx->adjust_qty = $rowData[8];
+                              $modelx->cost_sum = $rowData[10];
+                              $modelx->cost = $rowData[11];
+                              $modelx->qty = $rowData[9];
+                            //  $modelx->min_qty = 0;
+                            //  $modelx->max_qty = 0;
+                            //  $modelx->status = 1;
+                            //  $modelx->group_id = $this->checkCat($rowData[12]);
+                            //  $modelx->vendor_id = $this->checkVendor($rowData[17]);
+                              $modelx->front_qty = 0;
+                              $modelx->back_qty = 0;
+                              $modelx->back_qty2 = 0;
+                              $modelx->total_qty = 0;
+                              $modelx->selection =0;
+                            //  $modelx->mode = $rowData[19]=='y'?1:0;
+                             // $modelx->sale_price = $rowData[18];
+                        
+                           if($modelx->save(false)){
+                             
+                           }
+                          }else{
+
+                          }
+           
+                           
+           
+                     }
+                     fclose($file);
                         // unlink('../web/uploads/files/'.$upfiles);
                         return $this->redirect(['index']);
               }
