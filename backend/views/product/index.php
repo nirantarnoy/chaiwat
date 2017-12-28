@@ -240,7 +240,7 @@ $this->registerJsFile(
         'dataProvider' => $dataProvider,
         'id'=>'product-grid',
         //'filterModel' => $searchModel,
-       // 'tableOptions'=>['class'=>'my-grid-table'],
+        'tableOptions'=>['class'=>'table-striped'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
