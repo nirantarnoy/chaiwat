@@ -10,7 +10,7 @@ body{
     margin-top: 10px;
 }
 .table_bordered td{
-    border:0.1px solid #CCC;
+    border:0.8px solid #000;
     border-collapse: collapse;
     padding: 5px;
 }
