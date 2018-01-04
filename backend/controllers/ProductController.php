@@ -936,11 +936,11 @@ class ProductController extends Controller
                             //  $modelx->status = 1;
                             //  $modelx->group_id = $this->checkCat($rowData[12]);
                             //  $modelx->vendor_id = $this->checkVendor($rowData[17]);
-                              $modelx->front_qty = 0;
-                              $modelx->back_qty = 0;
-                              $modelx->back_qty2 = 0;
-                              $modelx->total_qty = 0;
-                              $modelx->selection =0;
+                              // $modelx->front_qty = 0;
+                              // $modelx->back_qty = 0;
+                              // $modelx->back_qty2 = 0;
+                              // $modelx->total_qty = 0;
+                              // $modelx->selection =0;
                             //  $modelx->mode = $rowData[19]=='y'?1:0;
                              // $modelx->sale_price = $rowData[18];
                         

@@ -124,7 +124,8 @@ $this->registerJsFile(
                             'id'=>"product_group",
                             'name'=>'product_group[]',
                             //'model'=>null,
-                            "options" => ['multiple'=>"multiple"], // for the actual multiselect
+                            "options" => ['multiple'=>"multiple",
+                                            'onchange'=>''], // for the actual multiselect
                             'data' => count($groupall)==0?['No Data']:ArrayHelper::map($groupall,'id','name'), // data as array
                             'value' => $group, // if preselected
                             "clientOptions" => 
@@ -133,6 +134,7 @@ $this->registerJsFile(
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'กลุ่มสินค้า',
                                     'enableFiltering' => true,
+                                    'enableCaseInsensitiveFiltering'=>true,
                                 ], 
                         ]); ?>
                    
@@ -151,7 +153,8 @@ $this->registerJsFile(
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'ประเภทสินค้า',
                                     'enableFiltering' => true,
-                                    'disabled' => true
+                                    'disabled' => true,
+                                    'enableCaseInsensitiveFiltering'=>true,
                                 ], 
                         ]); ?>
                 <?php      echo MultiSelect::widget([
@@ -167,6 +170,7 @@ $this->registerJsFile(
                                 'numberDisplayed' => 5,
                                 'nonSelectedText'=>'คุณสมบัติ',
                                 'enableFiltering' => true,
+                                'enableCaseInsensitiveFiltering'=>true,
                             ], 
                     ]); ?>
                
@@ -184,6 +188,7 @@ $this->registerJsFile(
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'ผู้จำหน่าย',
                                     'enableFiltering' => true,
+                                    'enableCaseInsensitiveFiltering'=>true,
                                 ], 
                         ]); ?>
                
@@ -223,6 +228,7 @@ $this->registerJsFile(
                       'numberDisplayed' => 5,
                       'nonSelectedText'=>'ยี่ห้อ',
                       'enableFiltering' => true,
+                      'enableCaseInsensitiveFiltering'=>true,
                   ], 
           ]); ?>
 
@@ -795,6 +801,12 @@ $this->registerJsFile(
                     });
                   }else{
         alert("เลือกรายการก่อน");
+      }
+   });
+
+   $("select#product_group").change(function(){
+      if($(this).val()!=""){
+        $(this).hide();
       }
    });
 
