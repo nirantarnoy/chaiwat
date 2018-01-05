@@ -115,7 +115,7 @@ class ProductController extends Controller
         $modelfile = new Modelfile();
         $modelfile2 = new Modelfile2();
 
-         $dataProvider->query->orderby(['product_code'=>SORT_ASC]);
+         $dataProvider->query->orderby(['name'=>SORT_ASC]);
 
         if($modelfile->load(Yii::$app->request->post())){
            $uploaded = UploadedFile::getInstance($modelfile,"file");

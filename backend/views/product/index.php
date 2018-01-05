@@ -806,7 +806,8 @@ $this->registerJsFile(
 
    $("select#product_group").change(function(){
       if($(this).val()!=""){
-        $(this).hide();
+        $("select#product_group").attr("buttonClass","btn-success");
+        $("select#product_group").multiselect("rebuild");
       }
    });
 
