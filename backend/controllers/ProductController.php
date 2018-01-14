@@ -176,14 +176,14 @@ class ProductController extends Controller
                             $modelx->property_id = $this->checkProperty($rowData[14],$modelx->type_id);
                             $modelx->brand_id = $this->checkBrand($rowData[15]);
                             $modelx->price = 0;
-                            $modelx->product_start = $rowData[4];
-                            $modelx->sale_qty = $rowData[5];
-                            $modelx->purch_qty = $rowData[6];
-                            $modelx->return_qty = $rowData[7];
-                            $modelx->adjust_qty = $rowData[8];
-                            $modelx->cost_sum = $rowData[10];
-                            $modelx->cost = $rowData[11];
-                            $modelx->qty = $rowData[9];
+                            $modelx->product_start = str_replace(',','', $rowData[4]);
+                            $modelx->sale_qty = str_replace(',','', $rowData[5]);
+                            $modelx->purch_qty = str_replace(',','', $rowData[6]);;
+                            $modelx->return_qty =str_replace(',','', $rowData[7]);;
+                            $modelx->adjust_qty = str_replace(',','', $rowData[8]);;
+                            $modelx->cost_sum = str_replace(',','', $rowData[10]);;
+                            $modelx->cost = str_replace(',','', $rowData[11]);;
+                            $modelx->qty = str_replace(',','', $rowData[9]);;
                             $modelx->min_qty = 0;
                             $modelx->max_qty = 0;
                             $modelx->status = 1;
@@ -195,7 +195,7 @@ class ProductController extends Controller
                             $modelx->total_qty = 0;
                             $modelx->selection =0;
                             $modelx->mode = $rowData[19]=='y'?1:0;
-                            $modelx->sale_price = $rowData[18];
+                            $modelx->sale_price = str_replace(',','', $rowData[18]);;
                         
                            if($modelx->save(false)){
                               // $data_save += 1;
@@ -923,14 +923,14 @@ class ProductController extends Controller
                              // $modelx->property_id = $this->checkProperty($rowData[14],$modelx->type_id);
                             //  $modelx->brand_id = $this->checkBrand($rowData[15]);
                              // $modelx->price = 0;
-                              $modelx->product_start = $rowData[4];
-                              $modelx->sale_qty = $rowData[5];
-                              $modelx->purch_qty = $rowData[6];
-                              $modelx->return_qty = $rowData[7];
-                              $modelx->adjust_qty = $rowData[8];
-                              $modelx->cost_sum = $rowData[10];
-                              $modelx->cost = $rowData[11];
-                              $modelx->qty = $rowData[9];
+                              $modelx->product_start = str_replace(',','', $rowData[4]);;
+                              $modelx->sale_qty = str_replace(',','', $rowData[5]);;
+                              $modelx->purch_qty = str_replace(',','', $rowData[6]);;
+                              $modelx->return_qty = str_replace(',','', $rowData[7]);;
+                              $modelx->adjust_qty = str_replace(',','', $rowData[8]);;
+                              $modelx->cost_sum = str_replace(',','', $rowData[10]);;
+                              $modelx->cost = str_replace(',','', $rowData[11]);;
+                              $modelx->qty = str_replace(',','', $rowData[9]);;
                             //  $modelx->min_qty = 0;
                             //  $modelx->max_qty = 0;
                             //  $modelx->status = 1;
