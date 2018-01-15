@@ -47,17 +47,17 @@ $xpurch = intval($purch_sum);
 //       'events'=> $events,
 //   ));
 
-$groupall = \backend\models\Category::find()->where(['!=','name',''])->all();
-$typeall = \backend\models\Producttype::find()->where(['!=','name',''])->all();
-$brandall = \backend\models\Brand::find()->where(['!=','name',''])->all();
-$vendorall = \backend\models\Vendor::find()->where(['!=','name',''])->all();
-$propertyall = \backend\models\Property::find()->where(['!=','name',''])->all();
+$groupall = \backend\models\Category::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
+$typeall = \backend\models\Producttype::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
+$brandall = \backend\models\Brand::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
+$vendorall = \backend\models\Vendor::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
+$propertyall = \backend\models\Property::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
 $modeall = [['id'=>1,'name'=>'สั่งซ์้อ'],['id'=>0,'name'=>'ไม่สั่งซ์้อ']];
 if($product_type !='' && $group !=''){
-  $typeall = \backend\models\Producttype::find()->where(['group_id'=>$group])->all();
+  $typeall = \backend\models\Producttype::find()->where(['group_id'=>$group])->orderby(['name'=>SORT_ASC])->all();
 }
 if($property !=''){
-  $propertyall = \backend\models\Property::find()->where(['type_id'=>$product_type])->all();
+  $propertyall = \backend\models\Property::find()->where(['type_id'=>$product_type])->orderby(['name'=>SORT_ASC])->all();
 }
 
 $this->registerJsFile(
@@ -168,7 +168,7 @@ $this->registerJsFile(
                             [
                                 "includeSelectAllOption" => true,
                                 'numberDisplayed' => 5,
-                                'nonSelectedText'=>'คุณสมบัติ',
+                                'nonSelectedText'=>'ลักษณะ',
                                 'enableFiltering' => true,
                                 'enableCaseInsensitiveFiltering'=>true,
                             ], 

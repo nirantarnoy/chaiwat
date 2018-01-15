@@ -722,7 +722,7 @@ class ProductController extends Controller
         }
     }
     public function actionShowsubcategory($id){
-      $model = \backend\models\Subcategory::find()->where(['category_id' => $id])->all();
+      $model = \backend\models\Subcategory::find()->where(['category_id' => $id])->orderby(['name'=>SORT_ASC])->all();
         $i = 0;
       if (count($model) > 0) {
           foreach ($model as $value) {
@@ -741,7 +741,7 @@ class ProductController extends Controller
 
     }
     public function actionShowmodel($id){
-      $model = \backend\models\Productmodel::find()->where(['brand_id' => $id])->all();
+      $model = \backend\models\Productmodel::find()->where(['brand_id' => $id])->orderby(['name'=>SORT_ASC])->all();
         $i = 0;
       if (count($model) > 0) {
           foreach ($model as $value) {
@@ -768,7 +768,7 @@ class ProductController extends Controller
       if(Yii::$app->request->isAjax){
         $id = Yii::$app->request->post('ids');
         if($id){
-          $model = \backend\models\Producttype::find()->where(['group_id'=>$id])->all();
+          $model = \backend\models\Producttype::find()->where(['group_id'=>$id])->orderby(['name'=>SORT_ASC])->all();
           if($model){
             // echo "<option>เลือกประเภทสินค้า </option>";
              foreach($model as $value){
@@ -807,7 +807,7 @@ class ProductController extends Controller
       if(Yii::$app->request->isAjax){
         $id = Yii::$app->request->post('ids');
         if($id){
-          $model = \backend\models\Property::find()->where(['type_id'=>$id])->all();
+          $model = \backend\models\Property::find()->where(['type_id'=>$id])->orderby(['name'=>SORT_ASC])->all();
           if($model){
             // echo "<option>เลือกคุณสมบัติ </option>";
              foreach($model as $value){
@@ -838,8 +838,6 @@ class ProductController extends Controller
             $text_search = Yii::$app->request->post('text_search');
             //print_r($group);return;
         }
-
-        
       
        $modellist = Product::find()
                      ->andFilterWhere(['like','category_id',$group])
@@ -848,7 +846,7 @@ class ProductController extends Controller
                      ->andFilterWhere(['in','brand_id',$brand])
                      ->andFilterWhere(['in','mode',$mode])
                      ->andFilterWhere(['in','vendor_id',$vendor])
-                     ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]])->orderby(['product_code'=>SORT_ASC])->all();
+                     ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]])->orderby(['name'=>SORT_ASC])->all();
       
       $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts

@@ -13,6 +13,7 @@
 					<th style="text-align: left">ประเภท</th>
 					<th style="text-align: left">คุณสมบัติ</th>
 					<th style="text-align: left">สั่งซื้อ</th>
+					<th style="text-align: left">ยี่ห้อ</th>
 					<th style="text-align: right">ซื้อ</th>
 					<th style="text-align: right">ขาย</th>
 					<th style="text-align: right">จำนวน</th>
@@ -27,19 +28,28 @@
 				<?php foreach($list as $value):?>
 				<?php $i+=1;?>
 				<tr>
+					 <?php
+					 	$po_qty = $value->purch_qty == 0?'-':number_format($value->purch_qty,0);
+					 	$so_qty = $value->sale_qty == 0?'-':number_format($value->sale_qty,0);
+					 	$qty = $value->qty == 0?'-':number_format($value->qty,0);
+					 	$cost = $value->cost == 0?'-':number_format($value->cost,0);
+					 	$sale_price = $value->sale_price == 0?'-':number_format($value->sale_price,0);
+					 ?>
 					<td><?=$i?></td>
 					<td><?=$value->product_code?></td>
 					<td><?=$value->name?></td>
 					<td><?= \backend\models\Category::getCategorycode($value->category_id)?></td>
 					<td><?= \backend\models\Producttype::getTypename($value->type_id)?></td>
 					<td><?= \backend\models\Property::getPropertyname($value->property_id)?></td>
+					
 					<td style="text-align: right"><?= $value->mode == 1?'Yes':'No'?></td>
-					<td style="text-align: right"><?=number_format($value->sale_qty,0)?></td>
-					<td style="text-align: right"><?=number_format($value->purch_qty,0)?></td>
-					<td style="text-align: right"><?=number_format($value->qty,0)?></td>
+					<td><?= \backend\models\Brand::getBrandname($value->unit_id)?></td>
+					<td style="text-align: right"><?=$po_qty?></td>
+					<td style="text-align: right"><?=$so_qty?></td>
+					<td style="text-align: right"><?=$qty?></td>
 					<td><?= \backend\models\Unit::getUnitname($value->unit_id)?></td>
-					<td style="text-align: right"><?=number_format($value->cost,0)?></td>
-					<td style="text-align: right"><?=number_format($value->sale_price,0)?></td>
+					<td style="text-align: right"><?=$cost?></td>
+					<td style="text-align: right"><?=$sale_price?></td>
 				</tr>
 			<?php endforeach;?>
 		<?php endif;?>
