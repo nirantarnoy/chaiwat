@@ -49,7 +49,7 @@
 					<td><?= \backend\models\Category::getCategorycode($value->category_id)?></td>
 					<td><?= \backend\models\Producttype::getTypename($value->type_id)?></td>
 					<td><?= \backend\models\Property::getPropertyname($value->property_id)?></td>
-					<td><?= \backend\models\Brand::getBrandname($value->unit_id)?></td>
+					<td><?= \backend\models\Brand::getBrandname($value->brand_id)?></td>
 					<td style="text-align: right"><?=$sale_price?></td>
 					<td style="text-align: right"><?= $value->mode == 1?'Yes':'No'?></td>
 					<td style="text-align: right"><?=$so_qty?></td>				
