@@ -213,7 +213,7 @@ $this->registerJsFile(
 
          
           <?php      echo MultiSelect::widget([
-             // 'id'=>"multiXX",
+              'id'=>"brand",
               'name'=>'brand[]',
               //'model'=>null,
               "options" => ['multiple'=>"multiple",
@@ -723,6 +723,44 @@ $this->registerJsFile(
              // $("#property").prop("disabled","");
               $("#property").html(data);
               $("#property").multiselect("rebuild");
+            }
+          });
+        }
+      });
+
+      $("#property").change(function(){
+        if($(this).val()!=""){
+          var grp = $("#product_group").val();
+          var typ = $("#product_type").val();
+
+          $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "'.Url::to(['product/showvendor'],true).'",
+            data: {groupid:grp,typeid:typ,propertyid: $(this).val()},
+            success: function(data){
+             // $("#property").prop("disabled","");
+              $("#vendor").html(data);
+              $("#vendor").multiselect("rebuild");
+            }
+          });
+        }
+      });
+      $("#vendor").change(function(){
+        if($(this).val()!=""){
+          var grp = $("#product_group").val();
+          var typ = $("#product_type").val();
+          var prop = $("#property").val();
+
+          $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "'.Url::to(['product/showbrand'],true).'",
+            data: {groupid:grp,typeid:typ,propertyid:prop,vendorid: $(this).val()},
+            success: function(data){
+             // $("#property").prop("disabled","");
+              $("#brand").html(data);
+              $("#brand").multiselect("rebuild");
             }
           });
         }

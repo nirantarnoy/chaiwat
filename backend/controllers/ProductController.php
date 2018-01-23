@@ -819,6 +819,69 @@ class ProductController extends Controller
         }
       }
     }
+     public function actionShowvendor(){
+      if(Yii::$app->request->isAjax){
+        $groupid = Yii::$app->request->post('groupid');
+        $typeid = Yii::$app->request->post('typeid');
+        $propertyid = Yii::$app->request->post('propertyid');
+
+        $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,'property_id'=>$propertyid])->all();
+        if($product){
+          $id = [];
+          foreach($product as $data){
+            array_push($id,$data->vendor_id);
+          }
+
+            if(count($id)>0){
+
+              $model = \backend\models\Vendor::find()->where(['id'=>$id])->orderby(['name'=>SORT_ASC])->all();
+              if($model){
+                // echo "<option>เลือกคุณสมบัติ </option>";
+                 foreach($model as $value){
+                   echo "<option value='" . $value->id . "'>$value->name</option>";
+                 }
+              }else{
+                 echo "<option value=''>ไม่พบข้อมูล</option>";
+              }
+            }
+          }else{
+             echo "<option value=''>ไม่พบข้อมูล</option>";
+          }
+        
+      }
+    }
+    public function actionShowbrand(){
+      if(Yii::$app->request->isAjax){
+        $groupid = Yii::$app->request->post('groupid');
+        $typeid = Yii::$app->request->post('typeid');
+        $propertyid = Yii::$app->request->post('propertyid');
+        $vendorid = Yii::$app->request->post('vendorid');
+
+        $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,'property_id'=>$propertyid,'vendor_id'=>$vendorid])->all();
+        if($product){
+          $id = [];
+          foreach($product as $data){
+            array_push($id,$data->brand_id);
+          }
+
+            if(count($id)>0){
+
+              $model = \backend\models\Brand::find()->where(['id'=>$id])->orderby(['name'=>SORT_ASC])->all();
+              if($model){
+                // echo "<option>เลือกคุณสมบัติ </option>";
+                 foreach($model as $value){
+                   echo "<option value='" . $value->id . "'>$value->name</option>";
+                 }
+              }else{
+                 echo "<option value=''>ไม่พบข้อมูล</option>";
+              }
+            }
+          }else{
+             echo "<option value=''>ไม่พบข้อมูล</option>";
+          }
+        
+      }
+    }
      public function actionShowreport(){
          $brand= '';
         $group= '';
