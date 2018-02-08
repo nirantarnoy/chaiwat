@@ -992,6 +992,9 @@ class ProductController extends Controller
                               $modelx->cost_sum = str_replace(',','', $rowData[10]);;
                               $modelx->cost = str_replace(',','', $rowData[11]);;
                               $modelx->qty = str_replace(',','', $rowData[9]);;
+                              $modelx->mode = $rowData[19]=='y'?1:0;
+                              $modelx->sale_price = str_replace(',','', $rowData[18]);;
+
                             //  $modelx->min_qty = 0;
                             //  $modelx->max_qty = 0;
                             //  $modelx->status = 1;
