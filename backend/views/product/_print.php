@@ -9,6 +9,7 @@
 					<th style="text-align: left">ลำดับ</th>
 					<th style="text-align: left">รหัสสินค้า</th>
 					<th style="text-align: left">ชื่อ</th>
+					<th style="text-align: left">หน่วย</th>
 					<th style="text-align: left">กลุ่ม</th>
 					<th style="text-align: left">ประเภท</th>
 					<th style="text-align: left">ลักษณะ</th>
@@ -23,7 +24,7 @@
 					<th style="text-align: right">ทุนรวม</th>
 					<th style="text-align: right">ต้นทุน</th>
 					<th style="text-align: right">ผู้จำหน่าย</th>
-					<th style="text-align: left">หน่วย</th>
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -45,6 +46,7 @@
 					<td><?=$i?></td>
 					<td><?=$value->product_code?></td>
 					<td><?=$value->name?></td>
+					<td><?php echo \backend\models\Unit::getUnitname($value->unit_id)?></td>
 					<td><?= \backend\models\Category::getCategorycode($value->category_id)?></td>
 					<td><?= \backend\models\Producttype::getTypename($value->type_id)?></td>
 					<td><?= \backend\models\Property::getPropertyname($value->property_id)?></td>
@@ -60,7 +62,7 @@
 					<td style="text-align: right"><?=$cost_sum?></td>
 					<td style="text-align: right"><?=$cost?></td>
 					<td><?= \backend\models\Vendor::getVendorname($value->vendor_id)?></td>
-				    <td><?php echo \backend\models\Unit::getUnitname($value->unit_id)?></td>
+				    
 				</tr>
 			<?php endforeach;?>
 		<?php endif;?>
