@@ -255,6 +255,13 @@ $this->registerJsFile(
            
             'product_code',
             'name',
+             [
+              'attribute'=>'unit_id',
+              'contentOptions'=>['style'=>'text-align: right'],
+              'value' => function($data){
+                return \backend\models\Unit::getUnitname($data->unit_id);
+              }
+             ],
             //'description',
            // 'category_id',
             //'photo',
