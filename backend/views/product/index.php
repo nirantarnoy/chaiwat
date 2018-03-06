@@ -235,6 +235,7 @@ $this->registerJsFile(
                
                 <!-- <input type="submit" class="btn btn-primary" value="ค้นหา"> -->
                <div class="btn btn-primary btn-search">ค้นหา</div>
+               <div class="btn btn-warning btn-reset">รีเซ็ต</div>
             </div>
             </form>
        
@@ -854,6 +855,25 @@ $this->registerJsFile(
         $("select#product_group").attr("buttonClass","btn-success");
         $("select#product_group").multiselect("rebuild");
       }
+   });
+
+   $("div.btn-reset").click(function(){
+        $("select#product_group option:selected").remove();
+        $("select#product_group").multiselect("rebuild");
+
+        $("select#product_type option:selected").remove();
+        $("select#product_type").multiselect("rebuild");
+
+        $("select#property option:selected").remove();
+        $("select#property").multiselect("rebuild");
+
+        $("select#vendor option:selected").remove();
+        $("select#vendor").multiselect("rebuild");
+
+         $("select#brand option:selected").remove();
+        $("select#brand").multiselect("rebuild");
+
+        $(".btn-search").trigger("click");
    });
 
   ',static::POS_END);?>
