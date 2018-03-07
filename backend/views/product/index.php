@@ -101,7 +101,7 @@ $this->registerJsFile(
             <div class="btn btn-info btn-import-update" data-toggle="modal" data-target="#myModal_update"><i class="fa fa-upload"></i> อัพเดทข้อมูลสินค้า</div>
              <div class="btn btn-danger btn-bulk-remove" disabled><i class="fa fa-trash"></i> ลบ <span class="remove_item">[0]</span></div>
              <div class="btn btn-danger btn-all-remove"><i class="fa fa-trash"></i> ลบทั้งหมด <span ></span></div>
-             <div class="btn btn-info btn-hide-col"><i class="fa fa-trash"></i> ซ่อนคอลัมน์ <span ></span></div>
+             
              <div class="btn btn-warning btn-view" disabled><i class="fa fa-eye"></i> รายละเอียด </div>
              <div class="btn btn-primary btn-update"><i class="fa fa-pencil"></i> แก้ไข </div>
              <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
@@ -238,6 +238,7 @@ $this->registerJsFile(
                 <!-- <input type="submit" class="btn btn-primary" value="ค้นหา"> -->
                <div class="btn btn-primary btn-search">ค้นหา</div>
                <div class="btn btn-warning btn-reset">รีเซ็ต</div>
+               <div class="btn btn-info btn-hide-col"><i class="fa  fa-eye-slash"></i> ซ่อนคอลัมน์ <span ></span></div>
             </div>
             </form>
        
