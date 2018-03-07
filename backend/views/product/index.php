@@ -101,6 +101,7 @@ $this->registerJsFile(
             <div class="btn btn-info btn-import-update" data-toggle="modal" data-target="#myModal_update"><i class="fa fa-upload"></i> อัพเดทข้อมูลสินค้า</div>
              <div class="btn btn-danger btn-bulk-remove" disabled><i class="fa fa-trash"></i> ลบ <span class="remove_item">[0]</span></div>
              <div class="btn btn-danger btn-all-remove"><i class="fa fa-trash"></i> ลบทั้งหมด <span ></span></div>
+             <div class="btn btn-info btn-hide-col"><i class="fa fa-trash"></i> ซ่อนคอลัมน์ <span ></span></div>
              <div class="btn btn-warning btn-view" disabled><i class="fa fa-eye"></i> รายละเอียด </div>
              <div class="btn btn-primary btn-update"><i class="fa fa-pencil"></i> แก้ไข </div>
              <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
@@ -269,6 +270,8 @@ $this->registerJsFile(
             //'photo',
               [
                'attribute'=>'category_id',
+               'headerOptions'=>['class'=>'head_cat'],
+               'contentOptions'=>['class'=>'content_cat'],
                'format' => 'html',
                'value'=>function($data){
                  return $data->category_id !== Null ? \backend\models\Category::getCategorycode($data->category_id):'';
@@ -276,14 +279,16 @@ $this->registerJsFile(
              ],
               [
               'attribute'=>'type_id',
-              'contentOptions'=>['style'=>'text-align: left'],
+              'headerOptions'=>['class'=>'head_type'],
+              'contentOptions'=>['style'=>'text-align: left','class'=>'content_type'],
               'value' => function($data){
                 return \backend\models\Producttype::getTypename($data->type_id);
               }
              ],
               [
               'attribute'=>'property_id',
-              'contentOptions'=>['style'=>'text-align: left'],
+              'headerOptions'=>['class'=>'head_prop'],
+              'contentOptions'=>['style'=>'text-align: left','class'=>'content_prop'],
               'value' => function($data){
                 return \backend\models\Property::getPropertyname($data->property_id);
               }
@@ -890,6 +895,25 @@ $this->registerJsFile(
         $("select#brand").multiselect("rebuild");
 
         $(".btn-search").trigger("click");
+   });
+
+   $("div.btn-hide-col").click(function(){
+      if($(".head_cat:visible").length == 0){
+         $(".head_cat").show();
+         $(".content_cat").show();
+         $(".head_type").show();
+         $(".content_type").show();
+         $(".head_prop").show();
+         $(".content_prop").show();
+      }else{
+         $(".head_cat").hide();
+         $(".content_cat").hide();
+          $(".head_type").hide();
+         $(".content_type").hide();
+         $(".head_prop").hide();
+         $(".content_prop").hide();
+      }
+     
    });
 
   ',static::POS_END);?>
