@@ -114,7 +114,8 @@ class ProductController extends Controller
 
         $modelfile = new Modelfile();
         $modelfile2 = new Modelfile2();
-
+         
+         $dataProvider->pagination->pageSize = 25;
          $dataProvider->query->orderby(['name'=>SORT_ASC]);
 
         if($modelfile->load(Yii::$app->request->post())){
