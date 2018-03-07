@@ -100,6 +100,7 @@ $this->registerJsFile(
             <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
             <div class="btn btn-info btn-import-update" data-toggle="modal" data-target="#myModal_update"><i class="fa fa-upload"></i> อัพเดทข้อมูลสินค้า</div>
              <div class="btn btn-danger btn-bulk-remove" disabled><i class="fa fa-trash"></i> ลบ <span class="remove_item">[0]</span></div>
+             <div class="btn btn-danger btn-all-remove"><i class="fa fa-trash"></i> ลบทั้งหมด <span ></span></div>
              <div class="btn btn-warning btn-view" disabled><i class="fa fa-eye"></i> รายละเอียด </div>
              <div class="btn btn-primary btn-update"><i class="fa fa-pencil"></i> แก้ไข </div>
              <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
@@ -686,6 +687,7 @@ $this->registerJsFile(
 <?php 
 
   $url_to_delete =  Url::to(['product/bulkdelete'],true);
+   $url_to_deleteall =  Url::to(['product/alldelete'],true);
   $url_to_showreport =  Url::to(['product/showreport'],true);
   $url_to_index_search =  Url::to(['product/index'],true);
   $url_to_update =  Url::to(['product/update2'],true);
@@ -792,6 +794,20 @@ $this->registerJsFile(
                       }
                     });
                   }
+                }
+    });
+     $(".btn-all-remove").click(function(e){
+               
+                if(confirm("คุณต้องการลบรายการทั้งหมดใช่หรือไม่")){
+                    $.ajax({
+                      type: "post",
+                      dataType: "html",
+                      url: "'.$url_to_deleteall.'",
+                      data: {id: 0},
+                      success: function(data){
+
+                      }
+                    });
                 }
     });
 

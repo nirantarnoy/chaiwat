@@ -696,6 +696,12 @@ class ProductController extends Controller
 
         return $this->redirect(['index']);
     }
+     public function actionAlldelete()
+    {
+        Product::deleteAll();
+
+        return $this->redirect(['index']);
+    }
     public function actionBulkdelete()
     {
         if(Yii::$app->request->isAjax){
