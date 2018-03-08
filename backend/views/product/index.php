@@ -121,7 +121,7 @@ $this->registerJsFile(
         <!--    <form id="search-form" action="index.php?r=product" method="get"> -->
                    <div class="form-inline">
                     
-                    <input type="text" name="text_search" class="form-control" value="<?=$text_search?>" placeholder="รหัสสินค้า,ชื่อสินค้า">
+                    <input type="text" name="text_search" class="form-control text_search" value="<?=$text_search?>" placeholder="รหัสสินค้า,ชื่อสินค้า">
                     <?php      echo MultiSelect::widget([
                             'id'=>"product_group",
                             'name'=>'product_group[]',
@@ -194,7 +194,7 @@ $this->registerJsFile(
                                 ], 
                         ]); ?>
                
-                <select class="form-control" name="mode">
+                <select class="form-control sale_mode" name="mode">
                   <option value="">เลือกโหมดสั่งซื้อ</option>
                   <?php for($i=0;$i<=count($modeall)-1;$i++):?>
                   <?php $select = '';
@@ -880,6 +880,8 @@ $this->registerJsFile(
    });
 
    $("div.btn-reset").click(function(){
+
+        $(".text_search").val("");
         $("select#product_group option:selected").remove();
         $("select#product_group").multiselect("rebuild");
 
@@ -894,6 +896,8 @@ $this->registerJsFile(
 
          $("select#brand option:selected").remove();
         $("select#brand").multiselect("rebuild");
+
+        $("select.sale_mode option:selected").remove();
 
         $(".btn-search").trigger("click");
    });
