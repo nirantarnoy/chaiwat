@@ -83,10 +83,10 @@ class ProductController extends Controller
             $session['text_search'] = $text_search;
         }
 
-        
+        //print_r($session['group']);
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['like','category_id',$session['group']])
+        $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
                      ->andFilterWhere(['in','type_id',$session['product_type']])
                      ->andFilterWhere(['in','property_id',$session['property']])
                      ->andFilterWhere(['in','brand_id',$session['brand']])
@@ -96,7 +96,7 @@ class ProductController extends Controller
 
         //$dataProvider->pagination->pageSize = 10;
        $sale_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])
-                                  ->andFilterWhere(['like','category_id',$session['group']])
+                                  ->andFilterWhere(['in','category_id',$session['group']])
                                    ->andFilterWhere(['in','type_id',$session['product_type']])
                                    ->andFilterWhere(['in','property_id',$session['property']])
                                    ->andFilterWhere(['in','brand_id',$session['brand']])
@@ -104,7 +104,7 @@ class ProductController extends Controller
                                    ->andFilterWhere(['in','vendor_id',$session['vendor']])
                                    ->sum('sale_qty');
        $purch_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])
-                                  ->andFilterWhere(['like','category_id',$session['group']])
+                                  ->andFilterWhere(['in','category_id',$session['group']])
                                    ->andFilterWhere(['in','type_id',$session['product_type']])
                                    ->andFilterWhere(['in','property_id',$session['property']])
                                    ->andFilterWhere(['in','brand_id',$session['brand']])
