@@ -699,7 +699,23 @@ class ProductController extends Controller
     }
      public function actionAlldelete()
     {
-        Product::deleteAll();
+        //Product::deleteAll();
+      $session = Yii::$app->session;
+      if($session['group']!=''){
+        $res = Product::find()->Where(['in','category_id',$session['group']])
+                     ->orFilterWhere(['in','type_id',$session['product_type']])
+                     ->orFilterWhere(['in','property_id',$session['property']])
+                     ->orFilterWhere(['in','brand_id',$session['brand']])
+                     ->orFilterWhere(['in','mode',$session['mode']])
+                     ->orFilterWhere(['in','vendor_id',$session['vendor']])
+                     ->orFilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])->all();
+      if(count($res)>0){
+        foreach($res as $data){
+          Product::deleteAll(['id'=>$data->id]);
+        }
+      }
+      }
+      
 
         return $this->redirect(['index']);
     }

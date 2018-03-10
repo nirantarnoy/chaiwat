@@ -48,10 +48,10 @@ $xpurch = intval($purch_sum);
 //   ));
 
 $groupall = \backend\models\Category::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
-$typeall = \backend\models\Producttype::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
-$brandall = \backend\models\Brand::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
-$vendorall = \backend\models\Vendor::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
-$propertyall = \backend\models\Property::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
+$typeall = \backend\models\Producttype::find()->where(['=','name',''])->orderby(['name'=>SORT_ASC])->all();
+$brandall = \backend\models\Brand::find()->where(['=','name',''])->orderby(['name'=>SORT_ASC])->all();
+$vendorall = \backend\models\Vendor::find()->where(['=','name',''])->orderby(['name'=>SORT_ASC])->all();
+$propertyall = \backend\models\Property::find()->where(['=','name',''])->orderby(['name'=>SORT_ASC])->all();
 $modeall = [['id'=>1,'name'=>'สั่งซ์้อ'],['id'=>0,'name'=>'ไม่สั่งซ์้อ']];
 if($product_type !='' && $group !=''){
   $typeall = \backend\models\Producttype::find()->where(['group_id'=>$group])->orderby(['name'=>SORT_ASC])->all();
@@ -146,7 +146,7 @@ $this->registerJsFile(
                             'name'=>'type',
                             'id'=>"product_type",
                             //'model'=>null,
-                            "options" => ['multiple'=>"multiple"], // for the actual multiselect
+                            "options" => ['multiple'=>"multiple","disabled"=>"disabled"], // for the actual multiselect
                             'data' => count($typeall)==0?['No Data']:ArrayHelper::map($typeall,'id','name'), // data as array
                             'value' => $product_type, // if preselected
                             "clientOptions" => 
@@ -155,7 +155,7 @@ $this->registerJsFile(
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'ประเภทสินค้า',
                                     'enableFiltering' => true,
-                                    'disabled' => true,
+                                    'disabled' => 'disabled',
                                     'enableCaseInsensitiveFiltering'=>true,
                                 ], 
                         ]); ?>
@@ -163,7 +163,7 @@ $this->registerJsFile(
                         'id'=>"property",
                         'name'=>'property[]',
                         //'model'=>null,
-                        "options" => ['multiple'=>"multiple"], // for the actual multiselect
+                        "options" => ['multiple'=>"multiple","disabled"=>"disabled"], // for the actual multiselect
                         'data' => count($typeall)==0?['No Data']:ArrayHelper::map($propertyall,'id','name'), // data as array
                         'value' => $property, // if preselected
                         "clientOptions" => 
@@ -181,7 +181,7 @@ $this->registerJsFile(
                             'name'=>'vendor[]',
                             'id'=>"vendor",
                             //'model'=>null,
-                            "options" => ['multiple'=>"multiple"], // for the actual multiselect
+                            "options" => ['multiple'=>"multiple","disabled"=>"disabled"], // for the actual multiselect
                             'data' => count($vendorall)==0?['No Data']:ArrayHelper::map($vendorall,'id','name'), // data as array
                             'value' => $vendor, // if preselected
                             "clientOptions" => 
@@ -218,7 +218,7 @@ $this->registerJsFile(
               'id'=>"brand",
               'name'=>'brand[]',
               //'model'=>null,
-              "options" => ['multiple'=>"multiple",
+              "options" => ['multiple'=>"multiple","disabled"=>"disabled"
                             
                            ], // for the actual multiselect
               'data' => count($brandall)==0?['No Data']:ArrayHelper::map($brandall,'id','name'), // data as array
@@ -703,7 +703,14 @@ $this->registerJsFile(
       var serc = "'.count($product_type).'";
       var perty = "'.count($property).'";
 
-     $("select#product_type").prop("disabled","disabled");
+     $("select#product_type").multiselect({
+            disableIfEmpty: true,
+            disabledText: "ประเภทสินค้า" 
+     });
+     $("select#property").multiselect({
+            disableIfEmpty: true,
+            disabledText: "ลักษณะ" 
+     });
        //});                   
 
       if(serc !=""){
@@ -805,15 +812,20 @@ $this->registerJsFile(
      $(".btn-all-remove").click(function(e){
                
                 if(confirm("คุณต้องการลบรายการทั้งหมดใช่หรือไม่")){
-                    $.ajax({
-                      type: "post",
-                      dataType: "html",
-                      url: "'.$url_to_deleteall.'",
-                      data: {id: 0},
-                      success: function(data){
+                    // $.ajax({
+                    //   type: "post",
+                    //   dataType: "html",
+                    //   url: "'.$url_to_deleteall.'",
+                    //   data: {id: 0},
+                    //   success: function(data){
 
-                      }
-                    });
+                    //   }
+                    // });
+
+                    $("#search-form").attr("action","");
+                    $("#search-form").attr("target","_parent");
+                    $("#search-form").attr("action","'.$url_to_deleteall.'");
+                    $("#search-form").submit();
                 }
     });
 
