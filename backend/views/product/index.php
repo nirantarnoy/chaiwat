@@ -218,7 +218,8 @@ $this->registerJsFile(
               'id'=>"brand",
               'name'=>'brand[]',
               //'model'=>null,
-              "options" => ['multiple'=>"multiple","disabled"=>"disabled"
+              "options" => ['multiple'=>"multiple",
+                              //"disabled"=>"disabled"
                             
                            ], // for the actual multiselect
               'data' => count($brandall)==0?['No Data']:ArrayHelper::map($brandall,'id','name'), // data as array
@@ -703,14 +704,14 @@ $this->registerJsFile(
       var serc = "'.count($product_type).'";
       var perty = "'.count($property).'";
 
-     $("select#product_type").multiselect({
-            disableIfEmpty: true,
-            disabledText: "ประเภทสินค้า" 
-     });
-     $("select#property").multiselect({
-            disableIfEmpty: true,
-            disabledText: "ลักษณะ" 
-     });
+     // $("select#product_type").multiselect({
+     //        disableIfEmpty: true,
+     //        disabledText: "ประเภทสินค้า" 
+     // });
+     // $("select#property").multiselect({
+     //        disableIfEmpty: true,
+     //        disabledText: "ลักษณะ" 
+     // });
        //});                   
 
       if(serc !=""){
@@ -910,6 +911,7 @@ $this->registerJsFile(
         $("select#brand").multiselect("rebuild");
 
         $("select.sale_mode option:selected").remove();
+        $("select.sale_mode").val("เลือกโหมดสั่งซื้อ").change();
 
         $(".btn-search").trigger("click");
    });
