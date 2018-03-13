@@ -917,8 +917,8 @@ $this->registerJsFile(
          $("select#brand option:selected").remove();
         $("select#brand").multiselect("rebuild");
 
-        $("select.sale_mode option:selected").remove();
-        $("select.sale_mode").val("เลือกโหมดสั่งซื้อ").change();
+        $("select#sale_mode option:selected").remove();
+        $("select#sale_mode").val("เลือกโหมดสั่งซื้อ").change();
 
         $(".btn-search").trigger("click");
    });
