@@ -163,7 +163,9 @@ $this->registerJsFile(
                         'id'=>"property",
                         'name'=>'property[]',
                         //'model'=>null,
-                        "options" => ['multiple'=>"multiple","disabled"=>"disabled"], // for the actual multiselect
+                        "options" => ['multiple'=>"multiple",
+                              //"disabled"=>"disabled"
+                        ], // for the actual multiselect
                         'data' => count($typeall)==0?['No Data']:ArrayHelper::map($propertyall,'id','name'), // data as array
                         'value' => $property, // if preselected
                         "clientOptions" => 
@@ -179,9 +181,11 @@ $this->registerJsFile(
                  <?php      echo MultiSelect::widget([
                             'id'=>"vendor",
                             'name'=>'vendor[]',
-                            'id'=>"vendor",
+                           // 'id'=>"vendor",
                             //'model'=>null,
-                            "options" => ['multiple'=>"multiple","disabled"=>"disabled"], // for the actual multiselect
+                            "options" => ['multiple'=>"multiple",
+                                    //"disabled"=>"disabled"
+                            ], // for the actual multiselect
                             'data' => count($vendorall)==0?['No Data']:ArrayHelper::map($vendorall,'id','name'), // data as array
                             'value' => $vendor, // if preselected
                             "clientOptions" => 
@@ -193,25 +197,28 @@ $this->registerJsFile(
                                     'enableCaseInsensitiveFiltering'=>true,
                                 ], 
                         ]); ?>
+
+                         <?php      echo MultiSelect::widget([
+                            'id'=>"sale_mode",
+                            'name'=>'mode',
+                            //'id'=>"vendor",
+                            //'model'=>null,
+                            "options" => ['multiple'=>"multiple",
+                                    //"disabled"=>"disabled"
+                            ], // for the actual multiselect
+                            'data' => count($modeall)==0?['เลือกโหมดสั่งซื้อ']:ArrayHelper::map($modeall,'id','name'), // data as array
+                            'value' => $mode, // if preselected
+                            "clientOptions" => 
+                                [
+                                    "includeSelectAllOption" => true,
+                                    'numberDisplayed' => 5,
+                                    'nonSelectedText'=>'เลือกโหมดสั่งซื้อ',
+                                    'enableFiltering' => true,
+                                    'enableCaseInsensitiveFiltering'=>true,
+                                ], 
+                        ]); ?>
                
-                <select class="form-control sale_mode" name="mode">
-                  <option value="">เลือกโหมดสั่งซื้อ</option>
-                  <?php for($i=0;$i<=count($modeall)-1;$i++):?>
-                  <?php $select = '';
-                  if($mode != ''):?>
-                  <?php
-                    if($modeall[$i]['id'] == $mode){
-                      $select = 'selected';
-                    } ?>
-                     <option value="<?=$modeall[$i]['id']?>" <?=$select?>><?=$modeall[$i]['name']?></option>
-                  <?php else:?>
-                     <option value="<?=$modeall[$i]['id']?>" <?=$select?>><?=$modeall[$i]['name']?></option>
-                  <?php 
-                    endif;
-                  ?>
-                 
-                 <?php endfor;?>
-                </select>
+               
 
          
           <?php      echo MultiSelect::widget([
