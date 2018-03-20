@@ -24,6 +24,23 @@ $this->params['breadcrumbs'][] = $this->title;
 $xsale = intval($sale_sum);
 $xpurch = intval($purch_sum);
 
+$modelx = $dataProvider->query->all();
+$modellist = '';
+if($modelx){
+  $x =0;
+  foreach($modelx as $data){
+    if($x==0){
+      $modellist.=$data->id;
+    }elseif($x==count($modelx)){
+      $modellist.=','.$data->id;
+    }else{
+      $modellist.= ','.$data->id;
+    }
+    $x+=1;
+  }
+}
+
+
 // $events = array();
 //   //Testing
 //   $Event = new \yii2fullcalendar\models\Event();
@@ -820,20 +837,22 @@ $this->registerJsFile(
      $(".btn-all-remove").click(function(e){
                
                 if(confirm("คุณต้องการลบรายการทั้งหมดใช่หรือไม่")){
-                    // $.ajax({
-                    //   type: "post",
-                    //   dataType: "html",
-                    //   url: "'.$url_to_deleteall.'",
-                    //   data: {id: 0},
-                    //   success: function(data){
+                    var datax;
+                    datax = "'.$modellist.'";
+                    $.ajax({
+                      type: "post",
+                      dataType: "html",
+                      url: "'.$url_to_deleteall.'",
+                      data: {id: datax },
+                      success: function(data){
+                          //alert(data);
+                      }
+                    });
 
-                    //   }
-                    // });
-
-                    $("#search-form").attr("action","");
-                    $("#search-form").attr("target","_parent");
-                    $("#search-form").attr("action","'.$url_to_deleteall.'");
-                    $("#search-form").submit();
+                    // $("#search-form").attr("action","");
+                    // $("#search-form").attr("target","_parent");
+                    // $("#search-form").attr("action","'.$url_to_deleteall.'");
+                    // $("#search-form").submit();
                 }
     });
 

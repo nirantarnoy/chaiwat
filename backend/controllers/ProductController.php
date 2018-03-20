@@ -115,6 +115,7 @@ class ProductController extends Controller
         $modelfile = new Modelfile();
         $modelfile2 = new Modelfile2();
          
+         $model_select = $dataProvider->getTotalCount();//$dataProvider->getModels();
          $dataProvider->pagination->pageSize = 25;
          $dataProvider->query->orderby(['name'=>SORT_ASC]);
 
@@ -407,6 +408,7 @@ class ProductController extends Controller
             'text_search' => $text_search,
             'sale_sum'=> $sale_sum,
             'purch_sum'=> $purch_sum,
+            'model_select'=> $model_select,
         ]);
     }
     function convert( $str ) {
@@ -700,20 +702,29 @@ class ProductController extends Controller
      public function actionAlldelete()
     {
         //Product::deleteAll();
-      $session = Yii::$app->session;
-      if($session['group']!=''){
-        $res = Product::find()->Where(['in','category_id',$session['group']])
-                     ->orFilterWhere(['in','type_id',$session['product_type']])
-                     ->orFilterWhere(['in','property_id',$session['property']])
-                     ->orFilterWhere(['in','brand_id',$session['brand']])
-                     ->orFilterWhere(['in','mode',$session['mode']])
-                     ->orFilterWhere(['in','vendor_id',$session['vendor']])
-                     ->orFilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])->all();
-      if(count($res)>0){
-        foreach($res as $data){
-          Product::deleteAll(['id'=>$data->id]);
+      // $session = Yii::$app->session;
+      // if($session['group']!=''){
+      //   $res = Product::find()->Where(['in','category_id',$session['group']])
+      //                ->andFilterWhere(['in','type_id',$session['product_type']])
+      //                ->andFilterWhere(['in','property_id',$session['property']])
+      //                ->andFilterWhere(['in','brand_id',$session['brand']])
+      //                ->andFilterWhere(['in','mode',$session['mode']])
+      //                ->andFilterWhere(['in','vendor_id',$session['vendor']])
+      //                ->andFilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])->all();
+      // if(count($res)>0){
+      //   foreach($res as $data){
+      //     Product::deleteAll(['id'=>$data->id]);
+      //   }
+      // }
+      // }
+
+      if(Yii::$app->request->isAjax){
+        $ids = Yii::$app->request->post('id');
+        if($ids !=''){
+         // return $ids;
+          $idd = explode(',', $ids);
+          Product::deleteAll(['id'=>$idd]);
         }
-      }
       }
       
 
