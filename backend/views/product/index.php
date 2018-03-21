@@ -283,7 +283,18 @@ $this->registerJsFile(
             //'id',
            
             'product_code',
-            'name',
+            //'name',
+            [
+              'attribute'=>'name',
+              'format'=>'raw',
+              'value'=>function($data){
+                  if($data->notes!=''){
+                    return '<div onclick="shownote('.$data->id.');" class="show_note" style="color: red;cursor: pointer">'.$data->name.'</div>';
+                  }else{
+                    return '<div>'.$data->name.'</div>';
+                  }
+              }
+            ],
              [
               'attribute'=>'unit_id',
               'contentOptions'=>['style'=>'text-align: right'],
@@ -637,6 +648,30 @@ $this->registerJsFile(
 
   </div>
 </div>
+<div id="myModal_note" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-commenting"></i> บันทึก <small id="items"> </small></h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+          <div class="col-lg-12">
+             <p class="note_text"></p>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
 <div id="myModal_chart" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
 
@@ -723,6 +758,7 @@ $this->registerJsFile(
   $url_to_index_search =  Url::to(['product/index'],true);
   $url_to_update =  Url::to(['product/update2'],true);
   $url_to_view =  Url::to(['product/view2'],true);
+  $url_to_getnote =  Url::to(['product/getnote'],true);
   $this->registerJs('
     $(function(){
       var serc = "'.count($product_type).'";
@@ -960,5 +996,20 @@ $this->registerJsFile(
       }
      
    });
+
+   function shownote(id){
+     if(id != ""){
+        $.ajax({
+                  type: "post",
+                  dataType: "html",
+                  url: "'.$url_to_getnote.'",
+                  data: {ids: id},
+                  success: function(data){
+                    //alert(data);
+                    $("#myModal_note").modal("show").find(".note_text").text(data);
+                  }
+        });
+     }
+   }
 
   ',static::POS_END);?>

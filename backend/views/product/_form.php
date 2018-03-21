@@ -147,7 +147,7 @@ $brand = \backend\models\Brand::find()->where(['status'=>1])->all();
                                    <?php echo $form->field($model, 'mode')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
                                   
                                     <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
-
+                                    <?= $form->field($model, 'notes')->textarea() ?>
                                   
                                 </div>
                                 <div class="col-lg-6">

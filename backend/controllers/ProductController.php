@@ -1117,6 +1117,22 @@ class ProductController extends Controller
           $model->save(false);
         }
       }
+      public function actionGetnote(){
+        if(Yii::$app->request->isAjax){
+          $id = Yii::$app->request->post('ids');
+          if($id){
+            $model = Product::find()->where(['id'=>$id])->one();
+            if($model){
+              return $model->notes;
+            }else{
+              return '';
+            }
+
+          }else{
+            return '';
+          }
+        }
+      }
 
 }
 

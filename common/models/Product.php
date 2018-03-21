@@ -41,7 +41,7 @@ class Product extends \yii\db\ActiveRecord
             [['name','category_id','product_code'],'required'],
             [['category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','parent_id','brand_id','model_id','property_id','type_id'], 'integer'],
             [['weight', 'price','cost','sale_price_1','sale_price_2','qty','min_qty','max_qty','purch_qty','sale_qty','return_qty','adjust_qty','cost_sum','product_start'], 'number'],
-            [['product_code', 'name', 'description', 'photo','selection'], 'string', 'max' => 255],
+            [['product_code', 'name', 'description', 'photo','selection','notes'], 'string', 'max' => 255],
             [['group_id','vendor_id','mode'],'integer'],
             [['front_qty','back_qty','back_qty2','total_qty','sale_price'],'number']
         ];
@@ -93,6 +93,7 @@ class Product extends \yii\db\ActiveRecord
             'selection'=>'รายการที่เลือก',
             'mode' => 'สั่งซื้อ',
             'sale_price' => 'ราคาขาย',
+            'notes'=>'บันทึกพิเเศษ',
         ];
     }
 }
