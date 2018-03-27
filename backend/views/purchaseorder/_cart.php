@@ -9,6 +9,7 @@ $this->title = "รายการสั่งซื้อ";
  ?>
 <div class="row">
 	<div class="col-lg-12">
+		
 		<table class="table table-cart">
 			<thead>
 				<tr>
@@ -39,10 +40,15 @@ $this->title = "รายการสั่งซื้อ";
 				</tr>
 				<?php 
 				 endforeach;
+				 ?>
+				<?php else: ?>
+				  <div style="width: 100%;text-align: center;"><b><p>ไม่พบรายการ</p></b></div>
+				 <?
 				 endif;
 				 ?>
 			</tbody>
 			<tfoot>
+				<?php if(isset($session['cart'])):?>
 				<tr>
 					<td></td>
 					<td></td>
@@ -51,17 +57,20 @@ $this->title = "รายการสั่งซื้อ";
 					<td style="text-align: right">ยอดรวม</td>
 					<td style="text-align: right;font-size: 16px"><b><p class="total"></p></b></td>
 				</tr>
+				
 				<tr>
 					<td></td>
 					<td></td>
 					<td colspan="4">
-						<div class="btn btn-danger"><i class="fa fa-trash"></i> ทิ้งรายการ </div>
+						<div class="btn btn-danger remove-order"><i class="fa fa-trash"></i> ทิ้งรายการ </div>
 						<div class="btn btn-default"><i class="fa fa-plus"></i> เพิ่มสินค้า </div>
 						<div class="btn btn-primary"><i class="fa fa-save"></i> บันทึกใบสั่งซื้อ </div>
 					</td>
 				</tr>
+			<?php endif;?>
 			</tfoot>
 		</table>
+	<?php endif;?>
 	</div>
 </div>
 <?php 
@@ -77,6 +86,9 @@ $this->title = "รายการสั่งซื้อ";
 				sumall();
 			}
 
+		});
+		$(".remove-order").click(function(){
+            $.get("index.php?r=purchaseorder/removeorder");
 		});
 		function calprice(e){
 			var qty = e.closest("tr").find(".qty").val();
@@ -99,5 +111,6 @@ $this->title = "รายการสั่งซื้อ";
 			}); 
 			$(".table-cart >tfoot").find(".total").text(parseFloat(amt).toLocaleString());
 		}
+
   ');
 ?>

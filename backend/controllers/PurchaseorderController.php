@@ -331,4 +331,8 @@ public function actionProductlist($q = null) {
     public function actionShowitem(){
         return $this->renderAjax('_cart');
     }
+    public function actionRemoveorder(){
+        $session = Yii::$app->session;
+        unset($session['cart']);
+    }
 }
