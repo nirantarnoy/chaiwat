@@ -12,6 +12,7 @@ use dosamigos\multiselect\MultiSelect;
 use backend\assets\ICheckAsset;
 use miloschuman\highcharts\Highcharts;
 use yii\web\JsExpression;
+use backend\common\cart;
 
 ICheckAsset::register($this);
 /* @var $this yii\web\View */
@@ -39,7 +40,20 @@ if($modelx){
     $x+=1;
   }
 }
-
+$session = Yii::$app->session;
+unset($session['cart']);
+// $cart = new cart();
+// $cart->addCart(100,['prodid'=>1,'qty'=>1]);
+// if(isset($session['cart'])){
+//                      $infocart = $session['cart'];
+//                     // echo $infocart[100]['product_id'];
+//                      //print_r($infocart);
+//                      foreach($infocart as $key => $data){
+//                         echo $key.' '.$data['product_id'];
+//                      }
+//                    }else{
+//                     //return 50;
+//                    }
 
 // $events = array();
 //   //Testing
@@ -122,7 +136,8 @@ $this->registerJsFile(
              <div class="btn btn-warning btn-view" disabled><i class="fa fa-eye"></i> รายละเอียด </div>
              <div class="btn btn-primary btn-update"><i class="fa fa-pencil"></i> แก้ไข </div>
              <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
-             <div class="btn btn-default btn-po"> <i class="fa fa-shopping-cart"></i> สร้างใบสั่งซื้อ</div>
+             <!-- <div class="btn btn-default btn-po"> <i class="fa fa-shopping-cart"></i> สร้างใบสั่งซื้อ</div> -->
+             <div class="btn btn-default btn-pick"> <i class="fa fa-shopping-cart"></i> หยิบใส่ตะกร้า</div>
              <div class="btn btn-default btn-chart"> <i class="fa fa-pie-chart"></i> กราฟเปรียบเทียบซื้อขาย</div>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -672,6 +687,25 @@ $this->registerJsFile(
 
   </div>
 </div>
+<div id="myModal_cart" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> รายการสั่งซื้อ <small id="items"> </small></h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
 <div id="myModal_chart" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
 
@@ -759,6 +793,8 @@ $this->registerJsFile(
   $url_to_update =  Url::to(['product/update2'],true);
   $url_to_view =  Url::to(['product/view2'],true);
   $url_to_getnote =  Url::to(['product/getnote'],true);
+  $url_to_addpick =  Url::to(['purchaseorder/addpick'],true);
+  $url_to_showcart =  Url::to(['purchaseorder/showitem'],true);
   $this->registerJs('
     $(function(){
       var serc = "'.count($product_type).'";
@@ -939,7 +975,7 @@ $this->registerJsFile(
                       url: "'.$url_to_update.'",
                       data: {id: $(".listid").val()},
                       success: function(data){
-
+  
                       }
                     });
                   }else{
@@ -995,6 +1031,36 @@ $this->registerJsFile(
          $(".content_prop").hide();
       }
      
+   });
+
+   $(".btn-pick").click(function(){
+      var cnt = $(".listid").val().split(",");
+      var listid = $(".listid").val();
+       if(cnt.length > 0){
+          $.ajax({
+                  type: "post",
+                  dataType: "html",
+                  url: "'.$url_to_addpick.'",
+                  data: {ids: listid},
+                  success: function(data){
+                    // alert(data);
+                    $(".cnt-pick").text(data);
+                  }
+        });
+       }
+
+   });
+   $(".show-pick").click(function(){
+       // $.ajax({
+       //            type: "post",
+       //            dataType: "html",
+       //            url: "'.$url_to_showcart.'",
+       //            data: {ids: 0},
+       //            success: function(data){
+                   
+       //            }
+       //  });
+       $("#myModal_cart").modal("show").find(".modal-body").load("'.$url_to_showcart.'");
    });
 
    function shownote(id){

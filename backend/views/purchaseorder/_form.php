@@ -124,6 +124,9 @@ use yii\helpers\Url;
                       ]);
                   ?>
                 </div>
+                <div class="col-lg-3">
+                  <div class="btn btn-add btn-default"><i class="fa fa-plus"></i> เพิ่มสินค้า</div>
+                </div>
                </div>
                <div class="table-responsive">
 
@@ -191,9 +194,36 @@ use yii\helpers\Url;
     
 
 </div>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-cubes"></i> รหัสสินค้า <small id="items"> </small></h4>
+      </div>
+      <div class="modal-body">
+        <?php echo $this->render('_productlist'); ?>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
+
+
 <?php $this->registerJs('
   $(function(){
    sumall();
+
+  $(".btn-add").click(function(){
+    $("#myModal").modal("show");
+  });
+
   });
   function sumall(){
     var amount = 0;

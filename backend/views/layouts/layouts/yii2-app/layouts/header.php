@@ -19,6 +19,7 @@ $session->open();
 // $img_logo = $directoryAsset.'/img/blue.png';
 
 
+
 ?>
 
 <header class="main-header">
@@ -31,7 +32,13 @@ $session->open();
         </a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-
+                <li class="dropdown notifications-menu show-pick">
+                    <a href="#">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="label label-warning cnt-pick">0</span>
+                    </a>
+                    
+                </li>
                 <!-- Messages: style can be found in dropdown.less-->
                 <?php //if($session['roleid'] ==1):?>
                 <li class="dropdown notifications-menu">

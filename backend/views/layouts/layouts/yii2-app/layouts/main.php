@@ -5,6 +5,8 @@ use yii\web\Session;
 $session = new Session();
 $session->open();
 
+$_SESSION['picklist']= [];
+
 
 /* @var $this \yii\web\View */
 /* @var $content string */

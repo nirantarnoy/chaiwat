@@ -10,6 +10,14 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Trans;
 use yii\helpers\Json;
+use backend\models\Product;
+use yii\web\Session;
+use Yii\headers\ArrayHelper;
+use backend\common\cart;
+
+$session = new Session();
+$session->open();
+
 /**
  * PurchaseorderController implements the CRUD actions for Purchaseorder model.
  */
@@ -187,6 +195,10 @@ class PurchaseorderController extends Controller
 
         return $this->redirect(['index']);
     }
+    public function actionProductitem(){
+        $model = Product::find()->where(['vendor_id'=>148])->all();
+        return $this->renderAjax('_productlist',['model'=>$model]);
+    }
 
     /**
      * Finds the Purchaseorder model based on its primary key value.
@@ -291,4 +303,32 @@ public function actionProductlist($q = null) {
       }
 
 }
+    public function actionAddpick(){
+        if(Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('ids');
+            if($id!=''){
+                $ids = explode(',', $id);
+                 
+                for($i=0;$i<=count($ids)-1;$i++){
+                     $model = Product::getProductInfo($ids[$i]);
+                     $cart = new cart();
+                     $cart->addCart($ids[$i],['prodid'=>$model->product_code,'name'=>$model->name,'price'=>$model->price,'qty'=>1]);
+                }
+                $session = Yii::$app->session;
+                if(isset($session['cart'])){
+                        $infocart = $session['cart'];
+                         return count($infocart);
+                }else{
+                        //return 50;
+                }
+            }
+        }
+    }
+    // public function actionShowcart(){
+    //     //$session = Yii::$app->session;
+    //     return $this->redirect(['purchaseorder/showitem']);
+    // }
+    public function actionShowitem(){
+        return $this->renderAjax('_cart');
+    }
 }
