@@ -13,6 +13,7 @@ use backend\assets\ICheckAsset;
 use miloschuman\highcharts\Highcharts;
 use yii\web\JsExpression;
 use backend\common\cart;
+use lavrentiev\widgets\toastr\Notification;
 
 ICheckAsset::register($this);
 /* @var $this yii\web\View */
@@ -41,7 +42,7 @@ if($modelx){
   }
 }
 $session = Yii::$app->session;
-unset($session['cart']);
+//unset($session['cart']);
 // $cart = new cart();
 // $cart->addCart(100,['prodid'=>1,'qty'=>1]);
 // if(isset($session['cart'])){
@@ -98,6 +99,37 @@ $this->registerJsFile(
 );
 
 ?>
+
+<?php $session = Yii::$app->session;
+      if ($session->getFlash('msg_addcart')): ?>
+       <!-- <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <?php //echo $session->getFlash('msg'); ?>
+      </div> -->
+        <?php echo Notification::widget([
+            'type' => 'success',
+            'title' => 'แจ้งผลการทำงาน',
+            'message' => $session->getFlash('msg_addcart'),
+            'options' => [
+                "closeButton" => false,
+                "debug" => false,
+                "newestOnTop" => false,
+                "progressBar" => false,
+                "positionClass" => "toast-bottom-center",
+                "preventDuplicates" => false,
+                "onclick" => null,
+                "showDuration" => "300",
+                "hideDuration" => "1000",
+                "timeOut" => "6000",
+                "extendedTimeOut" => "1000",
+                "showEasing" => "swing",
+                "hideEasing" => "linear",
+                "showMethod" => "fadeIn",
+                "hideMethod" => "fadeOut"
+            ]
+        ]); ?> 
+        <?php endif; 
+  ?>
 <div class="product-index">
   <input type="hidden" name="listid" class="listid" value="">
    <div class="row">
@@ -1045,6 +1077,7 @@ $this->registerJsFile(
                   success: function(data){
                     // alert(data);
                     $(".cnt-pick").text(data);
+                    location.reload();
                   }
         });
        }
@@ -1062,6 +1095,7 @@ $this->registerJsFile(
        //  });
        $("#myModal_cart").modal("show").find(".modal-body").load("'.$url_to_showcart.'");
    });
+
 
    function shownote(id){
      if(id != ""){

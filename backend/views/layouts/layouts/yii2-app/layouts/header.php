@@ -15,6 +15,11 @@ use yii\helpers\Url;
 $session = new Session();
 $session->open();
 
+$cart_item = 0;
+if(isset($session['cart'])){
+    $cart_item = count($session['cart']);
+}
+
 // $noti = Notification::find()->where(['!=','status',1])->all();
 // $img_logo = $directoryAsset.'/img/blue.png';
 
@@ -35,7 +40,7 @@ $session->open();
                 <li class="dropdown notifications-menu show-pick">
                     <a href="#">
                         <i class="fa fa-shopping-cart"></i>
-                        <span class="label label-warning cnt-pick">0</span>
+                        <span class="label label-warning cnt-pick"><?=$cart_item?></span>
                     </a>
                     
                 </li>

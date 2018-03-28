@@ -23,6 +23,7 @@ $session->open();
  */
 class PurchaseorderController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -33,6 +34,7 @@ class PurchaseorderController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST','GET'],
+                    'submitcart'=>['POST','GET'],
                 ],
             ],
         ];
@@ -317,6 +319,7 @@ public function actionProductlist($q = null) {
                 $session = Yii::$app->session;
                 if(isset($session['cart'])){
                         $infocart = $session['cart'];
+                        $session->setFlash('msg_addcart','เพิ่มสินค้าเรียบร้อย');
                          return count($infocart);
                 }else{
                         //return 50;
@@ -334,5 +337,39 @@ public function actionProductlist($q = null) {
     public function actionRemoveorder(){
         $session = Yii::$app->session;
         unset($session['cart']);
+    }
+    public function actionSubmitcart(){
+
+    }
+    public function actionUpdatecart(){
+        if(Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('prodid');
+            $prc = Yii::$app->request->post('prc');
+            $qty = Yii::$app->request->post('qty');
+            if($id){
+                $model = Product::getProductInfo($id);
+                $cart = new cart();
+                $res = $cart->updateCart($id,$model->product_code,$model->name,$prc,$qty);
+                return $res;
+            }else{
+                return 2;
+            }
+        }
+    }
+    public function actionRemoveitemcart(){
+        if(Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('prodid');
+            if($id){
+                 $cart = new cart();
+                 $res = $cart->removeItemCart($id);
+                // return $res;
+                 $session = Yii::$app->session;
+                if(isset($session['cart'])){
+                   return count($session['cart']);
+                }
+            }else{
+                return 2;
+            }
+        }
     }
 }
