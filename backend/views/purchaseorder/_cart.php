@@ -127,7 +127,7 @@ $this->title = "รายการสั่งซื้อ";
                   url: "'.$url_to_submitcart.'",
                   data: {id: 0},
                   success: function(data){
-                    alert(data);
+                   // alert(data);
                   }
         	});
    		});
