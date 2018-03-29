@@ -339,7 +339,84 @@ public function actionProductlist($q = null) {
         unset($session['cart']);
     }
     public function actionSubmitcart(){
+           $session = Yii::$app->session;
+           if(isset($session['cart'])){
+              if(isset($session['purchase_id'])){
+                       $cart = $session['cart'];
+                       $poid = $session['purchase_id'];
+                       if(count($cart)>0 && $poid !=''){
+                            foreach($cart as $kay =>$value){
+                                 $prodid = Product::getProdid($value['product_id']);
+                                 $modelx = \backend\models\Purchaseorderline::find()->where(['purchase_order_id'=>$poid,'product_id'=>$prodid])->one();
+                                 if($modelx){
+                                    $modelx->qty = $modelx->qty + $value['qty'];
+                                    $modelx->line_amount= $modelx->qty *  $modelx->price;
+                                    //$modelx->qty = 10;
+                                    $modelx->save(false);
+                                 }else{
+                                    $modelline = new \backend\models\Purchaseorderline();
+                                    $modelline->purchase_order_id = $poid;
+                                    $modelline->product_id = Product::getProdid($value['product_id']);
+                                    $modelline->qty = $value['qty'];
+                                    $modelline->price =$value['price'];
+                                    $modelline->line_amount=$value['qty'] * $value['price'];
+                                    $modelline->save(false);
+                                 }
+                            }
+                        }else{
+                            return $this->redirect(['product/index']);
+                        }
+                         $this->updateAmount($poid);
+                         unset($session['cart']);
+                         unset($session['purchase_id']);
+                         unset($session['purchase_no']);
+                         return $this->redirect(['update', 'id' => $poid]);
 
+              }else{
+                   $cart = $session['cart'];
+                   $vendorid = 0;
+                   $i=0;
+                   foreach($cart as $key =>$value){
+                     if($i==0){
+                        $modelx = Product::getProductInfo($key);
+                        if($modelx){
+                            $vendorid = $modelx->vendor_id;
+                        }
+                     }else{
+                        continue;
+                     }
+                     $i+=1;
+                   }
+                    $model = new Purchaseorder();
+                    $model->purchase_order = $model::getLastNo();
+                    $model->vendor_id = $vendorid;
+                    $model->purchase_date = strtotime(date('d-m-Y'));
+                    $model->status = 1;
+                    $model->created_by = Yii::$app->user->identity->id;
+                     if($model->save(false)){
+                        if(count($cart)>0){
+                            foreach($cart as $kay =>$value){
+                                $modelline = new \backend\models\Purchaseorderline();
+                                $modelline->purchase_order_id = $model->id;
+                                $modelline->product_id = Product::getProdid($value['product_id']);
+                                $modelline->qty = $value['qty'];
+                                $modelline->price =$value['price'];
+                                $modelline->line_amount=$value['qty'] * $value['price'];
+                                $modelline->save(false);
+                            }
+                        }
+                        $this->updateAmount($model->id);
+                         unset($session['cart']);
+                         return $this->redirect(['update', 'id' => $model->id]);
+                }
+              }
+               
+               return 0;
+           }
+                // $prodid = Yii::$app->request->post('product_id');
+                // $qty = Yii::$app->request->post('qty');
+                // $price = Yii::$app->request->post('price');
+                // $lineamt = Yii::$app->request->post('line_amount');
     }
     public function actionUpdatecart(){
         if(Yii::$app->request->isAjax){

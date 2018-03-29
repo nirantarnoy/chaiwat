@@ -90,6 +90,11 @@ if($product_type !='' && $group !=''){
 }
 if($property !=''){
   $propertyall = \backend\models\Property::find()->where(['type_id'=>$product_type])->orderby(['name'=>SORT_ASC])->all();
+  if(!$propertyall){
+    $propertyall = \backend\models\Property::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
+  }
+}else{
+
 }
 
 $this->registerJsFile(
@@ -664,12 +669,20 @@ $this->registerJsFile(
 </div>
 <div id="myModal_po" class="modal fade" role="dialog">
   <div class="modal-dialog modal-md">
-
+  <?php
+     $title_pop = '';
+     $session = Yii::$app->session;
+     if(isset($session['purchase_id'])){
+      $title_pop = "เพิ่มสินค้าใบสั่งซื้อเลขที่ ".$session['purchase_no'];
+     }else{
+      $title_pop = "สร้างใบสั่งซื้อ";
+     }
+  ?>
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> สร้างใบสั่งซื้อ <small id="items"> </small></h4>
+        <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> <?=$title_pop?> <small id="items"> </small></h4>
       </div>
       <div class="modal-body">
         
@@ -721,12 +734,20 @@ $this->registerJsFile(
 </div>
 <div id="myModal_cart" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
-
+   <?php
+     $title_pop = '';
+     $session = Yii::$app->session;
+     if(isset($session['purchase_id'])){
+      $title_pop = "เพิ่มสินค้าใบสั่งซื้อเลขที่ ".$session['purchase_no'];
+     }else{
+      $title_pop = "สร้างใบสั่งซื้อ";
+     }
+  ?>
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> รายการสั่งซื้อ <small id="items"> </small></h4>
+        <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> <?=$title_pop?> <small id="items"> </small></h4>
       </div>
       <div class="modal-body">
         

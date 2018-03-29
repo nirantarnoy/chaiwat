@@ -76,56 +76,57 @@ use yii\helpers\Url;
                <div class="row">
                 <div class="col-lg-3">
                   <?php
-                    echo Typeahead::widget([
-                          'name' => 'country',
-                          'options' => ['placeholder' => 'ค้นหารหัสสินค้า...'],
-                          'pluginOptions' => ['highlight'=>true],
-                          'dataset' => [
-                              [
-                                  'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('value')",
-                                  'display' => 'value',
-                                  'limit' => '100',
-                                  'templates'=>[
-                                    'notFound' => '<div class="text-danger" style="padding:0 8px">ไม่พบสินค้า</div>',
-                                    'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div><span class=\'fa fa-picture-o\' style=\'font-size:1.5em;\'></span> {{product_code}} {{name}}</div>')"),
-                                  ],
-                                  //'prefetch' => '/samples/countries.json',
-                                  'remote' => [
-                                      'url' => 'index.php?r=purchaseorder%2Fproductlist'.'&q=%QUERY',
-                                      'wildcard' => '%QUERY'
-                                  ]
-                              ]
-                              ],
-                              'pluginEvents'=>[
-                                "typeahead:select" => "
-                                  function(e,s){
-                                    if($(document).find('.saleline-id-'+s.id).length >=1){
+                    // echo Typeahead::widget([
+                    //       'name' => 'country',
+                    //       'options' => ['placeholder' => 'ค้นหารหัสสินค้า...'],
+                    //       'pluginOptions' => ['highlight'=>true],
+                    //       'dataset' => [
+                    //           [
+                    //               'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('value')",
+                    //               'display' => 'value',
+                    //               'limit' => '100',
+                    //               'templates'=>[
+                    //                 'notFound' => '<div class="text-danger" style="padding:0 8px">ไม่พบสินค้า</div>',
+                    //                 'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div><span class=\'fa fa-picture-o\' style=\'font-size:1.5em;\'></span> {{product_code}} {{name}}</div>')"),
+                    //               ],
+                    //               //'prefetch' => '/samples/countries.json',
+                    //               'remote' => [
+                    //                   'url' => 'index.php?r=purchaseorder%2Fproductlist'.'&q=%QUERY',
+                    //                   'wildcard' => '%QUERY'
+                    //               ]
+                    //           ]
+                    //           ],
+                    //           'pluginEvents'=>[
+                    //             "typeahead:select" => "
+                    //               function(e,s){
+                    //                 if($(document).find('.saleline-id-'+s.id).length >=1){
 
-                                    }else{
-                                      $.ajax({
-                                        type: 'POST',
-                                        url: '".Url::to(['/purchaseorder/addline'])."',
-                                        data: {data:s},
-                                        success: function(data){
-                                          $('.add-saleline').parent().append(data);
-                                          var cnt =0;
-                                          $('#lineitem >tbody >tr').each(function(){
-                                            cnt+=1;
-                                            $(this).find('td:first-child').text(cnt);
-                                          });
-                                            sumall();
-                                        }
-                                      });
-                                    }
-                                  }
-                                "
-                              ]
+                    //                 }else{
+                    //                   $.ajax({
+                    //                     type: 'POST',
+                    //                     url: '".Url::to(['/purchaseorder/addline'])."',
+                    //                     data: {data:s},
+                    //                     success: function(data){
+                    //                       $('.add-saleline').parent().append(data);
+                    //                       var cnt =0;
+                    //                       $('#lineitem >tbody >tr').each(function(){
+                    //                         cnt+=1;
+                    //                         $(this).find('td:first-child').text(cnt);
+                    //                       });
+                    //                         sumall();
+                    //                     }
+                    //                   });
+                    //                 }
+                    //               }
+                    //             "
+                    //           ]
                           
-                      ]);
+                    //   ]);
                   ?>
+                  <div class="btn btn-add btn-primary"><i class="fa fa-plus"></i> เพิ่มสินค้า</div>
                 </div>
                 <div class="col-lg-3">
-                  <div class="btn btn-add btn-default"><i class="fa fa-plus"></i> เพิ่มสินค้า</div>
+                  
                 </div>
                </div>
                <div class="table-responsive">
@@ -216,13 +217,31 @@ use yii\helpers\Url;
 </div>
 
 
-<?php $this->registerJs('
+<?php 
+$url_to_additemcart =  Url::to(['product/additemcart'],true);
+$this->registerJs('
   $(function(){
    sumall();
 
   $(".btn-add").click(function(){
-    $("#myModal").modal("show");
+   // $("#myModal").modal("show");
+    var poid = "'.$model->id.'";
+   // alert(poid);
+    if(poid!=""){
+      $.ajax({
+        type:"post",
+        dataType:"html",
+        url: "'.$url_to_additemcart.'",
+        data:{id: poid},
+        success: function(data){
+           //alert(data);
+           $(".cnt-pick").text("0");
+        }
+      });
+    }
   });
+
+
 
   });
   function sumall(){

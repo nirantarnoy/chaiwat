@@ -84,6 +84,7 @@ $this->title = "รายการสั่งซื้อ";
 <?php 
   $url_to_updatecart =  Url::to(['purchaseorder/updatecart'],true);
   $url_to_remove_itemcart =  Url::to(['purchaseorder/removeitemcart'],true);
+  $url_to_submitcart =  Url::to(['purchaseorder/submitcart'],true);
   $this->registerJs('
 
   	    $(function(){
@@ -120,7 +121,15 @@ $this->title = "รายการสั่งซื้อ";
 		      $("#myModal_cart").modal("hide");
    		});
    		$(".btn-submit-cart").click(function(){
-			$("#form-cart").submit();
+			$.ajax({
+                  type: "post",
+                  dataType: "html",
+                  url: "'.$url_to_submitcart.'",
+                  data: {id: 0},
+                  success: function(data){
+                    alert(data);
+                  }
+        	});
    		});
 		function calprice(e){
 			var prodids = e.closest("tr").find(".prodrec_id").val();

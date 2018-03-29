@@ -16,6 +16,9 @@ use backend\models\StockbalanceSearch;
 use backend\models\ViewStockSearch;
 use yii\helpers\Json;
 use kartik\mpdf\Pdf;
+use backend\models\Purchaseorder;
+use backend\common\cart;
+use yii\web\Session;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
@@ -82,7 +85,16 @@ class ProductController extends Controller
             $session['mode'] = $mode;
             $session['text_search'] = $text_search;
         }
-
+        
+        if(isset($session['group'])){
+          $brand=  $session['brand'];
+          $group=  $session['group'];
+          $product_type =  $session['product_type'];
+          $vendor =  $session['vendor'];
+          $property =  $session['property'];
+          $mode =  $session['mode'];
+          $text_search =  $session['text_search'];  
+        }
         //print_r($session['group']);
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -1130,6 +1142,21 @@ class ProductController extends Controller
 
           }else{
             return '';
+          }
+        }
+      }
+      public function actionAdditemcart(){
+        if(Yii::$app->request->isAjax){
+          $id = Yii::$app->request->post('id');
+          if($id){
+            $model = Purchaseorder::find()->where(['id'=>$id])->one();
+            if($model){
+             // return "ok";
+              $session = Yii::$app->session;
+              $session['purchase_id']=$model->id;
+              $session['purchase_no']=$model->purchase_order;
+            }
+            return $this->redirect(['index']);
           }
         }
       }
