@@ -281,13 +281,13 @@ $this->registerJsFile(
                             "options" => ['multiple'=>"multiple",
                                     //"disabled"=>"disabled"
                             ], // for the actual multiselect
-                            'data' => count($movementall)==0?['เลือกสินค้า']:ArrayHelper::map($movementall,'id','name'), // data as array
+                            'data' => count($movementall)==0?['การเคลื่อนไหว']:ArrayHelper::map($movementall,'id','name'), // data as array
                             'value' => $movement, // if preselected
                             "clientOptions" => 
                                 [
                                     "includeSelectAllOption" => true,
                                     'numberDisplayed' => 5,
-                                    'nonSelectedText'=>'เลือกสินค้า',
+                                    'nonSelectedText'=>'การเคลื่อนไหว',
                                     'enableFiltering' => true,
                                     'enableCaseInsensitiveFiltering'=>true,
                                 ], 
@@ -1099,7 +1099,7 @@ $this->registerJsFile(
         $("select#sale_mode").val("เลือกโหมดสั่งซื้อ").change();
 
          $("select#movement_id option:selected").remove();
-        $("select#movement_id").val("เลือกสินค้า").change();
+        $("select#movement_id").val("การเคลื่อนไหว").change();
 
         $(".btn-search").trigger("click");
    });
