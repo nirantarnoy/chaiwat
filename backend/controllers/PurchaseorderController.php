@@ -14,6 +14,7 @@ use backend\models\Product;
 use yii\web\Session;
 use Yii\headers\ArrayHelper;
 use backend\common\cart;
+use kartik\mpdf\Pdf;
 
 $session = new Session();
 $session->open();
@@ -448,5 +449,37 @@ public function actionProductlist($q = null) {
                 return 2;
             }
         }
+    }
+    public function actionPrintpo($id){
+       // if(Yii::$app->request->isAjax){
+           // $id = Yii::$app->request->post('id');
+            if($id){
+                $model = Purchaseorder::find()->where(['id'=>$id])->one();
+                if($model){
+                    $modelline = \backend\models\Purchaseorderline::find()->where(['purchase_order_id'=>$model->id])->all();
+                       $pdf = new Pdf([
+                        'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+                        'format' => Pdf::FORMAT_A4, 
+                        'orientation' => Pdf::ORIENT_PORTRAIT, //PORTRAIT , ORIENT_LANDSCAPE
+                        'destination' => Pdf::DEST_BROWSER, 
+                        'content' => $this->renderPartial('_print',[
+                            'model'=>$model,  
+                            'modelline'=>$modelline,  
+                            ]),
+                        //'content' => "nira",
+                        'cssFile' => '@backend/web/css/pdf.css',
+                        'options' => [
+                            'title' => 'ใบสั่งซื้อ',
+                            'subject' => ''
+                        ],
+                        'methods' => [
+                           // 'SetHeader' => ['ใบสั่งซื้อ||Generated On: ' . date("r")],
+                           // 'SetFooter' => ['|Page {PAGENO}|'],
+                        ]
+                    ]);
+                     return $pdf->render();
+                }
+            }
+        //}
     }
 }

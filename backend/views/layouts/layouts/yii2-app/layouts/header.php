@@ -5,7 +5,7 @@ use yii\helpers\BaseUrl;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-Yii::$app->name = 'Gate Tracker';
+Yii::$app->name = 'cmchaiwat';
 
 use backend\models\Notification;
 use yii\web\Session;

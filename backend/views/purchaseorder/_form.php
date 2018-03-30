@@ -19,7 +19,7 @@ use yii\helpers\Url;
         <div class="col-lg-12">
             <div class="form-group">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>   
-                <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์ใบสั่งซื้อ</div>
+                <div class="btn btn-default btn-print"><i class="fa fa-print"></i> พิมพ์ใบสั่งซื้อ</div>
             </div>
              <div class="form-group">
              
@@ -219,6 +219,7 @@ use yii\helpers\Url;
 
 <?php 
 $url_to_additemcart =  Url::to(['product/additemcart'],true);
+$url_to_printpo =  Url::to(['purchaseorder/printpo'],true);
 $this->registerJs('
   $(function(){
    sumall();
@@ -241,8 +242,21 @@ $this->registerJs('
     }
   });
 
-
-
+    $(".btn-print").click(function(){
+      var poid = "'.$model->id.'";
+      if(poid!=""){
+         $.ajax({
+          type:"post",
+          dataType:"html",
+          url: "'.$url_to_printpo.'",
+          data:{id: poid},
+          success: function(data){
+             alert(data);
+          }
+        });
+      }
+      
+    });
   });
   function sumall(){
     var amount = 0;

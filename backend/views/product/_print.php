@@ -58,7 +58,6 @@
 					<td style="text-align: right"><?=$qty?></td>
 					<td style="text-align: right"><?=$return_qty?></td>
 					<td style="text-align: right"><?=$adjust_qty?></td>
-					
 					<td style="text-align: right"><?=$cost_sum?></td>
 					<td style="text-align: right"><?=$cost?></td>
 					<td><?= \backend\models\Vendor::getVendorname($value->vendor_id)?></td>
