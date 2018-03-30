@@ -251,7 +251,8 @@ $this->registerJs('
           url: "'.$url_to_printpo.'",
           data:{id: poid},
           success: function(data){
-             alert(data);
+             //alert(data);
+            //location.reload();
           }
         });
       }

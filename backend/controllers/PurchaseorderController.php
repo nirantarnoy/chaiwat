@@ -15,6 +15,7 @@ use yii\web\Session;
 use Yii\headers\ArrayHelper;
 use backend\common\cart;
 use kartik\mpdf\Pdf;
+use yii\web\UrlManager;
 
 $session = new Session();
 $session->open();
@@ -36,6 +37,7 @@ class PurchaseorderController extends Controller
                 'actions' => [
                     'delete' => ['POST','GET'],
                     'submitcart'=>['POST','GET'],
+                    'displayprint'=>['POST','GET'],
                 ],
             ],
         ];
@@ -450,10 +452,20 @@ public function actionProductlist($q = null) {
             }
         }
     }
-    public function actionPrintpo($id){
-       // if(Yii::$app->request->isAjax){
-           // $id = Yii::$app->request->post('id');
+    public function actionPrintpo(){
+        if(Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('id');
             if($id){
+                $session = Yii::$app->session;
+                $session['printpo'] = $id;
+                return $this->redirect(['displayprint']);
+            }
+        }
+    }
+    public function actionDisplayprint(){
+        $session = Yii::$app->session;
+        if(isset($session['printpo'])){
+            $id = $session['printpo'];
                 $model = Purchaseorder::find()->where(['id'=>$id])->one();
                 if($model){
                     $modelline = \backend\models\Purchaseorderline::find()->where(['purchase_order_id'=>$model->id])->all();
@@ -478,8 +490,7 @@ public function actionProductlist($q = null) {
                         ]
                     ]);
                      return $pdf->render();
-                }
-            }
-        //}
+        }
+        }
     }
 }

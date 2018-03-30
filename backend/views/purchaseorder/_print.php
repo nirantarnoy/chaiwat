@@ -1,5 +1,6 @@
 <?php 
  use \backend\models\Product;
+ use \backend\models\Vendor;
 use yii\web\UrlManager;
 use yii\helpers\BaseUrl;
 
@@ -16,18 +17,16 @@ use yii\helpers\BaseUrl;
 		<table width="100%">
 		
 			<tr>
-				<td style="width: 30%;text-align: center;font-size: 16px;" colspan="7" ><b>ใบสั่งซื้อ</b></td>
+				<td style="width: 30%;text-align: center;font-size: 16px;padding: 15px;" colspan="7" ><b>ใบสั่งซื้อ</b></td>
 			</tr>
 			<tr>
-				<td style="width: 10%"></td>
-				<td style="width: 20%"></td>
-				<td style="width: 30%" colspan="2"></td>
-				<td style="width: 10%"></td>
+				<td style="width: 10%;font-size: 14px;">ผู้ขาย</td>
+				<td style="width: 60%;font-size: 14px;" colspan="4"><?=Vendor::getVendorname($model->vendor_id)?></td>
 				<td style="width: 10%;font-size: 14px;">เลขที่</td>
 				<td style="width: 20%"><b><?=$model->purchase_order?></b></td>
 			</tr>
 			<tr>
-				<td style="width: 10%"></td>
+				<td style="width: 10%;font-size: 14px;">ที่อยู่</td>
 				<td style="width: 20%"></td>
 				<td style="width: 30%" colspan="2"></td>
 				<td style="width: 10%"></td>
@@ -35,7 +34,7 @@ use yii\helpers\BaseUrl;
 				<td style="width: 20%"><b><?=date('d-m-Y',$model->purchase_date)?></b></td>
 			</tr>
 			<tr>
-				<td colspan="7" style="font-size: 14px;text-align: center;">รายการสินค้า</td>
+				<td colspan="7" style="font-size: 14px;text-align: center;height: 20px;"></td>
 			</tr>
 			<tr bgcolor="#ccc">
 				<td border="1"  style="font-size: 14px;text-align: center;padding: 15px;">ลำดับ</td>
