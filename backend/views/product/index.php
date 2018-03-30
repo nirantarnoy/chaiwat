@@ -1098,6 +1098,9 @@ $this->registerJsFile(
         $("select#sale_mode option:selected").remove();
         $("select#sale_mode").val("เลือกโหมดสั่งซื้อ").change();
 
+         $("select#movement_id option:selected").remove();
+        $("select#movement_id").val("เลือกสินค้า").change();
+
         $(".btn-search").trigger("click");
    });
 
