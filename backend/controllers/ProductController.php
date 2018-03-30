@@ -57,9 +57,11 @@ class ProductController extends Controller
         $property = '';
         $mode = '';
         $text_search = '';  
-        
+        $movement = '';
+
         $sale_sum = 0;
         $purch_sum = 0;
+        $last_update = '';
         
         $session = Yii::$app->session;
 
@@ -71,6 +73,7 @@ class ProductController extends Controller
             $property = Yii::$app->request->post('property');
             $mode = Yii::$app->request->post('mode');
             $text_search = Yii::$app->request->post('text_search');
+            $movement = Yii::$app->request->post('movement');
            // echo $mode;return;
             //echo Yii::$app->request->post('new_brand')[0]; return;
             // print_r($product_type);
@@ -83,6 +86,7 @@ class ProductController extends Controller
             $session['brand'] = $brand;
             $session['vendor'] = $vendor;
             $session['mode'] = $mode;
+            $session['movement'] = $movement;
             $session['text_search'] = $text_search;
         }
         
@@ -93,6 +97,7 @@ class ProductController extends Controller
           $vendor =  $session['vendor'];
           $property =  $session['property'];
           $mode =  $session['mode'];
+          $movement =  $session['movement'];
           $text_search =  $session['text_search'];  
         }
         //print_r($session['group']);
@@ -406,6 +411,8 @@ class ProductController extends Controller
            }
         }
 
+        $modellastupdate = Product::find()->max('updated_at');
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -421,6 +428,7 @@ class ProductController extends Controller
             'sale_sum'=> $sale_sum,
             'purch_sum'=> $purch_sum,
             'model_select'=> $model_select,
+            'last_update'=> $modellastupdate,
         ]);
     }
     function convert( $str ) {

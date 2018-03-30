@@ -85,6 +85,7 @@ $brandall = \backend\models\Brand::find()->where(['!=','name',''])->orderby(['na
 $vendorall = \backend\models\Vendor::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
 $propertyall = \backend\models\Property::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
 $modeall = [['id'=>1,'name'=>'สั่งซ์้อ'],['id'=>0,'name'=>'ไม่สั่งซ์้อ']];
+$movement = [['id'=>1,'name'=>'เคลื่อนไหว'],['id'=>0,'name'=>'ไม่เคลื่อนไหว']];
 if($product_type !='' && $group !=''){
   $typeall = \backend\models\Producttype::find()->where(['group_id'=>$group])->orderby(['name'=>SORT_ASC])->all();
 }
@@ -136,6 +137,11 @@ $this->registerJsFile(
         <?php endif; 
   ?>
 <div class="product-index">
+  <div class="row">
+    <div class="col-lg-12">
+      ข้อมูลอัพเดทล่าสุด <i class="fa fa-calendar-o"> </i> <?= date('d-m-Y',$last_update)?>
+    </div>
+  </div>
   <input type="hidden" name="listid" class="listid" value="">
    <div class="row">
     <div class="col-lg-12">
@@ -268,6 +274,26 @@ $this->registerJsFile(
                         ]); ?>
 
                          <?php      echo MultiSelect::widget([
+                            'id'=>"movement",
+                            'name'=>'movement',
+                            //'id'=>"vendor",
+                            //'model'=>null,
+                            "options" => ['multiple'=>"multiple",
+                                    //"disabled"=>"disabled"
+                            ], // for the actual multiselect
+                            'data' => count($movement)==0?['เลือกสินค้า']:ArrayHelper::map($movement,'id','name'), // data as array
+                            'value' => $movement, // if preselected
+                            "clientOptions" => 
+                                [
+                                    "includeSelectAllOption" => true,
+                                    'numberDisplayed' => 5,
+                                    'nonSelectedText'=>'เลือกสินค้า',
+                                    'enableFiltering' => true,
+                                    'enableCaseInsensitiveFiltering'=>true,
+                                ], 
+                        ]); ?>
+
+                        <?php      echo MultiSelect::widget([
                             'id'=>"sale_mode",
                             'name'=>'mode',
                             //'id'=>"vendor",
@@ -513,6 +539,14 @@ $this->registerJsFile(
                 return \backend\models\Vendor::getVendorname($data->vendor_id);
               }
              ],
+             // [
+             //  'attribute'=>'updated_at',
+             //  'label'=>'อัพเดทล่าสุด',
+             //  'contentOptions'=>['style'=>'text-align: center'],
+             //  'value' => function($data){
+             //    return date('d-m-Y',$data->updated_at);
+             //  }
+             // ],
             // 'cost',
             // 'price',
             // 'status',
