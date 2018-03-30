@@ -43,6 +43,13 @@ if($modelx){
 }
 $session = Yii::$app->session;
 //unset($session['cart']);
+
+$this->registerCss('
+    #example-selectedClass-container{
+      background-color: red;
+    }
+  '
+);
 // $cart = new cart();
 // $cart->addCart(100,['prodid'=>1,'qty'=>1]);
 // if(isset($session['cart'])){
@@ -882,6 +889,7 @@ $this->registerJsFile(
   $url_to_getnote =  Url::to(['product/getnote'],true);
   $url_to_addpick =  Url::to(['purchaseorder/addpick'],true);
   $url_to_showcart =  Url::to(['purchaseorder/showitem'],true);
+
   $this->registerJs('
     $(function(){
       var serc = "'.count($product_type).'";
@@ -1076,6 +1084,8 @@ $this->registerJsFile(
         $("select#product_group").multiselect("rebuild");
       }
    });
+
+
 
    $("div.btn-reset").click(function(){
 

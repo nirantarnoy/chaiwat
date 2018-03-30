@@ -166,3 +166,14 @@ $(document).on('ready pjax:success', function() {
                       }
                   });
               });
+
+  $("select#product_group").change(function(){
+      if($(this).val()!=""){
+          alert();
+          $('select#product_group').multiselect({
+                buttonContainer: '<div class="btn-group" id="example-selectedClass-container"></div>',
+                selectedClass: 'multiselect-selected'
+          });
+      }
+   });
+        

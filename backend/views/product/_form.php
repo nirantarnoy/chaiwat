@@ -151,6 +151,15 @@ $brand = \backend\models\Brand::find()->where(['status'=>1])->all();
                                   
                                 </div>
                                 <div class="col-lg-6">
+                                    <?= $form->field($model, 'vendor_id')->widget(Select2::className(),
+                                                    [
+                                                     'data'=> ArrayHelper::map(backend\models\Vendor::find()->all(),'id','name'),
+                                                    'options'=>['placeholder' => 'เลือกผู้ขาย','class'=>'form-control','id'=>'vendor',
+                                                       'onchange'=>'',
+                                                    ],
+                                                    ]
+
+                                                  )->label() ?>
                                    <?= $form->field($model, 'cost')->textInput(['maxlength' => true]) ?>
 
                                     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
