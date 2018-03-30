@@ -58,6 +58,7 @@ class ProductController extends Controller
         $mode = '';
         $text_search = '';  
         $movement = '';
+        $movement2 = '';
 
         $sale_sum = 0;
         $purch_sum = 0;
@@ -74,6 +75,16 @@ class ProductController extends Controller
             $mode = Yii::$app->request->post('mode');
             $text_search = Yii::$app->request->post('text_search');
             $movement = Yii::$app->request->post('movement');
+
+            if(count($movement)>1){
+              $movement2 = '';
+            }else{
+              $movement2 = $movement[0];
+            }
+
+           // echo $movement2;return;
+            
+         //  print_r($movement);return;
            // echo $mode;return;
             //echo Yii::$app->request->post('new_brand')[0]; return;
             // print_r($product_type);
@@ -86,7 +97,7 @@ class ProductController extends Controller
             $session['brand'] = $brand;
             $session['vendor'] = $vendor;
             $session['mode'] = $mode;
-            $session['movement'] = $movement;
+            $session['movement'] = $movement2;
             $session['text_search'] = $text_search;
         }
         
@@ -97,19 +108,29 @@ class ProductController extends Controller
           $vendor =  $session['vendor'];
           $property =  $session['property'];
           $mode =  $session['mode'];
-          $movement =  $session['movement'];
+          $movement2 =  $session['movement'];
+         // $movement =  $session['movement'];
           $text_search =  $session['text_search'];  
         }
         //print_r($session['group']);
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
+        
+
+         $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
                      ->andFilterWhere(['in','type_id',$session['product_type']])
                      ->andFilterWhere(['in','property_id',$session['property']])
                      ->andFilterWhere(['in','brand_id',$session['brand']])
                      ->andFilterWhere(['in','mode',$session['mode']])
                      ->andFilterWhere(['in','vendor_id',$session['vendor']])
                      ->andFilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]]);
+        if($movement2 == 0 && $movement2 !=''){
+             $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
+        }else if($movement2 == 1 && $movement2 !=''){
+             $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
+        }
+
+        
 
         //$dataProvider->pagination->pageSize = 10;
        $sale_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['text_search']],['like','name',$session['text_search']]])
@@ -424,6 +445,7 @@ class ProductController extends Controller
             'vendor' => $vendor,
             'property' => $property,
             'mode' => $mode,
+            'movement' => $movement,
             'text_search' => $text_search,
             'sale_sum'=> $sale_sum,
             'purch_sum'=> $purch_sum,
