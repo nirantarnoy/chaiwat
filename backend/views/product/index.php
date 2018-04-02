@@ -91,7 +91,7 @@ $typeall = \backend\models\Producttype::find()->where(['!=','name',''])->orderby
 $brandall = \backend\models\Brand::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
 $vendorall = \backend\models\Vendor::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
 $propertyall = \backend\models\Property::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
-$modeall = [['id'=>1,'name'=>'สั่งซ์้อ'],['id'=>0,'name'=>'ไม่สั่งซ์้อ']];
+$modeall = [['id'=>1,'name'=>'สั่งซื้อ'],['id'=>0,'name'=>'ไม่สั่งซื้อ']];
 $movementall = [['id'=>1,'name'=>'เคลื่อนไหว'],['id'=>0,'name'=>'ไม่เคลื่อนไหว']];
 if($product_type !='' && $group !=''){
   $typeall = \backend\models\Producttype::find()->where(['group_id'=>$group])->orderby(['name'=>SORT_ASC])->all();
