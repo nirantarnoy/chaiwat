@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
         'modelfile' => $modelfile,
         //'imagelist' => $imagelist,
          'dataProvider' => $dataProvider,
+         
          // 'dataProvider2' => $dataProvider2,
          //        'model_trans' => $model_trans,
     ]) ?>

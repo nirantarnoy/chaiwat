@@ -959,13 +959,15 @@ class ProductController extends Controller
       }
     }
      public function actionShowreport(){
-         $brand= '';
+        $brand= '';
         $group= '';
         $product_type = '';
         $vendor = '';
         $property = '';
         $mode = '';
-        $text_search = '';  
+        $text_search = '';    
+        $movement = '';
+        $movement2 = '';
 
         if(Yii::$app->request->isPost){
             $group = Yii::$app->request->post('product_group');
@@ -975,6 +977,13 @@ class ProductController extends Controller
             $property = Yii::$app->request->post('property');
             $mode = Yii::$app->request->post('mode');
             $text_search = Yii::$app->request->post('text_search');
+            $movement = Yii::$app->request->post('movement');
+
+            if(count($movement)>1){
+              $movement2 = '';
+            }else{
+              $movement2 = $movement[0];
+            }
             //print_r($group);return;
         }
       
@@ -985,7 +994,16 @@ class ProductController extends Controller
                      ->andFilterWhere(['in','brand_id',$brand])
                      ->andFilterWhere(['in','mode',$mode])
                      ->andFilterWhere(['in','vendor_id',$vendor])
-                     ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]])->orderby(['name'=>SORT_ASC])->all();
+                      ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]]);//->orderby(['name'=>SORT_ASC])->all();
+       if($movement2 == 0 && $movement2 !=''){
+             $modellist=$modellist->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
+        }else if($movement2 == 1 && $movement2 !=''){
+             $modellist=$modellist->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
+        }
+
+         $modellist = $modellist->orderby(['name'=>SORT_ASC])->all();
+
+         //echo count($modellist);return;
       
       $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
