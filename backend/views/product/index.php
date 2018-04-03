@@ -941,6 +941,15 @@ $this->registerJsFile(
             }
           });
         }
+
+            
+                   if($(this).val()!=""){
+                   $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+                  }else{
+                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
+                
+               
       });
 
       $("#property").change(function(){
@@ -960,6 +969,11 @@ $this->registerJsFile(
             }
           });
         }
+            if($(this).val()!=""){
+                   $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+                  }else{
+                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
       });
       $("#vendor").change(function(){
         if($(this).val()!=""){
@@ -979,8 +993,34 @@ $this->registerJsFile(
             }
           });
         }
+             if($(this).val()!=""){
+                   $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+                  }else{
+                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
       });
 
+    });
+    $("#movement_id").change(function(){
+            if($(this).val()!=""){
+                   $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+                  }else{
+                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
+    });
+    $("#sale_mode").change(function(){
+             if($(this).val()!=""){
+                   $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+                  }else{
+                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
+    });
+     $("#brand").change(function(){
+             if($(this).val()!=""){
+                   $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+                  }else{
+                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
     });
     $(".btn-bulk-remove").click(function(e){
           //alert($(".listid").val());
@@ -1079,10 +1119,11 @@ $this->registerJsFile(
    });
 
    $("select#product_group").change(function(){
-      if($(this).val()!=""){
-        $("select#product_group").attr("buttonClass","btn-success");
-        $("select#product_group").multiselect("rebuild");
-      }
+       if($(this).val()!=""){
+                   $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+                  }else{
+                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
    });
 
 

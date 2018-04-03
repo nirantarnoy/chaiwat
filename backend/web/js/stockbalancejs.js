@@ -168,11 +168,14 @@ $(document).on('ready pjax:success', function() {
               });
 
   $("select#product_group").change(function(){
-      if($(this).val()!=""){
-          $('select#product_group').multiselect({
-                buttonContainer: '<div class="btn-group" id="example-selectedClass-container"></div>',
-                selectedClass: 'multiselect-selected'
-          });
-      }
+      // if($(this).val()!=""){
+      //    $(this).parent().find(".btn-group").find(".multiselect").css("background-color","yellow");
+      //     // $('select#product_group').multiselect({
+      //     //       buttonContainer: '<div class="btn-group" id="example-selectedClass-container"></div>',
+      //     //       selectedClass: 'example-selectedClass-container'
+      //     // });
+      // }else{
+      //   $(this).parent().find(".btn-group").find(".multiselect").css("background-color","gray");
+      // }
    });
         
