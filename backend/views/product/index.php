@@ -891,19 +891,71 @@ $this->registerJsFile(
   $url_to_showcart =  Url::to(['purchaseorder/showitem'],true);
 
   $this->registerJs('
+     
+    
     $(function(){
       var serc = "'.count($product_type).'";
       var perty = "'.count($property).'";
 
-     // $("select#product_type").multiselect({
-     //        disableIfEmpty: true,
-     //        disabledText: "ประเภทสินค้า" 
-     // });
-     // $("select#property").multiselect({
-     //        disableIfEmpty: true,
-     //        disabledText: "ลักษณะ" 
-     // });
-       //});                   
+
+      
+         if($("#product_group").val()!=""){
+            $("#product_group").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "กลุ่มสินค้า"
+            });
+            $("select#product_group").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+          if($("#product_type").val()!=""){
+            $("#product_type").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "ประเภทสินค้า"
+            });
+            $("select#product_type").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+          if($("#movement_id").val()!=""){
+            $("#movement_id").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "การเคลื่อนไหว"
+            });
+            $("select#movement_id").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+          if($("#vendor").val()!=""){
+            $("#vendor").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "ผู้จำหน่าย"
+            });
+            $("select#vendor").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+          if($("#brand").val()!=""){
+            $("#brand").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "ยี่ห้อ"
+            });
+            $("select#brand").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+          if($("#sale_mode").val()!=""){
+            $("#sale_mode").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "เลือกโหมดสั่งซื้อ"
+            });
+            $("select#sale_mode").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+          if($("#property").val()!=""){
+            $("#property").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "ลักษณะ"
+            });
+            $("select#property").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+ 
 
       if(serc !=""){
         $("#product_type").prop("disabled","");
@@ -944,9 +996,9 @@ $this->registerJsFile(
 
             
                    if($(this).val()!=""){
-                   $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
-                  }else{
-                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+                        $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+                   }else{
+                       $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
             }
                 
                
