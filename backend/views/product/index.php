@@ -228,7 +228,7 @@ $this->registerJsFile(
                             'name'=>'type',
                             'id'=>"product_type",
                             //'model'=>null,
-                            "options" => ['multiple'=>"multiple","disabled"=>"disabled"], // for the actual multiselect
+                            "options" => ['multiple'=>"multiple"], // for the actual multiselect
                             'data' => count($typeall)==0?['No Data']:ArrayHelper::map($typeall,'id','name'), // data as array
                             'value' => $product_type, // if preselected
                             "clientOptions" => 
@@ -914,6 +914,7 @@ $this->registerJsFile(
                nonSelectedText: "ประเภทสินค้า"
             });
             $("select#product_type").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+            $("select#product_type").prop("disabled","");
           }
           if($("#movement_id").val()!=""){
             $("#movement_id").multiselect({
