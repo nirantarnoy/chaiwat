@@ -27,6 +27,10 @@ body{
   border-radius: 15px;
   padding: 15px;
 }
+.po-detail{
+  border: 1px solid gray;
+  border-radius: 15px;
+}
 .po-bottom{
   margin-bottom: 15px;
   /*position: absolute;*/
