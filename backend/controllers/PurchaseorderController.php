@@ -487,6 +487,7 @@ public function actionProductlist($q = null) {
                         'methods' => [
                            // 'SetHeader' => ['ใบสั่งซื้อ||Generated On: ' . date("r")],
                            // 'SetFooter' => ['|Page {PAGENO}|'],
+                            //'SetHtmlFooter'=>''
                         ]
                     ]);
                      return $pdf->render();

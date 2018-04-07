@@ -18,3 +18,12 @@ body{
 .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #f9f9f9;
 }
+
+.po-logo{
+  border: 0px solid;
+}
+.po-vendor{
+  border: 1px solid;
+  border-radius: 15px;
+  padding: 15px;
+}
