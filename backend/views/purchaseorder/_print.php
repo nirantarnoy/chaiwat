@@ -59,7 +59,7 @@ use yii\helpers\BaseUrl;
 
 <table width="100%" class="po-detail">
 	<tr bgcolor="#ccc">
-		<td border="1"  style="font-size: 14px;text-align: center;padding: 15px;">ลำดับ</td>
+		<td width="10%" border="1"  style="font-size: 14px;text-align: center;padding: 15px;">ลำดับ</td>
 		<td  style="font-size: 14px;">รหัสสินค้า</td>
 		<td colspan="2"  style="font-size: 14px;">รายละเอียด</td>
 		<td  style="font-size: 14px;text-align: right;">จำนวน</td>
