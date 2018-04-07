@@ -63,8 +63,8 @@ use yii\helpers\BaseUrl;
 		<td  style="font-size: 14px;">รหัสสินค้า</td>
 		<td colspan="2"  style="font-size: 14px;">รายละเอียด</td>
 		<td  style="font-size: 14px;text-align: right;">จำนวน</td>
-		<td  style="font-size: 14px;text-align: right;">ราคา</td>
-		<td  style="font-size: 14px;text-align: right;">รวม</td>
+		<td width="10%"  style="font-size: 14px;text-align: right;">ราคา</td>
+		<td width="10%"  style="font-size: 14px;text-align: right;">รวม</td>
 	</tr>
 		<?php $i=0;?>
 		<?php $total=0;?>
