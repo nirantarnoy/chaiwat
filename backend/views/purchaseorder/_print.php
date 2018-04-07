@@ -10,7 +10,7 @@ use yii\helpers\BaseUrl;
 <table width="100%">
 	<tr>
 		<td class="po-logo">
-			<img src="<?=$img_url?>" style="width: 20%;"/>
+			<img src="<?=$img_url?>" style="width: 40%;"/>
 		</td>
 		<td class="po-logo">
 			<h3>บริษัท เชียงใหม่ชัยวัฒน์(1991)จำกัด</h3> <br />
@@ -86,4 +86,37 @@ use yii\helpers\BaseUrl;
 		</tr>
 </table>
 
+<table class="po-bottom" width="100%">
+	<tr>
+		<td colspan="7" style="font-size: 14px;text-align: center;height: 20px;"></td>
+	</tr>
+	<tr>
+		<td width="50%">
+			<table class="po-vendor" width="100%">
+				<tr>
+					<td width="100%" style="font-size: 14px;text-align: center;">................................................</td>				
+				</tr>
+				<tr>
+					<td width="100%" style="font-size: 14px;text-align: center;">วันที่..........................................</td>				
+				</tr>
+				<tr>
+					<td width="100%" style="font-size: 14px;text-align: center;">ผู้สั่งซื้อ</td>
+				</tr>
+		    </table> 
+		</td>
+		<td width="50%">
+			<table class="po-vendor" width="100%">
+				<tr>
+					<td width="100%" style="font-size: 14px;text-align: center;">................................................</td>				
+				</tr>
+				<tr>
+					<td width="100%" style="font-size: 14px;text-align: center;">วันที่..........................................</td>				
+				</tr>
+				<tr>
+					<td width="100%" style="font-size: 14px;text-align: center;">ผู้อนุมัติ</td>
+				</tr>
+		    </table> 
+		</td>
+	</tr>
+</table>
 
