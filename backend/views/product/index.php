@@ -203,7 +203,8 @@ $this->registerJsFile(
         <!--    <form id="search-form" action="index.php?r=product" method="get"> -->
                    <div class="form-inline">
                     
-                    <input type="text" name="text_search" class="form-control text_search" value="<?=$text_search?>" placeholder="รหัสสินค้า,ชื่อสินค้า">
+                    <input type="text" name="code_search" class="form-control code_search" value="<?=$code_search?>" placeholder="รหัสสินค้า">
+                       <input type="text" name="text_search" class="form-control text_search" value="<?=$text_search?>" placeholder="ชื่อสินค้า">
                     <?php      echo MultiSelect::widget([
                             'id'=>"product_group",
                             'name'=>'product_group[]',
@@ -1184,6 +1185,7 @@ $this->registerJsFile(
    $("div.btn-reset").click(function(){
 
         $(".text_search").val("");
+        $(".code_search").val("");
         $("select#product_group option:selected").remove();
         $("select#product_group").multiselect("rebuild");
 
