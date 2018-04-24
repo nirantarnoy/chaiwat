@@ -115,6 +115,8 @@ class ProductController extends Controller
          // $movement =  $session['movement'];
           $text_search =  $session['text_search'];  
           $code_search =  $session['code_search'];  
+
+          echo "niran";
         }
 
         print_r($movement2);
