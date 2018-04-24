@@ -601,6 +601,7 @@ $this->registerJsFile(
         'striped' => false,
         'condensed' => false,
         'responsive' => false,
+        'resizableColumnsOptions' => ['resizeFromBody' => true],
         'hover' => true,
          'floatHeader'=>true,
         // 'floatOverflowContainer' => true,
@@ -610,8 +611,8 @@ $this->registerJsFile(
               'floatThead'=>[
                 'position'=>'auto',
                 'autoReflow'=>true,
-              ]
-              //'floatContainerClass'=>'floatThead-container',
+              ],
+          'floatContainerClass'=>'table-grid',
           ],
         // 'panel' => [
         //     'type' => GridView::TYPE_PRIMARY
