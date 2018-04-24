@@ -116,7 +116,7 @@ class ProductController extends Controller
           $text_search =  $session['text_search'];  
           $code_search =  $session['code_search'];  
         }
-        //print_r($session['group']);
+        print_r($session['product_type']);
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
