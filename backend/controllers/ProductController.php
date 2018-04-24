@@ -118,6 +118,7 @@ class ProductController extends Controller
     
        // }
 
+        echo $movement2;
 
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
