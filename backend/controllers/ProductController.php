@@ -117,8 +117,6 @@ class ProductController extends Controller
           $code_search =  $session['code_search'];  
         }
 
-        print_r($movement2)."<br />";
-        print_r($movement);
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
@@ -131,11 +129,11 @@ class ProductController extends Controller
                      ->andFilterWhere(['in','vendor_id',$session['vendor']])
                      ->andFilterWhere(['like','product_code',$session['code_search']])
                      ->andFilterWhere(['like','name',$session['text_search']]);
-        // if($movement2 == 0 && $movement2 !=''){
-        //      $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
-        // }else if($movement2 == 1 && $movement2 !=''){
-        //      $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
-        // }
+        if($movement2 == 0 && $movement2 !=''){
+             $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
+        }else if($movement2 == 1 && $movement2 !=''){
+             $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
+        }
 
         
 
