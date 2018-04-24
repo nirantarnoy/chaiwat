@@ -117,8 +117,8 @@ class ProductController extends Controller
           $code_search =  $session['code_search'];  
         }
 
-        echo $movement2."<br />";
-        echo $movement;
+        print_r($movement2)."<br />";
+        print_r($movement);
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
