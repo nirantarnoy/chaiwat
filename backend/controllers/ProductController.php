@@ -116,13 +116,12 @@ class ProductController extends Controller
           $text_search =  $session['text_search'];  
           $code_search =  $session['code_search'];  
         }
-        print_r($session['product_type']);
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
 
-         $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
-                     ->andFilterWhere(['in','type_id',$session['product_type']]);
+         $dataProvider->query->andFilterWhere(['in','type_id',$session['group']]);
+                    // ->andFilterWhere(['in','type_id',$session['product_type']]);
                      // ->andFilterWhere(['in','property_id',$session['property']])
                      // ->andFilterWhere(['in','brand_id',$session['brand']])
                      // ->andFilterWhere(['in','mode',$session['mode']])
