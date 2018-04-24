@@ -123,19 +123,19 @@ class ProductController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
 
-         $dataProvider->query->andFilterWhere(['in','type_id',$session['group']]);
-                    // ->andFilterWhere(['in','type_id',$session['product_type']]);
-                     // ->andFilterWhere(['in','property_id',$session['property']])
-                     // ->andFilterWhere(['in','brand_id',$session['brand']])
-                     // ->andFilterWhere(['in','mode',$session['mode']])
-                     // ->andFilterWhere(['in','vendor_id',$session['vendor']])
-                     // ->andFilterWhere(['like','product_code',$session['code_search']])
-                     // ->andFilterWhere(['like','name',$session['text_search']]);
-        if($movement2 == 0 && $movement2 !=''){
-             $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
-        }else if($movement2 == 1 && $movement2 !=''){
-             $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
-        }
+         $dataProvider->query->andFilterWhere(['in','category_id',$session['group']]);
+                    ->andFilterWhere(['in','type_id',$session['product_type']]);
+                     ->andFilterWhere(['in','property_id',$session['property']])
+                     ->andFilterWhere(['in','brand_id',$session['brand']])
+                     ->andFilterWhere(['in','mode',$session['mode']])
+                     ->andFilterWhere(['in','vendor_id',$session['vendor']])
+                     ->andFilterWhere(['like','product_code',$session['code_search']])
+                     ->andFilterWhere(['like','name',$session['text_search']]);
+        // if($movement2 == 0 && $movement2 !=''){
+        //      $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
+        // }else if($movement2 == 1 && $movement2 !=''){
+        //      $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
+        // }
 
         
 
