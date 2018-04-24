@@ -129,9 +129,9 @@ class ProductController extends Controller
                      ->andFilterWhere(['in','vendor_id',$session['vendor']])
                      ->andFilterWhere(['like','product_code',$session['code_search']])
                      ->andFilterWhere(['like','name',$session['text_search']]);
-        if($movement2 == 0 && $movement2 !=''){
+        if($movement2 == 0){
              $dataProvider->query->andFilterWhere(['and',['sale_qty'=>0],['purch_qty'=>0]]);
-        }else if($movement2 == 1 && $movement2 !=''){
+        }else if($movement2 == 1){
              $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
         }
 
