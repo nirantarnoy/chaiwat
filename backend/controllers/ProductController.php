@@ -130,7 +130,7 @@ class ProductController extends Controller
                      ->andFilterWhere(['in','vendor_id',$session['vendor']])
                      ->andFilterWhere(['like','product_code',$session['code_search']])
                      ->andFilterWhere(['like','name',$session['text_search']]);
-        if($movement2 == 0 ){
+        if($movement2 == 2 ){
             echo "noo";
              $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
         }else if($movement2 == 1){
