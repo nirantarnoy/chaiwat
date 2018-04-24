@@ -104,7 +104,7 @@ class ProductController extends Controller
             $session['code_search'] = $code_search;
         }
         
-        if(isset($session['group'])){
+       // if(isset($session['group'])){
           $brand=  $session['brand'];
           $group=  $session['group'];
           $product_type =  $session['product_type'];
@@ -115,11 +115,9 @@ class ProductController extends Controller
          // $movement =  $session['movement'];
           $text_search =  $session['text_search'];  
           $code_search =  $session['code_search'];  
+    
+       // }
 
-          echo "niran";
-        }
-
-        print_r($movement2);
 
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
