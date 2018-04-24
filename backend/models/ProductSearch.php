@@ -62,16 +62,16 @@ class ProductSearch extends Product
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'category_id' => $this->category_id,
-            'weight' => $this->weight,
-            'unit_id' => $this->unit_id,
-            'price' => $this->price,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
+            // 'id' => $this->id,
+            // 'category_id' => $this->category_id,
+            // 'weight' => $this->weight,
+            // 'unit_id' => $this->unit_id,
+            // 'price' => $this->price,
+            // 'status' => $this->status,
+            // 'created_at' => $this->created_at,
+            // 'updated_at' => $this->updated_at,
+            // 'created_by' => $this->created_by,
+            // 'updated_by' => $this->updated_by,
         ]);
 
        if($this->globalSearch != ''){
