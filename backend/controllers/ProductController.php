@@ -133,7 +133,7 @@ class ProductController extends Controller
                      ->andFilterWhere(['like','name',$session['text_search']]);
         if($movement2 == 0){
              $dataProvider->query->andFilterWhere(['sale_qty'=>0]);
-             $dataProvider->query->andFilterWhere(['purch_qty'=>0]]);
+             $dataProvider->query->andFilterWhere(['purch_qty'=>0]);
         }else if($movement2 == 1){
              $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
         }
