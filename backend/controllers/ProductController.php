@@ -975,6 +975,7 @@ class ProductController extends Controller
         $vendor = '';
         $property = '';
         $mode = '';
+        $code_search = '';    
         $text_search = '';    
         $movement = '';
         $movement2 = '';
@@ -986,6 +987,7 @@ class ProductController extends Controller
             $vendor = Yii::$app->request->post('vendor');
             $property = Yii::$app->request->post('property');
             $mode = Yii::$app->request->post('mode');
+            $code_search = Yii::$app->request->post('code_search');
             $text_search = Yii::$app->request->post('text_search');
             $movement = Yii::$app->request->post('movement');
 
@@ -1004,10 +1006,11 @@ class ProductController extends Controller
                      ->andFilterWhere(['in','brand_id',$brand])
                      ->andFilterWhere(['in','mode',$mode])
                      ->andFilterWhere(['in','vendor_id',$vendor])
-                      ->andFilterWhere(['or',['like','product_code',$text_search],['like','name',$text_search]]);//->orderby(['name'=>SORT_ASC])->all();
-       if($movement2 == 0 && $movement2 !=''){
+                      ->andFilterWhere(['like','product_code',$code_search])
+                     ->andFilterWhere(['like','name',$text_search]);
+       if($movement2 == 2){
              $modellist=$modellist->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
-        }else if($movement2 == 1 && $movement2 !=''){
+        }else if($movement2 == 1){
              $modellist=$modellist->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
         }
 
