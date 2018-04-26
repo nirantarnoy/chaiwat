@@ -1144,7 +1144,10 @@ $this->registerJsFile(
       var strindex = $(location).attr("href").indexOf("sort");
       var sorttext = $(location).attr("href").substr(strindex + 5,$(location).attr("href").length);
      
-      $(".sort_report").val(sorttext);
+      if(strindex > 0){
+         $(".sort_report").val(sorttext);
+      }
+     
 
       $("#search-form").attr("action","");
       $("#search-form").attr("target","_blank");
