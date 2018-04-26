@@ -200,6 +200,7 @@ $this->registerJsFile(
           <div class="col-lg-12">
             <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
               <input type="hidden" class="actiontype" name="action-type" value="0">
+              <input type="hidden" class="sort_report" name="sort_report" value="">
         <!--    <form id="search-form" action="index.php?r=product" method="get"> -->
                    <div class="form-inline">
                     
@@ -1139,6 +1140,12 @@ $this->registerJsFile(
     });
 
     $(".btn-print").click(function(){
+
+      var strindex = $(location).attr("href").indexOf("sort");
+      var sorttext = $(location).attr("href").substr(strindex + 5,$(location).attr("href").length);
+     
+      $(".sort_report").val(sorttext);
+
       $("#search-form").attr("action","");
       $("#search-form").attr("target","_blank");
       $("#search-form").attr("action","'.$url_to_showreport.'");

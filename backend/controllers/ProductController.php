@@ -121,6 +121,7 @@ class ProductController extends Controller
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
+        //print_r(Yii::$app->request->queryParams);
 
          $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
                     ->andFilterWhere(['in','type_id',$session['product_type']])
@@ -139,7 +140,6 @@ class ProductController extends Controller
           //echo "nid";
         }
 
-        
 
         //$dataProvider->pagination->pageSize = 10;
        $sale_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['code_search']],['like','name',$session['text_search']]])
@@ -979,6 +979,7 @@ class ProductController extends Controller
         $text_search = '';    
         $movement = '';
         $movement2 = '';
+        $sortparam = '';
 
         if(Yii::$app->request->isPost){
             $group = Yii::$app->request->post('product_group');
@@ -990,6 +991,7 @@ class ProductController extends Controller
             $code_search = Yii::$app->request->post('code_search');
             $text_search = Yii::$app->request->post('text_search');
             $movement = Yii::$app->request->post('movement');
+            $sortparam = Yii::$app->request->post('sort_report');
 
             if(count($movement)>1){
               $movement2 = '';
@@ -1000,7 +1002,7 @@ class ProductController extends Controller
         }
       
        $modellist = Product::find()
-                     ->andFilterWhere(['like','category_id',$group])
+                     ->andFilterWhere(['in','category_id',$group])
                      ->andFilterWhere(['in','type_id',$product_type])
                      ->andFilterWhere(['in','property_id',$property])
                      ->andFilterWhere(['in','brand_id',$brand])
@@ -1014,7 +1016,16 @@ class ProductController extends Controller
              $modellist=$modellist->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
         }
 
-         $modellist = $modellist->orderby(['name'=>SORT_ASC])->all();
+        if($sortparam != ''){
+          if(substr($sortparam,0,1)=="-"){
+             $newsort = substr($sortparam,strpos($sortparam, "-") + 1, strlen($sortparam));
+             $modellist = $modellist->orderby([$newsort=>SORT_DESC])->all();
+           }else{
+             $modellist = $modellist->orderby([$sortparam=>SORT_ASC])->all();
+           }
+         
+        }
+         
 
          //echo count($modellist);return;
       
