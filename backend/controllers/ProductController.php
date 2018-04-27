@@ -998,7 +998,7 @@ class ProductController extends Controller
             }else{
               $movement2 = $movement[0];
             }
-            //print_r($group);return;
+          //  print_r($group);return;
         }
       
        $modellist = Product::find()
