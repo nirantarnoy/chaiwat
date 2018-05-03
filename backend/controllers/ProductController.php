@@ -1014,6 +1014,8 @@ class ProductController extends Controller
              $modellist=$modellist->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
         }else if($movement2 == 1){
              $modellist=$modellist->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
+        }else{
+
         }
 
         if($sortparam != ''){
@@ -1024,6 +1026,8 @@ class ProductController extends Controller
              $modellist = $modellist->orderby([$sortparam=>SORT_ASC])->all();
            }
          
+        }else{
+          $modellist = $modellist->orderby(['name'=>SORT_ASC])->all();
         }
          
 
