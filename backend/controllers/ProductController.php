@@ -1098,7 +1098,7 @@ class ProductController extends Controller
                           // }
                           // break;
                         // echo trim($rowData[0]);return;
-                          $prodcode = $rowData[0];
+                          $prodcode = (string)$rowData[0];
                           $modelx = \backend\models\Product::find()->where(['LIKE','product_code',$prodcode])->one();
                           if(count($modelx)>0){
                              // $modelx = new \backend\models\Product();
