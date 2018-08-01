@@ -1059,12 +1059,16 @@ class ProductController extends Controller
 
     public function actionImportupdate(){
 
+
        $modelfile = new Modelfile2();
        $uploaded = UploadedFile::getInstance($modelfile,"file");
            if(!empty($uploaded)){
+
                $upfiles = time() . "." . $uploaded->getExtension();
+               //echo $upfiles;return;
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
-                        $myfile = '../web/uploads/files/'.$upfiles;
+
+                    $myfile = '../web/uploads/files/'.$upfiles;
                        
                     $file = fopen($myfile, "r");
                     fwrite($file, "\xEF\xBB\xBF");
@@ -1074,6 +1078,8 @@ class ProductController extends Controller
                      // setlocale(LC_ALL, 'th_TH.utf8');
                    setlocale ( LC_ALL, 'th_TH.TIS-620' );
                     $i = -1;
+
+
                      while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE)
                      {
                           $i+=1;
@@ -1091,8 +1097,9 @@ class ProductController extends Controller
                           //    //echo $x;
                           // }
                           // break;
-
-                          $modelx = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
+                        // echo trim($rowData[0]);return;
+                          $prodcode = $rowData[0];
+                          $modelx = \backend\models\Product::find()->where(['LIKE','product_code',$prodcode])->one();
                           if(count($modelx)>0){
                              // $modelx = new \backend\models\Product();
                              // $modelx->product_code = $rowData[0];
@@ -1134,14 +1141,14 @@ class ProductController extends Controller
                              
                            }
                           }else{
-
+                               echo "not found";
                           }
            
                            
            
                      }
                      fclose($file);
-                        // unlink('../web/uploads/files/'.$upfiles);
+                        unlink('../web/uploads/files/'.$upfiles);
                         return $this->redirect(['index']);
               }
 
