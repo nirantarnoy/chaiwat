@@ -1098,9 +1098,12 @@ class ProductController extends Controller
                           // }
                           // break;
                         // echo trim($rowData[0]);return;
-                          $prodcode = (string)$rowData[0];
-                          $modelx = \backend\models\Product::find()->where(['LIKE','product_code',$prodcode])->one();
+                          $prodcode = (string)trim($rowData[0]);
+                         // echo $prodcode;return;
+                          $modelx = \backend\models\Product::find()->where(['product_code'=> 4021201])->one();
                           if(count($modelx)>0){
+                           //  echo str_replace(',','', $rowData[5]);return;
+                              $qty = str_replace(',','', $rowData[5]);
                              // $modelx = new \backend\models\Product();
                              // $modelx->product_code = $rowData[0];
                              // $modelx->name = $rowData[1];
@@ -1113,16 +1116,17 @@ class ProductController extends Controller
                              // $modelx->property_id = $this->checkProperty($rowData[14],$modelx->type_id);
                             //  $modelx->brand_id = $this->checkBrand($rowData[15]);
                              // $modelx->price = 0;
-                              $modelx->product_start = str_replace(',','', $rowData[4]);;
-                              $modelx->sale_qty = str_replace(',','', $rowData[5]);;
-                              $modelx->purch_qty = str_replace(',','', $rowData[6]);;
-                              $modelx->return_qty = str_replace(',','', $rowData[7]);;
-                              $modelx->adjust_qty = str_replace(',','', $rowData[8]);;
-                              $modelx->cost_sum = str_replace(',','', $rowData[10]);;
-                              $modelx->cost = str_replace(',','', $rowData[11]);;
-                              $modelx->qty = str_replace(',','', $rowData[9]);;
-                              $modelx->mode = $rowData[19]=='y'?1:0;
-                              $modelx->sale_price = str_replace(',','', $rowData[18]);;
+                              $modelx->product_start = str_replace(',','', $rowData[4]);
+                              $modelx->sale_qty = $qty;
+                             // $modelx->sale_qty = str_replace(',','', $rowData[5]);;
+                              $modelx->purch_qty = str_replace(',','', $rowData[6]);
+                              $modelx->return_qty = str_replace(',','', $rowData[7]);
+                              $modelx->adjust_qty = str_replace(',','', $rowData[8]);
+                              $modelx->cost_sum = str_replace(',','', $rowData[10]);
+                              $modelx->cost = str_replace(',','', $rowData[11]);
+                              $modelx->qty = str_replace(',','', $rowData[9]);
+                             // $modelx->mode = $rowData[19]=='y'?1:0;
+                             // $modelx->sale_price = str_replace(',','', $rowData[18]);;
 
                             //  $modelx->min_qty = 0;
                             //  $modelx->max_qty = 0;
