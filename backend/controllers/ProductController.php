@@ -1076,48 +1076,36 @@ class ProductController extends Controller
                      // iconv_set_encoding("internal_encoding", "UTF-8");
                      // iconv_set_encoding("output_encoding", "UTF-8");
                      // setlocale(LC_ALL, 'th_TH.utf8');
-                   setlocale ( LC_ALL, 'th_TH.TIS-620' );
+                    setlocale ( LC_ALL, 'th_TH.TIS-620' );
                     $i = -1;
 
-
-                     while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE)
+                    $res = 0;
+                    $x ='';
+                     while (($rowData = fgetcsv($file,1000,",")) !== FALSE)
                      {
                           $i+=1;
                           if($rowData[0] =='' || $i == 0){
                             continue;
                           }
-                          
-                         // $rowData = array_map('utf8_encode', $rowData);
 
-                          // if( mb_detect_encoding($rowData[1], 'UTF-8','auto') !== false ){
-                          //     // echo "utf-8";
-                          //     // echo $rowData[1];
-                          // }else{
-                          //    $x = utf8_encode($rowData[1]);
-                          //    //echo $x;
-                          // }
-                          // break;
-                        // echo trim($rowData[0]);return;
-                          $prodcode = (string)trim($rowData[0]);
-                         // echo $prodcode;return;
-                          $modelx = \backend\models\Product::find()->where(['product_code'=> 4021201])->one();
+//                         $rowData = preg_replace('/(\\\",)/','\\ ",',$rowData);
+//                         $rowData = preg_replace('/(\\\"("?),)/',' ',$rowData);
+//                         $data[] = str_getcsv($rowData);
+                          
+
+                          $x = $rowData[0];
+                        //  echo str_replace('\\','',$x[0]); return;
+                        // var_dump($prodcode);
+
+
+                          $modelx = \backend\models\Product::find()->where(['product_code'=> $x])->one();
                           if(count($modelx)>0){
-                           //  echo str_replace(',','', $rowData[5]);return;
+                             // echo "OK";
+                              //return;
+                             //echo str_replace(',','', $rowData[5]);return;
                               $qty = str_replace(',','', $rowData[5]);
-                             // $modelx = new \backend\models\Product();
-                             // $modelx->product_code = $rowData[0];
-                             // $modelx->name = $rowData[1];
-                             // $modelx->description = $rowData[1] ;
-                          //    $modelx->category_id = $rowData[0][3];
-                             // $modelx->weight = 0;
-                             // $modelx->category_id = $this->checkCat($rowData[12]);
-                             // $modelx->unit_id = $this->checkUnit($rowData[2]);
-                             // $modelx->type_id = $this->checkType($rowData[13],$modelx->category_id);
-                             // $modelx->property_id = $this->checkProperty($rowData[14],$modelx->type_id);
-                            //  $modelx->brand_id = $this->checkBrand($rowData[15]);
-                             // $modelx->price = 0;
                               $modelx->product_start = str_replace(',','', $rowData[4]);
-                              $modelx->sale_qty = $qty;
+                              $modelx->sale_qty = (int)trim((string)$rowData[5]);
                              // $modelx->sale_qty = str_replace(',','', $rowData[5]);;
                               $modelx->purch_qty = str_replace(',','', $rowData[6]);
                               $modelx->return_qty = str_replace(',','', $rowData[7]);
@@ -1142,10 +1130,10 @@ class ProductController extends Controller
                              // $modelx->sale_price = $rowData[18];
                         
                            if($modelx->save(false)){
-                             
+                             $res +=1;
                            }
                           }else{
-                               echo "not found";
+                               //echo "not found";
                           }
            
                            
@@ -1153,7 +1141,10 @@ class ProductController extends Controller
                      }
                      fclose($file);
                         unlink('../web/uploads/files/'.$upfiles);
-                        return $this->redirect(['index']);
+                        if($res > 0){
+                            return $this->redirect(['index']);
+                        }
+
               }
 
            }else{
