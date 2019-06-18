@@ -165,8 +165,9 @@ class ProductController extends Controller
         $modelfile2 = new Modelfile2();
 
          $model_select = $dataProvider->getTotalCount();//$dataProvider->getModels();
-         $dataProvider->pagination->pageSize = 25;
-        // $dataProvider->query->orderby(['name'=>SORT_ASC]);
+         //$dataProvider->pagination->pageSize = 25;
+
+         /// $dataProvider->query->orderby(['name'=>SORT_ASC]);
 
         if($modelfile->load(Yii::$app->request->post())){
            $uploaded = UploadedFile::getInstance($modelfile,"file");
