@@ -140,8 +140,8 @@ $this->registerJsFile(
                 "showMethod" => "fadeIn",
                 "hideMethod" => "fadeOut"
             ]
-        ]); ?> 
-        <?php endif; 
+        ]); ?>
+        <?php endif;
   ?>
 <div class="product-index">
   <div class="row">
@@ -169,7 +169,7 @@ $this->registerJsFile(
     </div>
    </div>
 
-   
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 <div class="row">
@@ -182,7 +182,7 @@ $this->registerJsFile(
             <div class="btn btn-info btn-import-update" data-toggle="modal" data-target="#myModal_update"><i class="fa fa-upload"></i> อัพเดทข้อมูลสินค้า</div>
              <div class="btn btn-danger btn-bulk-remove" disabled><i class="fa fa-trash"></i> ลบ <span class="remove_item">[0]</span></div>
              <div class="btn btn-danger btn-all-remove"><i class="fa fa-trash"></i> ลบทั้งหมด <span ></span></div>
-             
+
              <div class="btn btn-warning btn-view" disabled><i class="fa fa-eye"></i> รายละเอียด </div>
              <div class="btn btn-primary btn-update"><i class="fa fa-pencil"></i> แก้ไข </div>
              <div class="btn btn-default btn-print"> <i class="fa fa-print"></i> พิมพ์</div>
@@ -203,7 +203,7 @@ $this->registerJsFile(
               <input type="hidden" class="sort_report" name="sort_report" value="">
         <!--    <form id="search-form" action="index.php?r=product" method="get"> -->
                    <div class="form-inline">
-                    
+
                     <input type="text" name="code_search" class="form-control code_search" value="<?=$code_search?>" placeholder="รหัสสินค้า">
                        <input type="text" name="text_search" class="form-control text_search" value="<?=$text_search?>" placeholder="ชื่อสินค้า">
                     <?php      echo MultiSelect::widget([
@@ -214,17 +214,17 @@ $this->registerJsFile(
                                             'onchange'=>''], // for the actual multiselect
                             'data' => count($groupall)==0?['No Data']:ArrayHelper::map($groupall,'id','name'), // data as array
                             'value' => $group, // if preselected
-                            "clientOptions" => 
+                            "clientOptions" =>
                                 [
                                     "includeSelectAllOption" => true,
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'กลุ่มสินค้า',
                                     'enableFiltering' => true,
                                     'enableCaseInsensitiveFiltering'=>true,
-                                ], 
+                                ],
                         ]); ?>
-                   
-             
+
+
                  <?php      echo MultiSelect::widget([
                            // 'id'=>"multiXX",
                             'name'=>'type',
@@ -233,7 +233,7 @@ $this->registerJsFile(
                             "options" => ['multiple'=>"multiple"], // for the actual multiselect
                             'data' => count($typeall)==0?['No Data']:ArrayHelper::map($typeall,'id','name'), // data as array
                             'value' => $product_type, // if preselected
-                            "clientOptions" => 
+                            "clientOptions" =>
                                 [
                                     "includeSelectAllOption" => true,
                                     'numberDisplayed' => 5,
@@ -241,7 +241,7 @@ $this->registerJsFile(
                                     'enableFiltering' => true,
                                     'disabled' => 'disabled',
                                     'enableCaseInsensitiveFiltering'=>true,
-                                ], 
+                                ],
                         ]); ?>
                 <?php      echo MultiSelect::widget([
                         'id'=>"property",
@@ -252,16 +252,16 @@ $this->registerJsFile(
                         ], // for the actual multiselect
                         'data' => count($typeall)==0?['No Data']:ArrayHelper::map($propertyall,'id','name'), // data as array
                         'value' => $property, // if preselected
-                        "clientOptions" => 
+                        "clientOptions" =>
                             [
                                 "includeSelectAllOption" => true,
                                 'numberDisplayed' => 5,
                                 'nonSelectedText'=>'ลักษณะ',
                                 'enableFiltering' => true,
                                 'enableCaseInsensitiveFiltering'=>true,
-                            ], 
+                            ],
                     ]); ?>
-               
+
                  <?php      echo MultiSelect::widget([
                             'id'=>"vendor",
                             'name'=>'vendor[]',
@@ -272,14 +272,14 @@ $this->registerJsFile(
                             ], // for the actual multiselect
                             'data' => count($vendorall)==0?['No Data']:ArrayHelper::map($vendorall,'id','name'), // data as array
                             'value' => $vendor, // if preselected
-                            "clientOptions" => 
+                            "clientOptions" =>
                                 [
                                     "includeSelectAllOption" => true,
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'ผู้จำหน่าย',
                                     'enableFiltering' => true,
                                     'enableCaseInsensitiveFiltering'=>true,
-                                ], 
+                                ],
                         ]); ?>
 
                          <?php      echo MultiSelect::widget([
@@ -292,14 +292,14 @@ $this->registerJsFile(
                             ], // for the actual multiselect
                             'data' => count($movementall)==0?['การเคลื่อนไหว']:ArrayHelper::map($movementall,'id','name'), // data as array
                             'value' => $movement, // if preselected
-                            "clientOptions" => 
+                            "clientOptions" =>
                                 [
                                     "includeSelectAllOption" => true,
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'การเคลื่อนไหว',
                                     'enableFiltering' => true,
                                     'enableCaseInsensitiveFiltering'=>true,
-                                ], 
+                                ],
                         ]); ?>
 
                         <?php      echo MultiSelect::widget([
@@ -312,52 +312,52 @@ $this->registerJsFile(
                             ], // for the actual multiselect
                             'data' => count($modeall)==0?['เลือกโหมดสั่งซื้อ']:ArrayHelper::map($modeall,'id','name'), // data as array
                             'value' => $mode, // if preselected
-                            "clientOptions" => 
+                            "clientOptions" =>
                                 [
                                     "includeSelectAllOption" => true,
                                     'numberDisplayed' => 5,
                                     'nonSelectedText'=>'เลือกโหมดสั่งซื้อ',
                                     'enableFiltering' => true,
                                     'enableCaseInsensitiveFiltering'=>true,
-                                ], 
+                                ],
                         ]); ?>
-               
-               
 
-         
+
+
+
           <?php      echo MultiSelect::widget([
               'id'=>"brand",
               'name'=>'brand[]',
               //'model'=>null,
               "options" => ['multiple'=>"multiple",
                               //"disabled"=>"disabled"
-                            
+
                            ], // for the actual multiselect
               'data' => count($brandall)==0?['No Data']:ArrayHelper::map($brandall,'id','name'), // data as array
               'value' => $brand, // if preselected
              // 'name' => 'multti', // name for the form
-              "clientOptions" => 
+              "clientOptions" =>
                   [
                       "includeSelectAllOption" => true,
                       'numberDisplayed' => 5,
                       'nonSelectedText'=>'ยี่ห้อ',
                       'enableFiltering' => true,
                       'enableCaseInsensitiveFiltering'=>true,
-                  ], 
+                  ],
           ]); ?>
 
-               
+
                 <!-- <input type="submit" class="btn btn-primary" value="ค้นหา"> -->
                <div class="btn btn-primary btn-search">ค้นหา</div>
                <div class="btn btn-warning btn-reset">รีเซ็ต</div>
                <div class="btn btn-info btn-hide-col"><i class="fa  fa-eye-slash"></i> ซ่อนคอลัมน์ <span ></span></div>
             </div>
             </form>
-       
+
           </div>
         </div><br />
 <div class="table-grid">
- 
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'id'=>'product-grid',
@@ -368,7 +368,7 @@ $this->registerJsFile(
             ['class' => 'yii\grid\CheckboxColumn'],
 
             //'id',
-           
+
             'product_code',
             //'name',
             [
@@ -440,7 +440,7 @@ $this->registerJsFile(
               }
             ],
             // 'weight',
-            
+
              //  [
              //  'attribute'=>'unit_id',
              //  'contentOptions'=>['style'=>'text-align: right'],
@@ -448,7 +448,7 @@ $this->registerJsFile(
              //    return \backend\models\Unit::getUnitname($data->unit_id);
              //  }
              // ],
-             
+
              // [
              //  'attribute'=>'product_start',
              //  'contentOptions'=>['style'=>'text-align: right'],
@@ -467,7 +467,7 @@ $this->registerJsFile(
                 }else{
                   return '<div class="text-red"><b>'.number_format($data->sale_qty).'</b></div>';
                 }
-                
+
               }
              ],
               [
@@ -480,7 +480,7 @@ $this->registerJsFile(
                 }else{
                   return '<div class="text-green"><b>'.number_format($data->purch_qty).'</b></div>';
                 }
-                
+
               }
              ],
               [
@@ -517,7 +517,7 @@ $this->registerJsFile(
                 }
               }
              ],
-            
+
              [
               'attribute'=>'cost_sum',
               'contentOptions'=>['style'=>'text-align: right'],
@@ -540,7 +540,7 @@ $this->registerJsFile(
                 }
               }
              ],
-            
+
               [
               'attribute'=>'vendor_id',
               'contentOptions'=>['style'=>'text-align: left'],
@@ -597,7 +597,7 @@ $this->registerJsFile(
             //         ],
         ],
         'containerOptions' => ['style'=>'overflow: auto'],
-        'pjax' => true,
+        //'pjax' => true,
         'bordered' => true,
         'striped' => false,
         'condensed' => false,
@@ -638,10 +638,10 @@ $this->registerJsFile(
         <h4 class="modal-title"><i class="fa fa-download"></i> นำเข้ารหัสสินค้า</h4>
       </div>
       <div class="modal-body">
-        
+
         <div class="row">
             <div class="col-lg-12">
-                <?php 
+                <?php
 
                 ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]);
                 echo FileInput::widget([
@@ -659,7 +659,7 @@ $this->registerJsFile(
                 ActiveForm::end();
              ?>
             </div>
-           
+
         </div>
       </div>
       <!-- <div class="modal-footer">
@@ -679,10 +679,10 @@ $this->registerJsFile(
         <h4 class="modal-title"><i class="fa fa-download"></i> อัพเดทข้อมูลสินค้า</h4>
       </div>
       <div class="modal-body">
-        
+
         <div class="row">
            <div class="col-lg-12">
-                <?php 
+                <?php
 
                 ActiveForm::begin(['action'=>Url::to(['product/importupdate'],true),'options'=>['enctype'=>'multipart/form-data']]);
                 echo FileInput::widget([
@@ -700,8 +700,8 @@ $this->registerJsFile(
                 ActiveForm::end();
              ?>
             </div>
-           
-           
+
+
         </div>
       </div>
       <!-- <div class="modal-footer">
@@ -729,7 +729,7 @@ $this->registerJsFile(
         <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> <?=$title_pop?> <small id="items"> </small></h4>
       </div>
       <div class="modal-body">
-        
+
         <div class="row">
           <div class="col-lg-12">
              <form id="form-po" action="<?=Url::to(['product/genpo'],true)?>" method="post">
@@ -762,7 +762,7 @@ $this->registerJsFile(
         <h4 class="modal-title"><i class="fa fa-commenting"></i> บันทึก <small id="items"> </small></h4>
       </div>
       <div class="modal-body">
-        
+
         <div class="row">
           <div class="col-lg-12">
              <p class="note_text"></p>
@@ -794,7 +794,7 @@ $this->registerJsFile(
         <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> <?=$title_pop?> <small id="items"> </small></h4>
       </div>
       <div class="modal-body">
-        
+
       </div>
       <!-- <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -813,13 +813,13 @@ $this->registerJsFile(
         <h4 class="modal-title"><i class="fa fa-pie-chart text-warning"></i> กราฟเปรียบเทียบซื้อขาย <small id="items"> </small></h4>
       </div>
       <div class="modal-body">
-        
+
         <div class="row">
           <div class="col-lg-12">
               <?php
                // $sale_sum = $sale_sum;
 
-             
+
 
                 $titlename = ['ซื้อ', 'ขาย',];
                 $dataamt = [['ซื้อ', $xpurch], ['ขาย', $xsale]];
@@ -865,7 +865,7 @@ $this->registerJsFile(
                                     ]
                                 ],
                                 'showInLegend' => true,
-                                
+
                             ]
                         ],
                     ]
@@ -881,7 +881,7 @@ $this->registerJsFile(
 
   </div>
 </div>
-<?php 
+<?php
 
   $url_to_delete =  Url::to(['product/bulkdelete'],true);
    $url_to_deleteall =  Url::to(['product/alldelete'],true);

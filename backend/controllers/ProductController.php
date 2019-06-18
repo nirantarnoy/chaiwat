@@ -170,7 +170,7 @@ class ProductController extends Controller
          /// $dataProvider->query->orderby(['name'=>SORT_ASC]);
 
         if($modelfile->load(Yii::$app->request->post())){
-           $uploaded = UploadedFile::getInstance($modelfile,"file");
+ //          $uploaded = UploadedFile::getInstance($modelfile,"file");
 //           if(!empty($uploaded)){
 //            //echo $uploaded;return;
 //              // $data = [];
