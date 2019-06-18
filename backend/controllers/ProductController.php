@@ -123,22 +123,22 @@ class ProductController extends Controller
 
         //print_r(Yii::$app->request->queryParams);
 
-//         $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
-//                    ->andFilterWhere(['in','type_id',$session['product_type']])
-//                     ->andFilterWhere(['in','property_id',$session['property']])
-//                     ->andFilterWhere(['in','brand_id',$session['brand']])
-//                     ->andFilterWhere(['in','mode',$session['mode']])
-//                     ->andFilterWhere(['in','vendor_id',$session['vendor']])
-//                     ->andFilterWhere(['like','product_code',$session['code_search']])
-//                     ->andFilterWhere(['like','name',$session['text_search']]);
-//        if($movement2 == 2 ){
-//            //echo "noo";
-//             $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
-//        }else if($movement2 == 1){
-//             $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
-//        }else{
-//          //echo "nid";
-//        }
+         $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
+                    ->andFilterWhere(['in','type_id',$session['product_type']])
+                     ->andFilterWhere(['in','property_id',$session['property']])
+                     ->andFilterWhere(['in','brand_id',$session['brand']])
+                     ->andFilterWhere(['in','mode',$session['mode']])
+                     ->andFilterWhere(['in','vendor_id',$session['vendor']])
+                     ->andFilterWhere(['like','product_code',$session['code_search']])
+                     ->andFilterWhere(['like','name',$session['text_search']]);
+        if($movement2 == 2 ){
+            //echo "noo";
+             $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
+        }else if($movement2 == 1){
+             $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
+        }else{
+          //echo "nid";
+        }
 
 
         //$dataProvider->pagination->pageSize = 10;
@@ -164,111 +164,111 @@ class ProductController extends Controller
         $modelfile = new Modelfile();
         $modelfile2 = new Modelfile2();
 
-         $model_select = $dataProvider->getTotalCount();//$dataProvider->getModels();
-         //$dataProvider->pagination->pageSize = 25;
+       //  $model_select = $dataProvider->getTotalCount();//$dataProvider->getModels();
+         $dataProvider->pagination->pageSize = 50;
 
          /// $dataProvider->query->orderby(['name'=>SORT_ASC]);
 
         if($modelfile->load(Yii::$app->request->post())){
- //          $uploaded = UploadedFile::getInstance($modelfile,"file");
-//           if(!empty($uploaded)){
-//            //echo $uploaded;return;
-//              // $data = [];
-//              // $data_save = 0;
-//              // $data_fail = [];
-//              // $data_all = 0;
-//              $upfiles = time() . "." . $uploaded->getExtension();
-//               if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
-//                 //echo "okk";return;
-//                  $myfile = '../web/uploads/files/'.$upfiles;
-//
-//
-//                    $file = fopen($myfile, "r");
-//                    fwrite($file, "\xEF\xBB\xBF");
-//                     // header('Content-Type: text/html; charset=UTF-8');
-//                     // iconv_set_encoding("internal_encoding", "UTF-8");
-//                     // iconv_set_encoding("output_encoding", "UTF-8");
-//                     // setlocale(LC_ALL, 'th_TH.utf8');
-//                   setlocale ( LC_ALL, 'th_TH.TIS-620' );
-//                    $i = -1;
-//                     while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE)
-//                     {
-//                          $i+=1;
-//                          if($rowData[0] =='' || $i == 0){
-//                            continue;
-//                          }
-//
-//                         // $rowData = array_map('utf8_encode', $rowData);
-//
-//                          // if( mb_detect_encoding($rowData[1], 'UTF-8','auto') !== false ){
-//                          //     echo "utf-8";
-//                          //     echo $rowData[1];
-//                          // }else{
-//                          //    $x = utf8_encode($rowData[1]);
-//                          //    echo $x;
-//                          // }
-//                          // break;
-//
-//                          $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
-//                          if(count($modelprod)>0){
-//                            // $data_all +=1;
-//                            // array_push($data_fail,['name'=>$rowData[0][1]]);
-//                            continue;
-//                          }
-//
-//                            $modelx = new \backend\models\Product();
-//                            $modelx->product_code = $rowData[0];
-//                            $modelx->name = $rowData[1];
-//                            $modelx->description = $rowData[1] ;
-//                        //    $modelx->category_id = $rowData[0][3];
-//                            $modelx->weight = 0;
-//                            $modelx->category_id = $this->checkCat($rowData[12]);
-//                            $modelx->unit_id = $this->checkUnit($rowData[2]);
-//                            $modelx->type_id = $this->checkType($rowData[13],$modelx->category_id);
-//                            $modelx->property_id = $this->checkProperty($rowData[14],$modelx->type_id);
-//                            $modelx->brand_id = $this->checkBrand($rowData[15]);
-//                            $modelx->price = 0;
-//                            $modelx->product_start = str_replace(',','', $rowData[4]);
-//                            $modelx->sale_qty = str_replace(',','', $rowData[5]);
-//                            $modelx->purch_qty = str_replace(',','', $rowData[6]);;
-//                            $modelx->return_qty =str_replace(',','', $rowData[7]);;
-//                            $modelx->adjust_qty = str_replace(',','', $rowData[8]);;
-//                            $modelx->cost_sum = str_replace(',','', $rowData[10]);;
-//                            $modelx->cost = str_replace(',','', $rowData[11]);;
-//                            $modelx->qty = str_replace(',','', $rowData[9]);;
-//                            $modelx->min_qty = 0;
-//                            $modelx->max_qty = 0;
-//                            $modelx->status = 1;
-//                            $modelx->group_id = $this->checkCat($rowData[12]);
-//                            $modelx->vendor_id = $this->checkVendor($rowData[17]);
-//                            $modelx->front_qty = 0;
-//                            $modelx->back_qty = 0;
-//                            $modelx->back_qty2 = 0;
-//                            $modelx->total_qty = 0;
-//                            $modelx->selection =0;
-//                            $modelx->mode = $rowData[19]=='y'?1:0;
-//                            $modelx->sale_price = str_replace(',','', $rowData[18]);;
-//
-//                           if($modelx->save(false)){
-//                              // $data_save += 1;
-//                              // $data_all +=1;
-//                              // array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
-//                           }
-//                        // }
-//
-//                     }
-//                     fclose($file);
-//
-//
-//
-//                unlink('../web/uploads/files/'.$upfiles);
-//              //  print_r($data_insert);return;
-//
-//                }else{
-//                  //echo "not";
-//                }
-//
-//           }
+           $uploaded = UploadedFile::getInstance($modelfile,"file");
+           if(!empty($uploaded)){
+            //echo $uploaded;return;
+              // $data = [];
+              // $data_save = 0;
+              // $data_fail = [];
+              // $data_all = 0;
+              $upfiles = time() . "." . $uploaded->getExtension();
+               if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
+                 //echo "okk";return;
+                  $myfile = '../web/uploads/files/'.$upfiles;
+
+
+                    $file = fopen($myfile, "r");
+                    fwrite($file, "\xEF\xBB\xBF");
+                     // header('Content-Type: text/html; charset=UTF-8');
+                     // iconv_set_encoding("internal_encoding", "UTF-8");
+                     // iconv_set_encoding("output_encoding", "UTF-8");
+                     // setlocale(LC_ALL, 'th_TH.utf8');
+                   setlocale ( LC_ALL, 'th_TH.TIS-620' );
+                    $i = -1;
+                     while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE)
+                     {
+                          $i+=1;
+                          if($rowData[0] =='' || $i == 0){
+                            continue;
+                          }
+
+                         // $rowData = array_map('utf8_encode', $rowData);
+
+                          // if( mb_detect_encoding($rowData[1], 'UTF-8','auto') !== false ){
+                          //     echo "utf-8";
+                          //     echo $rowData[1];
+                          // }else{
+                          //    $x = utf8_encode($rowData[1]);
+                          //    echo $x;
+                          // }
+                          // break;
+
+                          $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
+                          if(count($modelprod)>0){
+                            // $data_all +=1;
+                            // array_push($data_fail,['name'=>$rowData[0][1]]);
+                            continue;
+                          }
+
+                            $modelx = new \backend\models\Product();
+                            $modelx->product_code = $rowData[0];
+                            $modelx->name = $rowData[1];
+                            $modelx->description = $rowData[1] ;
+                        //    $modelx->category_id = $rowData[0][3];
+                            $modelx->weight = 0;
+                            $modelx->category_id = $this->checkCat($rowData[12]);
+                            $modelx->unit_id = $this->checkUnit($rowData[2]);
+                            $modelx->type_id = $this->checkType($rowData[13],$modelx->category_id);
+                            $modelx->property_id = $this->checkProperty($rowData[14],$modelx->type_id);
+                            $modelx->brand_id = $this->checkBrand($rowData[15]);
+                            $modelx->price = 0;
+                            $modelx->product_start = str_replace(',','', $rowData[4]);
+                            $modelx->sale_qty = str_replace(',','', $rowData[5]);
+                            $modelx->purch_qty = str_replace(',','', $rowData[6]);;
+                            $modelx->return_qty =str_replace(',','', $rowData[7]);;
+                            $modelx->adjust_qty = str_replace(',','', $rowData[8]);;
+                            $modelx->cost_sum = str_replace(',','', $rowData[10]);;
+                            $modelx->cost = str_replace(',','', $rowData[11]);;
+                            $modelx->qty = str_replace(',','', $rowData[9]);;
+                            $modelx->min_qty = 0;
+                            $modelx->max_qty = 0;
+                            $modelx->status = 1;
+                            $modelx->group_id = $this->checkCat($rowData[12]);
+                            $modelx->vendor_id = $this->checkVendor($rowData[17]);
+                            $modelx->front_qty = 0;
+                            $modelx->back_qty = 0;
+                            $modelx->back_qty2 = 0;
+                            $modelx->total_qty = 0;
+                            $modelx->selection =0;
+                            $modelx->mode = $rowData[19]=='y'?1:0;
+                            $modelx->sale_price = str_replace(',','', $rowData[18]);;
+
+                           if($modelx->save(false)){
+                              // $data_save += 1;
+                              // $data_all +=1;
+                              // array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
+                           }
+                        // }
+
+                     }
+                     fclose($file);
+
+
+
+                unlink('../web/uploads/files/'.$upfiles);
+              //  print_r($data_insert);return;
+
+                }else{
+                  //echo "not";
+                }
+
+           }
         }
 
         $modellastupdate = Product::find()->max('updated_at');
