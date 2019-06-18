@@ -131,19 +131,19 @@ class ProductController extends Controller
                      ->andFilterWhere(['in','vendor_id',$session['vendor']])
                      ->andFilterWhere(['like','product_code',$session['code_search']])
                      ->andFilterWhere(['like','name',$session['text_search']]);
-        if($movement2 == 2 ){
-            //echo "noo";
-             $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
-        }else if($movement2 == 1){
-             $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
-        }else{
-          //echo "nid";
-        }
+//        if($movement2 == 2 ){
+//            //echo "noo";
+//             $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);
+//        }else if($movement2 == 1){
+//             $dataProvider->query->andFilterWhere(['or',['>','sale_qty',0],['>','purch_qty',0]]);
+//        }else{
+//          //echo "nid";
+//        }
 
 
         //$dataProvider->pagination->pageSize = 10;
 
-        
+
 //       $sale_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['code_search']],['like','name',$session['text_search']]])
 //                                  ->andFilterWhere(['in','category_id',$session['group']])
 //                                   ->andFilterWhere(['in','type_id',$session['product_type']])
@@ -461,7 +461,7 @@ class ProductController extends Controller
             'code_search' => $code_search,
             'sale_sum'=> $sale_sum,
             'purch_sum'=> $purch_sum,
-            'model_select'=> $model_select,
+          //  'model_select'=> $model_select,
             'last_update'=> $modellastupdate,
         ]);
     }
