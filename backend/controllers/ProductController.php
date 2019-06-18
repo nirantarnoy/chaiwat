@@ -56,15 +56,15 @@ class ProductController extends Controller
         $vendor = '';
         $property = '';
         $mode = '';
-        $text_search = '';  
-        $code_search = '';  
+        $text_search = '';
+        $code_search = '';
         $movement = '';
         $movement2 = '';
 
         $sale_sum = 0;
         $purch_sum = 0;
         $last_update = '';
-        
+
         $session = Yii::$app->session;
 
         if(Yii::$app->request->isPost){
@@ -85,14 +85,14 @@ class ProductController extends Controller
             }
 
            // echo $movement2;return;
-            
+
          //  print_r($movement);return;
            // echo $mode;return;
             //echo Yii::$app->request->post('new_brand')[0]; return;
             // print_r($product_type);
-           // echo $product_type; 
-           // print_r(Yii::$app->request->queryParams); return;   
-          
+           // echo $product_type;
+           // print_r(Yii::$app->request->queryParams); return;
+
             $session['group'] = $group;
             $session['product_type'] = $product_type;
             $session['property'] = $property;
@@ -103,7 +103,7 @@ class ProductController extends Controller
             $session['text_search'] = $text_search;
             $session['code_search'] = $code_search;
         }
-        
+
        // if(isset($session['group'])){
           $brand=  $session['brand'];
           $group=  $session['group'];
@@ -113,14 +113,14 @@ class ProductController extends Controller
           $mode =  $session['mode'];
           $movement2 =  $session['movement'];
          // $movement =  $session['movement'];
-          $text_search =  $session['text_search'];  
-          $code_search =  $session['code_search'];  
-    
+          $text_search =  $session['text_search'];
+          $code_search =  $session['code_search'];
+
        // }
 
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+
         //print_r(Yii::$app->request->queryParams);
 
          $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
@@ -142,26 +142,28 @@ class ProductController extends Controller
 
 
         //$dataProvider->pagination->pageSize = 10;
-       $sale_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['code_search']],['like','name',$session['text_search']]])
-                                  ->andFilterWhere(['in','category_id',$session['group']])
-                                   ->andFilterWhere(['in','type_id',$session['product_type']])
-                                   ->andFilterWhere(['in','property_id',$session['property']])
-                                   ->andFilterWhere(['in','brand_id',$session['brand']])
-                                   ->andFilterWhere(['in','mode',$session['mode']])
-                                   ->andFilterWhere(['in','vendor_id',$session['vendor']])
-                                   ->sum('sale_qty');
-       $purch_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['code_search']],['like','name',$session['text_search']]])
-                                  ->andFilterWhere(['in','category_id',$session['group']])
-                                   ->andFilterWhere(['in','type_id',$session['product_type']])
-                                   ->andFilterWhere(['in','property_id',$session['property']])
-                                   ->andFilterWhere(['in','brand_id',$session['brand']])
-                                   ->andFilterWhere(['in','mode',$session['mode']])
-                                   ->andFilterWhere(['in','vendor_id',$session['vendor']])
-                                   ->sum('purch_qty');
+
+        
+//       $sale_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['code_search']],['like','name',$session['text_search']]])
+//                                  ->andFilterWhere(['in','category_id',$session['group']])
+//                                   ->andFilterWhere(['in','type_id',$session['product_type']])
+//                                   ->andFilterWhere(['in','property_id',$session['property']])
+//                                   ->andFilterWhere(['in','brand_id',$session['brand']])
+//                                   ->andFilterWhere(['in','mode',$session['mode']])
+//                                   ->andFilterWhere(['in','vendor_id',$session['vendor']])
+//                                   ->sum('sale_qty');
+//       $purch_sum = Product::find()->andfilterWhere(['or',['like','product_code',$session['code_search']],['like','name',$session['text_search']]])
+//                                  ->andFilterWhere(['in','category_id',$session['group']])
+//                                   ->andFilterWhere(['in','type_id',$session['product_type']])
+//                                   ->andFilterWhere(['in','property_id',$session['property']])
+//                                   ->andFilterWhere(['in','brand_id',$session['brand']])
+//                                   ->andFilterWhere(['in','mode',$session['mode']])
+//                                   ->andFilterWhere(['in','vendor_id',$session['vendor']])
+//                                   ->sum('purch_qty');
 
         $modelfile = new Modelfile();
         $modelfile2 = new Modelfile2();
-         
+
          $model_select = $dataProvider->getTotalCount();//$dataProvider->getModels();
          $dataProvider->pagination->pageSize = 25;
         // $dataProvider->query->orderby(['name'=>SORT_ASC]);
@@ -194,7 +196,7 @@ class ProductController extends Controller
                           if($rowData[0] =='' || $i == 0){
                             continue;
                           }
-                          
+
                          // $rowData = array_map('utf8_encode', $rowData);
 
                           // if( mb_detect_encoding($rowData[1], 'UTF-8','auto') !== false ){
@@ -212,7 +214,7 @@ class ProductController extends Controller
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
                             continue;
                           }
-           
+
                             $modelx = new \backend\models\Product();
                             $modelx->product_code = $rowData[0];
                             $modelx->name = $rowData[1];
@@ -245,14 +247,14 @@ class ProductController extends Controller
                             $modelx->selection =0;
                             $modelx->mode = $rowData[19]=='y'?1:0;
                             $modelx->sale_price = str_replace(',','', $rowData[18]);;
-                        
+
                            if($modelx->save(false)){
                               // $data_save += 1;
                               // $data_all +=1;
                               // array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
                            }
                         // }
-           
+
                      }
                      fclose($file);
 
@@ -267,7 +269,7 @@ class ProductController extends Controller
                //  $highestColumn = $sheet->getHighestColumn();
 
                //  //for($row=1;$row <= $highestRow; $row++){
-                 
+
                //   $data_insert = [];
 
 //                   for($row=1;$row <= 130; $row++){
@@ -282,7 +284,7 @@ class ProductController extends Controller
 //                    // $data_all +=1;
 //                     continue;
 //                   }
-// array_push($data_insert, ['niran']); 
+// array_push($data_insert, ['niran']);
 
 ///////////// insert temp
 
@@ -318,7 +320,7 @@ class ProductController extends Controller
                         //     $modelx->selection =0;
                         //     $modelx->mode = $rowData[0][19]=='y'?1:0;
                         //     $modelx->sale_price = $rowData[0][18];
-                        
+
                         //    if($modelx->save(false)){
                         //       // $data_save += 1;
                         //       // $data_all +=1;
@@ -356,7 +358,7 @@ class ProductController extends Controller
                           // $xvendor = $this->checkVendor($rowData[0][17]);
 
                           // array_push($data_insert, [
-                          //        $rowData[0][0], 
+                          //        $rowData[0][0],
                           //        $rowData[0][1],
                           //        $rowData[0][1],
                           //        $xunit,
@@ -410,20 +412,20 @@ class ProductController extends Controller
                         //     $modelx->selection =0;
                         //     $modelx->mode = $rowData[0][19]=='y'?1:0;
                         //     $modelx->sale_price = $rowData[0][18];
-                        
+
                         //    if($modelx->save(false)){
                         //       // $data_save += 1;
                         //       // $data_all +=1;
                         //       // array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
                         //    }
                          //}
-                          
+
                   //echo $rowData[0][0]."/".$rowData[0][1]."/".$rowData[0][2]."/".$rowData[0][3]."/".$rowData[0][4].'<br />';
-              
+
               //  }
 
                 // Yii::$app->db->createCommand()->batchInsert('product', ['product_code', 'name', 'description','unit_id','product_start','sale_qty','purch_qty','return_qty','adjust_qty','cost_sum',
-                //                                                         'qty','cost','category_id','group_id','type_id','property_id','brand_id','vendor_id','sale_price','mode'                                          
+                //                                                         'qty','cost','category_id','group_id','type_id','property_id','brand_id','vendor_id','sale_price','mode'
                 //         ],
                 // [
                 //    $data_insert
@@ -437,7 +439,7 @@ class ProductController extends Controller
                 }else{
                   //echo "not";
                 }
-              
+
            }
         }
 
@@ -578,11 +580,11 @@ class ProductController extends Controller
         $modelfile = new Modelfile();
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
              $uploaded = UploadedFile::getInstances($modelfile, 'file');
-             
+
             if($model->save()){
                 if(!empty($uploaded)){
                   foreach($uploaded as $file){
-                        $upfiles = time() . "." . $file->getExtension();                        
+                        $upfiles = time() . "." . $file->getExtension();
                         $modelimage = new Productimage();
                         if ($file->saveAs('../web/uploads/images/' . $upfiles)) {
                            $modelimage->image = $upfiles;
@@ -637,8 +639,8 @@ class ProductController extends Controller
     //         if($model->save()){
     //             if(!empty($uploaded)){
     //               foreach($uploaded as $file){
-    //                   //  $upfiles = time() . "." . $file->getExtension();                        
-    //                     $upfiles = $file;                        
+    //                   //  $upfiles = time() . "." . $file->getExtension();
+    //                     $upfiles = $file;
     //                     $modelimage = new Productimage();
     //                     if ($file->saveAs('../web/uploads/images/' . $upfiles)) {
     //                        $modelimage->image = $upfiles;
@@ -694,8 +696,8 @@ class ProductController extends Controller
             if($model->save()){
                 if(!empty($uploaded)){
                   foreach($uploaded as $file){
-                      //  $upfiles = time() . "." . $file->getExtension();                        
-                        $upfiles = $file;                        
+                      //  $upfiles = time() . "." . $file->getExtension();
+                        $upfiles = $file;
                         $modelimage = new Productimage();
                         if ($file->saveAs('../web/uploads/images/' . $upfiles)) {
                            $modelimage->image = $upfiles;
@@ -778,7 +780,7 @@ class ProductController extends Controller
           Product::deleteAll(['id'=>$idd]);
         }
       }
-      
+
 
         return $this->redirect(['index']);
     }
@@ -933,7 +935,7 @@ class ProductController extends Controller
           }else{
              echo "<option value=''>ไม่พบข้อมูล</option>";
           }
-        
+
       }
     }
     public function actionShowbrand(){
@@ -965,7 +967,7 @@ class ProductController extends Controller
           }else{
              echo "<option value=''>ไม่พบข้อมูล</option>";
           }
-        
+
       }
     }
      public function actionShowreport(){
@@ -975,8 +977,8 @@ class ProductController extends Controller
         $vendor = '';
         $property = '';
         $mode = '';
-        $code_search = '';    
-        $text_search = '';    
+        $code_search = '';
+        $text_search = '';
         $movement = '';
         $movement2 = '';
         $sortparam = '';
@@ -1000,7 +1002,7 @@ class ProductController extends Controller
             }
           //  print_r($group);return;
         }
-      
+
        $modellist = Product::find()
                      ->andFilterWhere(['in','category_id',$group])
                      ->andFilterWhere(['in','type_id',$product_type])
@@ -1025,21 +1027,21 @@ class ProductController extends Controller
            }else{
              $modellist = $modellist->orderby([$sortparam=>SORT_ASC])->all();
            }
-         
+
         }else{
           $modellist = $modellist->orderby(['name'=>SORT_ASC])->all();
         }
-         
+
 
          //echo count($modellist);return;
-      
+
       $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
-                'format' => Pdf::FORMAT_A4, 
+                'format' => Pdf::FORMAT_A4,
                 'orientation' => Pdf::ORIENT_LANDSCAPE,
-                'destination' => Pdf::DEST_BROWSER, 
+                'destination' => Pdf::DEST_BROWSER,
                 'content' => $this->renderPartial('_print',[
-                    'list'=>$modellist,  
+                    'list'=>$modellist,
                     // 'from_date'=> $from_date,
                     // 'to_date' => $to_date,
                     ]),
@@ -1069,7 +1071,7 @@ class ProductController extends Controller
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
 
                     $myfile = '../web/uploads/files/'.$upfiles;
-                       
+
                     $file = fopen($myfile, "r");
                     fwrite($file, "\xEF\xBB\xBF");
                      // header('Content-Type: text/html; charset=UTF-8');
@@ -1091,7 +1093,7 @@ class ProductController extends Controller
 //                         $rowData = preg_replace('/(\\\",)/','\\ ",',$rowData);
 //                         $rowData = preg_replace('/(\\\"("?),)/',' ',$rowData);
 //                         $data[] = str_getcsv($rowData);
-                          
+
 
                           $x = $rowData[0];
                         //  echo str_replace('\\','',$x[0]); return;
@@ -1128,16 +1130,16 @@ class ProductController extends Controller
                               // $modelx->selection =0;
                             //  $modelx->mode = $rowData[19]=='y'?1:0;
                              // $modelx->sale_price = $rowData[18];
-                        
+
                            if($modelx->save(false)){
                              $res +=1;
                            }
                           }else{
                                //echo "not found";
                           }
-           
-                           
-           
+
+
+
                      }
                      fclose($file);
                         unlink('../web/uploads/files/'.$upfiles);
@@ -1151,13 +1153,13 @@ class ProductController extends Controller
                   return $this->redirect(['index']);
           }
     }
-      
+
       public function actionGenpo(){
         $prodid = Yii::$app->request->post('listid');
         $vendor_id = Yii::$app->request->post('vendor_id');
         $pid = explode(',', $prodid);
-        
-        
+
+
         if(count($pid)>0 && $pid[0]!=''){
             $model = new \backend\models\Purchaseorder();
             $model->purchase_order = $model::getLastNo();
@@ -1241,7 +1243,6 @@ class ProductController extends Controller
 
 }
 
-              
-               
 
-               
+
+
