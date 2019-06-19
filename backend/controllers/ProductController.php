@@ -927,6 +927,35 @@ class ProductController extends Controller
                         //  echo str_replace('\\','',$x[0]); return;
                         // var_dump($prodcode);
 
+                         $sale_qty_new = 0;
+                         $purch_qty_new = 0;
+                         $return_qty_new = 0;
+                         $adj_qty_new = 0;
+                         $cost_sum_new = 0;
+                         $cost_new = 0;
+                         $qty_new = 0;
+
+                         if($rowData[5] != "-"){
+                             $sale_qty_new = str_replace(',','', $rowData[5]);
+                         }
+                         if($rowData[6] != "-"){
+                             $purch_qty_new = str_replace(',','', $rowData[6]);
+                         }
+                         if($rowData[7] != "-"){
+                             $return_qty_new = str_replace(',','', $rowData[7]);
+                         }
+                         if($rowData[8] != "-"){
+                             $adj_qty_new = str_replace(',','', $rowData[8]);
+                         }
+                         if($rowData[10] != "-"){
+                             $cost_sum_new = str_replace(',','', $rowData[10]);
+                         }
+                         if($rowData[11] != "-"){
+                             $cost_new = str_replace(',','', $rowData[11]);
+                         }
+                         if($rowData[9] != "-"){
+                             $qty_new = str_replace(',','', $rowData[9]);
+                         }
 
                           $modelx = \backend\models\Product::find()->where(['product_code'=> $x])->one();
                           if(count($modelx)>0){
@@ -935,14 +964,14 @@ class ProductController extends Controller
                              //echo str_replace(',','', $rowData[5]);return;
                               $qty = str_replace(',','', $rowData[5]);
                               $modelx->product_start = str_replace(',','', $rowData[4]);
-                              $modelx->sale_qty = (int)trim((string)$rowData[5]);
+                              $modelx->sale_qty = $sale_qty_new;
                              // $modelx->sale_qty = str_replace(',','', $rowData[5]);;
-                              $modelx->purch_qty = str_replace(',','', $rowData[6]);
-                              $modelx->return_qty = str_replace(',','', $rowData[7]);
-                              $modelx->adjust_qty = str_replace(',','', $rowData[8]);
-                              $modelx->cost_sum = str_replace(',','', $rowData[10]);
-                              $modelx->cost = str_replace(',','', $rowData[11]);
-                              $modelx->qty = str_replace(',','', $rowData[9]);
+                              $modelx->purch_qty = $purch_qty_new;
+                              $modelx->return_qty = $return_qty_new;
+                              $modelx->adjust_qty = $adj_qty_new;
+                              $modelx->cost_sum = $cost_sum_new;
+                              $modelx->cost = $cost_new;
+                              $modelx->qty = $qty_new;
                              // $modelx->mode = $rowData[19]=='y'?1:0;
                              // $modelx->sale_price = str_replace(',','', $rowData[18]);;
 
