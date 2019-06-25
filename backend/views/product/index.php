@@ -884,7 +884,7 @@ $this->registerJsFile(
 <?php
 
   $url_to_delete =  Url::to(['product/bulkdelete'],true);
-   $url_to_deleteall =  Url::to(['product/alldelete'],true);
+  $url_to_deleteall =  Url::to(['product/alldelete'],true);
   $url_to_showreport =  Url::to(['product/showreport'],true);
   $url_to_index_search =  Url::to(['product/index'],true);
   $url_to_update =  Url::to(['product/update2'],true);
