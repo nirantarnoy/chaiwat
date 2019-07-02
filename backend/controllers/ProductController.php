@@ -209,12 +209,13 @@ class ProductController extends Controller
                           //    echo $x;
                           // }
                           // break;
-                         echo $rowData[0];return;
+
 
                           $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
                           if(count($modelprod)>0){
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
+                              echo $rowData[0];return;
                             continue;
                           }else{
                               echo $rowData[0]; return;
