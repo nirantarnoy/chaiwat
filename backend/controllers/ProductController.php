@@ -215,10 +215,10 @@ class ProductController extends Controller
                           if(count($modelprod)>0){
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
-                              echo $rowData[0];return;
+                             // echo $rowData[0];return;
                             continue;
                           }else{
-                              echo $rowData[0]; return;
+                              //echo $rowData[0]; return;
                           }
                          $sale_qty_new = 0;
                          $purch_qty_new = 0;
