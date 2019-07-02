@@ -337,12 +337,16 @@ class ProductController extends Controller
       if(count($model)>0){
         return $model->id;
       }else{
-        $model_new = new \backend\models\Vendor();
-        $model_new->name = $name;
-        $model_new->status = 1;
-        if($model_new->save(false)){
-          return $model_new->id;
-        }
+          if($name!='') {
+              $model_new = new \backend\models\Vendor();
+              $model_new->name = $name;
+              $model_new->status = 1;
+              if ($model_new->save(false)) {
+                  return $model_new->id;
+              }
+          }else{
+              return 0;
+          }
       }
     }
      public function checkCat($name){
@@ -350,12 +354,16 @@ class ProductController extends Controller
       if(count($model)>0){
         return $model->id;
       }else{
-        $model_new = new \backend\models\Category();
-        $model_new->name = $name;
-        $model_new->status = 1;
-        if($model_new->save(false)){
-          return $model_new->id;
-        }
+          if($name!='') {
+              $model_new = new \backend\models\Category();
+              $model_new->name = $name;
+              $model_new->status = 1;
+              if ($model_new->save(false)) {
+                  return $model_new->id;
+              }
+          }else{
+              return 0;
+          }
       }
     }
      public function checkBrand($name){
@@ -363,12 +371,16 @@ class ProductController extends Controller
       if(count($model)>0){
         return $model->id;
       }else{
-        $model_new = new \backend\models\Brand();
-        $model_new->name = $name;
-        $model_new->status = 1;
-        if($model_new->save(false)){
-          return $model_new->id;
-        }
+          if($name!='') {
+              $model_new = new \backend\models\Brand();
+              $model_new->name = $name;
+              $model_new->status = 1;
+              if ($model_new->save(false)) {
+                  return $model_new->id;
+              }
+          }else{
+              return 0;
+          }
       }
     }
   public function checkUnit($name){
@@ -376,12 +388,16 @@ class ProductController extends Controller
       if(count($model)>0){
         return $model->id;
       }else{
-        $model_new = new \backend\models\Unit();
-        $model_new->name = $name;
-        $model_new->status = 1;
-        if($model_new->save(false)){
-          return $model_new->id;
-        }
+          if($name!='') {
+              $model_new = new \backend\models\Unit();
+              $model_new->name = $name;
+              $model_new->status = 1;
+              if ($model_new->save(false)) {
+                  return $model_new->id;
+              }
+          }else{
+              return 0;
+          }
       }
     }
     public function checkType($name,$groupid){
