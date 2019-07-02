@@ -50,8 +50,7 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
-        echo "Hello";
-        return;
+
         $brand= '';
         $group= '';
         $product_type = '';
@@ -224,6 +223,7 @@ class ProductController extends Controller
                          $cost_sum_new = 0;
                          $cost_new = 0;
                          $qty_new = 0;
+                         $sale_price_new = 0;
 
                          if($rowData[5] != "-"){
                              $sale_qty_new = str_replace(',','', $rowData[5]);
