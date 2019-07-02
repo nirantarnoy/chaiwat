@@ -50,6 +50,7 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
+        echo "Hello";return;
         $brand= '';
         $group= '';
         $product_type = '';
