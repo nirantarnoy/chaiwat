@@ -180,7 +180,7 @@ class ProductController extends Controller
               // $data_all = 0;
               $upfiles = time() . "." . $uploaded->getExtension();
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
-                 echo "okk";return;
+                 //echo "okk";return;
                   $myfile = '../web/uploads/files/'.$upfiles;
 
 
@@ -209,6 +209,7 @@ class ProductController extends Controller
                           //    echo $x;
                           // }
                           // break;
+                         echo $rowData[0];return;
 
                           $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
                           if(count($modelprod)>0){
