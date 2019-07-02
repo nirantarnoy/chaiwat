@@ -173,14 +173,14 @@ class ProductController extends Controller
         if($modelfile->load(Yii::$app->request->post())){
            $uploaded = UploadedFile::getInstance($modelfile,"file");
            if(!empty($uploaded)){
-            //echo $uploaded;return;
+
               // $data = [];
               // $data_save = 0;
               // $data_fail = [];
               // $data_all = 0;
               $upfiles = time() . "." . $uploaded->getExtension();
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
-                 //echo "okk";return;
+                 echo "okk";return;
                   $myfile = '../web/uploads/files/'.$upfiles;
 
 
