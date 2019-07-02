@@ -389,13 +389,16 @@ class ProductController extends Controller
       if(count($model)>0){
         return $model->id;
       }else{
-        $model_new = new \backend\models\Producttype();
-        $model_new->name = $name;
-        $model_new->group_id = $groupid;
-        $model_new->status = 1;
-        if($model_new->save(false)){
-          return $model_new->id;
-        }
+          if($name!=''){
+              $model_new = new \backend\models\Producttype();
+              $model_new->name = $name;
+              $model_new->group_id = $groupid;
+              $model_new->status = 1;
+              if($model_new->save(false)){
+                  return $model_new->id;
+              }
+          }
+        return 0;
       }
     }
     public function checkProperty($name,$type_id){
