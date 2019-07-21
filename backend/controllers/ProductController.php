@@ -911,7 +911,7 @@ class ProductController extends Controller
            }
 
         }else{
-          $modellist = $modellist->orderby(['name'=>SORT_ASC])->all();
+          $modellist = $modellist->orderby(['brand_id'=>SORT_ASC,'name'=>SORT_ASC])->all();
         }
 
 
