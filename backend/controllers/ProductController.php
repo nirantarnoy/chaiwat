@@ -916,7 +916,7 @@ class ProductController extends Controller
 
 
          //echo count($modellist);return;
-
+         ini_set("pcre.backtrack_limit", "5000000");
       $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
                 'format' => Pdf::FORMAT_A4,
