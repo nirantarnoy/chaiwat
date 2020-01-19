@@ -211,7 +211,7 @@ class ProductController extends Controller
                           // break;
 
 
-                          $modelprod = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
+                          $modelprod = \backend\models\Product::find()->where(['product_code'=>trim($rowData[0])])->one();
                           if(count($modelprod)>0){
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
@@ -252,7 +252,7 @@ class ProductController extends Controller
                          }
 
                             $modelx = new \backend\models\Product();
-                            $modelx->product_code = $rowData[0];
+                            $modelx->product_code = trim($rowData[0]);
                             $modelx->name = $rowData[1];
                             $modelx->description = $rowData[1] ;
                         //    $modelx->category_id = $rowData[0][3];
@@ -958,9 +958,9 @@ class ProductController extends Controller
            if(!empty($uploaded)){
 
                $upfiles = time() . "." . $uploaded->getExtension();
-               //echo $upfiles;return;
+//               echo $upfiles;return;
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
-
+                   echo "save";return;
                     $myfile = '../web/uploads/files/'.$upfiles;
 
                     $file = fopen($myfile, "r");
@@ -986,7 +986,7 @@ class ProductController extends Controller
 //                         $data[] = str_getcsv($rowData);
 
 
-                          $x = $rowData[0];
+                          $x = trim($rowData[0]);
                         //  echo str_replace('\\','',$x[0]); return;
                         // var_dump($prodcode);
 
@@ -1067,7 +1067,9 @@ class ProductController extends Controller
                             return $this->redirect(['index']);
                         }
 
-              }
+              }else{
+                   echo "not save";
+               }
 
            }else{
                   return $this->redirect(['index']);
