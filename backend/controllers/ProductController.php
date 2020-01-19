@@ -960,7 +960,7 @@ class ProductController extends Controller
                $upfiles = time() . "." . $uploaded->getExtension();
 //               echo $upfiles;return;
                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)){
-                   echo "save";return;
+                  // echo "save";return;
                     $myfile = '../web/uploads/files/'.$upfiles;
 
                     $file = fopen($myfile, "r");
