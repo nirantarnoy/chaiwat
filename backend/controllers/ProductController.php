@@ -655,12 +655,21 @@ class ProductController extends Controller
       // }
 
       if(Yii::$app->request->isAjax){
-        $ids = Yii::$app->request->post('id');
-        if($ids !=''){
+      //  $ids = Yii::$app->request->post('id');
+        //if($ids !=''){
          // return $ids;
-          $idd = explode(',', $ids);
-          Product::deleteAll(['id'=>$idd]);
-        }
+        //  $idd = explode(',', $ids);
+            \backend\models\Producttype::deleteAll();
+            \backend\models\Category::deleteAll();
+            \backend\models\Subcategory::deleteAll();
+            \backend\models\Unit::deleteAll();
+            \backend\models\Brand::deleteAll();
+            \backend\models\Vendor::deleteAll();
+            \backend\models\Product::deleteAll();
+            \backend\models\Property::deleteAll();
+
+            //Product::deleteAll(['id'=>$idd]);
+       // }
       }
 
 
