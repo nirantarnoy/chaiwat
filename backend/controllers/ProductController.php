@@ -804,7 +804,17 @@ class ProductController extends Controller
         $typeid = Yii::$app->request->post('typeid');
         $propertyid = Yii::$app->request->post('propertyid');
 
-        $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,'property_id'=>$propertyid])->all();
+          if($groupid !='' && $typeid == '' && $propertyid ==''){
+              $product = Product::find()->where(['group_id'=>$groupid])->all();
+          }
+          if($groupid !='' && $typeid != '' && $propertyid ==''){
+              $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid])->all();
+          }
+          if($groupid !='' && $typeid != '' && $propertyid !=''){
+              $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,'property_id'=>$propertyid])->all();
+          }
+
+       // $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,['LIKE','property_id',$propertyid]])->all();
         if($product){
           $id = [];
           foreach($product as $data){
@@ -836,7 +846,23 @@ class ProductController extends Controller
         $propertyid = Yii::$app->request->post('propertyid');
         $vendorid = Yii::$app->request->post('vendorid');
 
-        $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,'property_id'=>$propertyid,'vendor_id'=>$vendorid])->all();
+        if($groupid !='' && $typeid == '' && $propertyid =='' && $vendorid ==''){
+            $product = Product::find()->where(['group_id'=>$groupid])->all();
+        }
+        if($groupid !='' && $typeid != '' && $propertyid =='' && $vendorid ==''){
+              $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid])->all();
+        }
+        if($groupid !='' && $typeid != '' && $propertyid !='' && $vendorid ==''){
+              $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,'property_id'=>$propertyid])->all();
+        }
+          if($groupid !='' && $typeid != '' && $propertyid !='' && $vendorid !=''){
+              $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,'property_id'=>$propertyid,'vendor_id'=>$vendorid])->all();
+          }
+
+//       if($groupid != ''){
+//           $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,'property_id'=>$propertyid,'vendor_id'=>$vendorid])->all();
+//       }
+
         if($product){
           $id = [];
           foreach($product as $data){

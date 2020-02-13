@@ -980,6 +980,8 @@ $this->registerJsFile(
                $("#product_type").multiselect("rebuild");
             }
           });
+           findVendor();
+          findBrand();
         }
       });
       
@@ -996,6 +998,8 @@ $this->registerJsFile(
               $("#property").multiselect("rebuild");
             }
           });
+          findVendor();
+          findBrand();
         }
 
             
@@ -1010,20 +1014,23 @@ $this->registerJsFile(
 
       $("#property").change(function(){
         if($(this).val()!=""){
-          var grp = $("#product_group").val();
-          var typ = $("#product_type").val();
+        alert();
+//          var grp = $("#product_group").val();
+//          var typ = $("#product_type").val();
 
-          $.ajax({
-            type: "post",
-            dataType: "html",
-            url: "'.Url::to(['product/showvendor'],true).'",
-            data: {groupid:grp,typeid:typ,propertyid: $(this).val()},
-            success: function(data){
-             // $("#property").prop("disabled","");
-              $("#vendor").html(data);
-              $("#vendor").multiselect("rebuild");
-            }
-          });
+//          $.ajax({
+//            type: "post",
+//            dataType: "html",
+//            url: "'.Url::to(['product/showvendor'],true).'",
+//            data: {groupid:grp,typeid:typ,propertyid: $(this).val()},
+//            success: function(data){
+//             // $("#property").prop("disabled","");
+//              $("#vendor").html(data);
+//              $("#vendor").multiselect("rebuild");
+//            }
+//          });
+          findVendor();
+          findBrand();
         }
             if($(this).val()!=""){
                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
@@ -1048,6 +1055,7 @@ $this->registerJsFile(
               $("#brand").multiselect("rebuild");
             }
           });
+          findBrand();
         }
              if($(this).val()!=""){
                    $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
@@ -1271,7 +1279,53 @@ $this->registerJsFile(
        $("#myModal_cart").modal("show").find(".modal-body").load("'.$url_to_showcart.'");
    });
 
+   function findVendor(){
+          var grp = $("#product_group").val();
+          var typ = $("#product_type").val();
+          var prop = $("#property").val();
+          
+          //alert(prop);
+          
+          $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "'.Url::to(['product/showvendor'],true).'",
+            data: {groupid:grp,typeid:typ,propertyid: prop},
+            success: function(data){
+             // $("#property").prop("disabled","");
+              $("#vendor").html(data);
+              $("#vendor").multiselect("rebuild");
+            }
+          });
+   }
+   function findBrand(){
+          var grp = $("#product_group").val();
+          var typ = $("#product_type").val();
+          var prop = $("#property").val();
+          var vendor = $("#vendor").val();
+          
+        //  alert(grp);
+//   alert(typ);
+//   alert(prop);
+//   alert(vendor);
 
+          $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "'.Url::to(['product/showbrand'],true).'",
+            data: {groupid:grp,typeid:typ,propertyid:prop,vendorid: vendor},
+            success: function(data){
+             // $("#property").prop("disabled","");
+              $("#brand").html(data);
+              $("#brand").multiselect("rebuild");
+            },
+            error: function(data){
+              alert("eorr");
+            }
+          });  
+   }
+   
+   
    function shownote(id){
      if(id != ""){
         $.ajax({
