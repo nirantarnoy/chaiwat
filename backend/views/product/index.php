@@ -1014,7 +1014,7 @@ $this->registerJsFile(
 
       $("#property").change(function(){
         if($(this).val()!=""){
-        alert();
+      //  alert();
 //          var grp = $("#product_group").val();
 //          var typ = $("#product_type").val();
 
