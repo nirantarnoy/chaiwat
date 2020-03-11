@@ -968,7 +968,7 @@ $this->registerJsFile(
         $("#property").prop("disabled","");
       }
       $("#product_group").change(function(){
-        if($(this).val()!=""){
+//        if($(this).val()!=""){
           $.ajax({
             type: "post",
             dataType: "html",
@@ -982,7 +982,7 @@ $this->registerJsFile(
           });
            findVendor();
           findBrand();
-        }
+//        }
       });
       
       $("#product_type").change(function(){
