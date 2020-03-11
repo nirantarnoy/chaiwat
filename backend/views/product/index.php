@@ -986,7 +986,7 @@ $this->registerJsFile(
       });
       
       $("#product_type").change(function(){
-        if($(this).val()!=""){
+       // if($(this).val()!=""){
           $.ajax({
             type: "post",
             dataType: "html",
@@ -1000,7 +1000,7 @@ $this->registerJsFile(
           });
           findVendor();
           findBrand();
-        }
+       // }
 
             
                    if($(this).val()!=""){

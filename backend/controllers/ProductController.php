@@ -835,6 +835,16 @@ class ProductController extends Controller
           }else{
              echo "<option value=''>ไม่พบข้อมูล</option>";
           }
+        }else{
+            $model = \backend\models\Property::find()->all();
+            if($model){
+                // echo "<option>เลือกคุณสมบัติ </option>";
+                foreach($model as $value){
+                    echo "<option value='" . $value->id . "'>$value->name</option>";
+                }
+            }else{
+                echo "<option value=''>ไม่พบข้อมูล</option>";
+            }
         }
       }
     }
