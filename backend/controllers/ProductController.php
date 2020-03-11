@@ -124,14 +124,44 @@ class ProductController extends Controller
 
         //print_r(Yii::$app->request->queryParams);
 
-         $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
-                    ->andFilterWhere(['in','type_id',$session['product_type']])
-                     ->andFilterWhere(['in','property_id',$session['property']])
-                     ->andFilterWhere(['in','brand_id',$session['brand']])
-                     ->andFilterWhere(['in','mode',$session['mode']])
-                     ->andFilterWhere(['in','vendor_id',$session['vendor']])
-                     ->andFilterWhere(['like','product_code',$session['code_search']])
-                     ->andFilterWhere(['like','name',$session['text_search']]);
+        if($session['group'] !=''){
+            $dataProvider->query->andFilterWhere(['in','category_id',$session['group']])
+                ->andFilterWhere(['in','mode',$session['mode']])
+                ->andFilterWhere(['like','product_code',$session['code_search']])
+                ->andFilterWhere(['like','name',$session['text_search']]);
+        }
+        if($session['product_type'] !=''){
+            $dataProvider->query->andFilterWhere(['in','type_id',$session['product_type']])
+                ->andFilterWhere(['in','mode',$session['mode']])
+                ->andFilterWhere(['like','product_code',$session['code_search']])
+                ->andFilterWhere(['like','name',$session['text_search']]);
+        }
+        if($session['property'] !=''){
+            $dataProvider->query->andFilterWhere(['in','property_id',$session['property']])
+                ->andFilterWhere(['in','mode',$session['mode']])
+                ->andFilterWhere(['like','product_code',$session['code_search']])
+                ->andFilterWhere(['like','name',$session['text_search']]);
+        }
+        if($session['brand'] !=''){
+            $dataProvider->query->andFilterWhere(['in','brand_id',$session['brand']])
+                ->andFilterWhere(['in','mode',$session['mode']])
+                ->andFilterWhere(['like','product_code',$session['code_search']])
+                ->andFilterWhere(['like','name',$session['text_search']]);
+        }
+        if($session['vendor'] != '' ){
+            $dataProvider->query->andFilterWhere(['in','vendor_id',$session['vendor']])
+                ->andFilterWhere(['in','mode',$session['mode']])
+                ->andFilterWhere(['like','product_code',$session['code_search']])
+                ->andFilterWhere(['like','name',$session['text_search']]);
+        }
+//         $dataProvider->query->orFilterWhere(['in','category_id',$session['group']])
+//                    ->orFilterWhere(['in','type_id',$session['product_type']])
+//                     ->orFilterWhere(['in','property_id',$session['property']])
+//                     ->orFilterWhere(['in','brand_id',$session['brand']])
+//                     ->orFilterWhere(['in','mode',$session['mode']])
+//                     ->orFilterWhere(['in','vendor_id',$session['vendor']])
+//                     ->orFilterWhere(['like','product_code',$session['code_search']])
+//                     ->orFilterWhere(['like','name',$session['text_search']]);
         if($movement2 == 2 ){
             //echo "noo";
              $dataProvider->query->andFilterWhere(['sale_qty'=>0])->andFilterWhere(['purch_qty'=>0]);

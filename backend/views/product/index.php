@@ -1320,7 +1320,7 @@ $this->registerJsFile(
               $("#brand").multiselect("rebuild");
             },
             error: function(data){
-              alert("eorr");
+              // alert("eorr");
             }
           });  
    }
