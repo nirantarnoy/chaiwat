@@ -1292,6 +1292,7 @@ $this->registerJsFile(
             url: "'.Url::to(['product/showvendor'],true).'",
             data: {groupid:grp,typeid:typ,propertyid: prop},
             success: function(data){
+           // alert(data);
              // $("#property").prop("disabled","");
               $("#vendor").html(data);
               $("#vendor").multiselect("rebuild");
