@@ -1,5 +1,5 @@
 <?php
-error_reporting(0); 
+error_reporting(0);
  ?>
 
 <div class="row">
@@ -25,7 +25,7 @@ error_reporting(0);
 					<th style="text-align: right">ทุนรวม</th>
 					<th style="text-align: right">ต้นทุน</th>
 					<th style="text-align: right">ผู้จำหน่าย</th>
-					
+
 				</tr>
 			</thead>
 			<tbody>
@@ -46,7 +46,7 @@ error_reporting(0);
 					 ?>
 					<td><?=$i?></td>
 					<td><?=$value->product_code?></td>
-					<td><?=$value->name?></td>
+					<td style="overflow: hidden; text-overflow: ellipsis;white-space: nowrap;"><?=$value->name?></td>
 					<td><?php echo \backend\models\Unit::getUnitname($value->unit_id)?></td>
 					<td><?= \backend\models\Category::getCategorycode($value->category_id)?></td>
 					<td><?= \backend\models\Producttype::getTypename($value->type_id)?></td>
@@ -54,15 +54,15 @@ error_reporting(0);
 					<td><?= \backend\models\Brand::getBrandname($value->brand_id)?></td>
 					<td style="text-align: right"><?=$sale_price?></td>
 					<td style="text-align: right"><?= $value->mode == 1?'Yes':'No'?></td>
-					<td style="text-align: right"><?=$so_qty?></td>				
+					<td style="text-align: right"><?=$so_qty?></td>
 					<td style="text-align: right"><?=$po_qty?></td>
 					<td style="text-align: right"><?=$qty?></td>
 					<td style="text-align: right"><?=$return_qty?></td>
 					<td style="text-align: right"><?=$adjust_qty?></td>
 					<td style="text-align: right"><?=$cost_sum?></td>
 					<td style="text-align: right"><?=$cost?></td>
-					<td><?= \backend\models\Vendor::getVendorname($value->vendor_id)?></td>
-				    
+					<td style="overflow: hidden; text-overflow: ellipsis;white-space: nowrap;"><?= \backend\models\Vendor::getVendorname($value->vendor_id)?></td>
+
 				</tr>
 			<?php endforeach;?>
 		<?php endif;?>
