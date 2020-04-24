@@ -47,10 +47,10 @@ error_reporting(0);
 					<td><?=$i?></td>
 					<td><?=$value->product_code?></td>
 					<td style="overflow: hidden; text-overflow: ellipsis;white-space: nowrap;"><?=$value->name?></td>
-					<td><?php echo \backend\models\Unit::getUnitname($value->unit_id)?></td>
-					<td><?= \backend\models\Category::getCategorycode($value->category_id)?></td>
-					<td><?= \backend\models\Producttype::getTypename($value->type_id)?></td>
-					<td><?= \backend\models\Property::getPropertyname($value->property_id)?></td>
+					<td style="overflow: hidden; text-overflow: ellipsis;white-space: nowrap;"><?php echo \backend\models\Unit::getUnitname($value->unit_id)?></td>
+					<td style="overflow: hidden; text-overflow: ellipsis;white-space: nowrap;"><?= \backend\models\Category::getCategorycode($value->category_id)?></td>
+					<td style="overflow: hidden; text-overflow: ellipsis;white-space: nowrap;"><?= \backend\models\Producttype::getTypename($value->type_id)?></td>
+					<td style="overflow: hidden; text-overflow: ellipsis;white-space: nowrap;"><?= \backend\models\Property::getPropertyname($value->property_id)?></td>
 					<td><?= \backend\models\Brand::getBrandname($value->brand_id)?></td>
 					<td style="text-align: right"><?=$sale_price?></td>
 					<td style="text-align: right"><?= $value->mode == 1?'Yes':'No'?></td>
