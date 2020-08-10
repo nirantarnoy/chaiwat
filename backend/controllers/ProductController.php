@@ -864,6 +864,8 @@ class ProductController extends Controller
           if($propertyid !=''){
               $product->andFilterWhere(['property_id'=>$propertyid]);
           }
+
+
        //  echo count($product->all());return;
        // $product = Product::find()->where(['group_id'=>$groupid,'type_id'=>$typeid,['LIKE','property_id',$propertyid]])->all();
         if(count($product->all() >0)){
@@ -876,7 +878,7 @@ class ProductController extends Controller
 
             if(count($id)>0){
 
-              $model = \backend\models\Vendor::find()->where(['id'=>$id])->orderby(['name'=>SORT_ASC])->all();
+              $model = \backend\models\Vendor::find()->where(['id'=>$id])->andFilterWhere(['status'=>1])->orderby(['name'=>SORT_ASC])->all();
               if($model){
                 // echo "<option>เลือกคุณสมบัติ </option>";
                  foreach($model as $value){

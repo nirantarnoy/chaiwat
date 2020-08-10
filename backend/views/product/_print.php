@@ -15,16 +15,16 @@ error_reporting(0);
 					<th style="text-align: left">ประเภท</th>
 					<th style="text-align: left">ลักษณะ</th>
 					<th style="text-align: left">ยี่ห้อ</th>
-					<th style="text-align: left">ราคาขาย</th>
-					<th style="text-align: left">สั่งซื้อ</th>
-					<th style="text-align: right">ขาย</th>
-					<th style="text-align: right">ซื้อ</th>
-					<th style="text-align: right">คงเหลือ</th>
+					<th style="text-align: left;width: 20px;">ราคาขาย</th>
+					<th style="text-align: left;width: 20px;">สั่งซื้อ</th>
+					<th style="text-align: right;width: 20px;">ขาย</th>
+					<th style="text-align: right;width: 20px;">ซื้อ</th>
+					<th style="text-align: right;width: 20px;">คงเหลือ</th>
 					<th style="text-align: right">คืน</th>
 					<th style="text-align: right">ปรับปรุง</th>
 					<th style="text-align: right">ทุนรวม</th>
 					<th style="text-align: right">ต้นทุน</th>
-					<th style="text-align: right">ผู้จำหน่าย</th>
+					<th style="text-align: right;width: 15px;">ผู้จำหน่าย</th>
 
 				</tr>
 			</thead>
