@@ -36,7 +36,7 @@
         "phpoffice/phpexcel": "dev-master",
         "2amigos/yii2-ckeditor-widget" : "~2.1",
         "2amigos/yii2-multi-select-widget" : "*",
-        "yiisoft/yii2-authclient": "~2.1.0"
+        "yiisoft/yii2-authclient": "~2.2.15"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
